@@ -135,7 +135,7 @@ export default function GuideView({ notes }: { notes: SectorNote[] }) {
             <li
               key={step.title.ro}
               className={`${styles.step} rv`}
-              style={{ "--d": `${Math.min(i, 4) * 60}ms` } as React.CSSProperties}
+              style={{ "--d": `${Math.min(i, 5) * 60}ms` } as React.CSSProperties}
             >
               <span className={`num ${styles.stepNo}`}>{String(i + 1).padStart(2, "0")}</span>
               <div className={styles.stepBody}>
@@ -158,7 +158,7 @@ export default function GuideView({ notes }: { notes: SectorNote[] }) {
               <li
                 key={item.ro}
                 className={`${styles.check} rv`}
-                style={{ "--d": `${Math.min(i, 5) * 50}ms` } as React.CSSProperties}
+                style={{ "--d": `${Math.min(i, 5) * 60}ms` } as React.CSSProperties}
               >
                 {t(item)}
               </li>

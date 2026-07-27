@@ -81,7 +81,7 @@
 }
 .call:hover {
   color: var(--ink);
-  border-bottom-color: var(--brass);
+  border-bottom-color: var(--amber);
 }
 
 @media (max-width: 899px) {

@@ -28,7 +28,7 @@
   font-size: var(--t-spec);
   line-height: 30px;
   letter-spacing: 0.1em;
-  color: var(--brass);
+  color: var(--amber);
 }
 
 .stepBody {
@@ -50,7 +50,7 @@
 .checkSection {
   margin-top: var(--sec);
   padding-block: var(--sec-accent);
-  background: var(--forest);
+  background: var(--accent);
   color: var(--on-dark);
 }
 
@@ -92,7 +92,7 @@
   top: 30px;
   width: 18px;
   height: 1px;
-  background: var(--brass);
+  background: var(--amber);
 }
 
 /* ---------- sectors ---------- */
@@ -190,7 +190,7 @@
 }
 
 .link:hover {
-  color: var(--forest);
+  color: var(--accent);
 }
 
 @media (max-width: 1099px) {

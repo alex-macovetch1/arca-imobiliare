@@ -24,11 +24,11 @@
 }
 
 .photo img {
-  transition: transform 0.8s var(--ease);
+  transition: transform 0.6s var(--ease);
 }
 
 .photo:hover img {
-  transform: scale(1.03);
+  transform: scale(1.04);
 }
 
 .stage {
@@ -123,7 +123,7 @@
 
 .helpSection {
   padding-block: var(--sec-accent);
-  background: var(--forest);
+  background: var(--accent);
   color: var(--on-dark);
 }
 
@@ -173,7 +173,7 @@
 }
 
 .helpAll:hover {
-  text-decoration-color: var(--brass);
+  text-decoration-color: var(--amber);
 }
 
 @media (max-width: 899px) {
@@ -198,5 +198,11 @@
   .helpInner {
     grid-template-columns: 1fr;
     gap: 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo:hover img {
+    transform: none;
   }
 }

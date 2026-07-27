@@ -32,7 +32,7 @@
 .quote {
   margin: 14px 0 0;
   padding-left: 24px;
-  border-left: 1px solid var(--brass);
+  border-left: 1px solid var(--amber);
 }
 
 .quote p {
@@ -247,7 +247,7 @@
 }
 
 .teamAll:hover {
-  color: var(--forest);
+  color: var(--accent);
 }
 
 .teamAll svg {
@@ -328,7 +328,7 @@
 }
 
 .officeDd a:hover {
-  color: var(--forest);
+  color: var(--accent);
 }
 
 .officeBtn {
@@ -420,5 +420,12 @@
   .officeDt {
     padding-bottom: 0;
     border-bottom: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .serviceLink:hover svg,
+  .teamAll:hover svg {
+    transform: none;
   }
 }

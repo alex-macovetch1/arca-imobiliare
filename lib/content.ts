@@ -45,9 +45,21 @@ export const NAV: { href: string; label: T }[] = [
   { href: "/contact", label: { ro: "Contact", ru: "Контакты" } },
 ];
 
-/** The four SEO columns in the footer. */
-export const FOOTER_LINKS: { title: T; links: { href: string; label: T }[] }[] = [
-  {
+export interface LinkGroup {
+  title: T;
+  links: { href: string; label: T }[];
+}
+
+export type LinkGroupId = "vanzare-sector" | "chirie-sector" | "camere" | "tipuri";
+
+/**
+ * The filter shortcuts, grouped by the way people actually search. The footer
+ * prints the two sector sets, the results page prints the other two under its
+ * listings. Every screen names the groups it wants, so nothing here depends on
+ * the order of this object.
+ */
+export const LINK_GROUPS: Record<LinkGroupId, LinkGroup> = {
+  "vanzare-sector": {
     title: { ro: "Apartamente pe sector", ru: "Квартиры по секторам" },
     links: [
       { href: "/proprietati?sector=centru", label: { ro: "Centru", ru: "Центр" } },
@@ -59,7 +71,7 @@ export const FOOTER_LINKS: { title: T; links: { href: string; label: T }[] }[] =
       { href: "/proprietati?sector=posta-veche", label: { ro: "Poșta Veche", ru: "Старая Почта" } },
     ],
   },
-  {
+  camere: {
     title: { ro: "După numărul de camere", ru: "По количеству комнат" },
     links: [
       { href: "/proprietati?camere=1", label: { ro: "Apartamente cu 1 cameră", ru: "Однокомнатные квартиры" } },
@@ -68,7 +80,7 @@ export const FOOTER_LINKS: { title: T; links: { href: string; label: T }[] }[] =
       { href: "/proprietati?camere=4", label: { ro: "Apartamente cu 4+ camere", ru: "Квартиры 4+ комнат" } },
     ],
   },
-  {
+  tipuri: {
     title: { ro: "Case și terenuri", ru: "Дома и участки" },
     links: [
       { href: "/proprietati?tip=casa", label: { ro: "Case de vânzare", ru: "Дома на продажу" } },
@@ -77,7 +89,7 @@ export const FOOTER_LINKS: { title: T; links: { href: string; label: T }[] }[] =
       { href: "/proprietati?tip=birou", label: { ro: "Birouri", ru: "Офисы" } },
     ],
   },
-  {
+  "chirie-sector": {
     title: { ro: "Chirii pe sector", ru: "Аренда по секторам" },
     links: [
       { href: "/proprietati?tranzactie=chirie&sector=centru", label: { ro: "Chirie în Centru", ru: "Аренда в Центре" } },
@@ -87,7 +99,7 @@ export const FOOTER_LINKS: { title: T; links: { href: string; label: T }[] }[] =
       { href: "/proprietati?tranzactie=chirie&sector=ciocana", label: { ro: "Chirie în Ciocana", ru: "Аренда в Чеканах" } },
     ],
   },
-];
+};
 
 /* ---------------------------------------------------------------------------
    Label maps. Every enum value in lib/types.ts that a human ever reads has a

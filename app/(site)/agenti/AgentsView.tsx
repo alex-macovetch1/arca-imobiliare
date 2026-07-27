@@ -42,7 +42,7 @@ export default function AgentsView({ counts }: { counts: Record<string, number> 
             <li
               key={agent.slug}
               className={`rv ${styles.card}`}
-              style={{ "--d": `${index * 70}ms` } as React.CSSProperties}
+              style={{ "--d": `${Math.min(index, 5) * 60}ms` } as React.CSSProperties}
             >
               <Link href={`/agenti/${agent.slug}`} className={`ph ph-portrait ${styles.portrait}`}>
                 <Image
@@ -111,7 +111,7 @@ export default function AgentsView({ counts }: { counts: Record<string, number> 
             </p>
           </div>
 
-          <div className={`rv ${styles.hiringForm}`} style={{ "--d": "100ms" } as React.CSSProperties}>
+          <div className={`rv ${styles.hiringForm}`} style={{ "--d": "120ms" } as React.CSSProperties}>
             <LeadRequestForm
               source="contact"
               dark

@@ -133,7 +133,7 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  background: var(--forest-soft);
+  background: var(--accent-soft);
   border-left: 1px solid var(--line-2);
   border-right: 1px solid var(--line-2);
 }
@@ -144,7 +144,7 @@
   bottom: -4px;
   width: 2px;
   margin-left: -1px;
-  background: var(--forest);
+  background: var(--accent);
 }
 
 .bandFigures {
@@ -203,7 +203,7 @@
 
 .methodSection {
   padding-block: var(--sec-accent);
-  background: var(--forest);
+  background: var(--accent);
   color: var(--on-dark);
 }
 
@@ -246,7 +246,7 @@
   font-size: var(--t-spec);
   line-height: 28px;
   letter-spacing: 0.1em;
-  color: var(--brass);
+  color: var(--amber);
 }
 
 /* ---------- the two cards ---------- */

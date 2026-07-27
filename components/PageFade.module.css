@@ -1,0 +1,6 @@
+/* A transparent block. It exists only so the incoming route has one element
+   to animate, and it must not introduce a box of its own — `main` holds the
+   sections directly on every page. */
+.page {
+  transform-origin: 50% 0;
+}

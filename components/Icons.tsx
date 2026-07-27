@@ -68,6 +68,13 @@ export const IconClose = ({ className, size = 22 }: P) => (
   </svg>
 );
 
+export const IconChat = ({ className, size = 24 }: P) => (
+  <svg {...base(size)} className={className}>
+    <path d="M20 12a8 8 0 01-11.7 7.1L4 20l1-4.2A8 8 0 1120 12z" />
+    <path d="M9 10.6h6M9 14h3.6" />
+  </svg>
+);
+
 export const IconShare = ({ className, size = 20 }: P) => (
   <svg {...base(size)} className={className}>
     <path d="M12 3v13M8 7l4-4 4 4" />

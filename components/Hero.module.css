@@ -56,14 +56,14 @@
   line-height: var(--lh-h1-hero);
   letter-spacing: -0.045em;
   font-weight: 600;
-  color: #fff;
+  color: var(--on-dark);
   text-wrap: balance;
 }
 
 /* The serif word carries the whole type idea, so it gets the optical bump and
    a hair of tracking back. */
 .say {
-  color: #fff;
+  color: var(--on-dark);
   letter-spacing: -0.02em;
 }
 
@@ -100,14 +100,14 @@
 }
 
 .primary {
-  background: #fff;
+  background: var(--on-dark);
   color: var(--ink);
-  border: 1px solid #fff;
+  border: 1px solid var(--on-dark);
 }
 
 .ghost {
   background: transparent;
-  color: #fff;
+  color: var(--on-dark);
   border: 1px solid rgba(255, 255, 255, 0.42);
 }
 
@@ -124,7 +124,16 @@
 .primary:focus-visible,
 .ghost:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(6, 8, 12, 0.6), 0 0 0 4px #fff;
+  box-shadow: 0 0 0 2px rgba(6, 8, 12, 0.6), 0 0 0 4px var(--on-dark);
+}
+
+/* With durations forced to nothing the lift stops being motion and becomes a
+   jump on hover, so these two answer with colour alone. */
+@media (prefers-reduced-motion: reduce) {
+  .primary:hover,
+  .ghost:hover {
+    transform: none;
+  }
 }
 
 @media (max-width: 860px) {

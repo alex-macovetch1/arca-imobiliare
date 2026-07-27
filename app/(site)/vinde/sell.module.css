@@ -110,7 +110,7 @@
 .estimatorSection {
   margin-top: var(--sec);
   padding-block: var(--sec-accent);
-  background: var(--forest);
+  background: var(--accent);
   color: var(--on-dark);
 }
 
@@ -152,7 +152,7 @@
 }
 
 .estimatorLink:hover {
-  text-decoration-color: var(--brass);
+  text-decoration-color: var(--amber);
 }
 
 .card {
@@ -236,7 +236,7 @@
 .scaleMark:nth-child(3) {
   height: 16px;
   margin-top: -2px;
-  background: var(--brass);
+  background: var(--amber);
 }
 
 .scaleLabels {
@@ -333,7 +333,7 @@
 }
 
 .agentPhone:hover {
-  color: var(--forest);
+  color: var(--accent);
 }
 
 /* ---------- faq ---------- */

@@ -12,7 +12,7 @@
   justify-content: center;
   min-height: 100vh;
   padding: 24px;
-  background: var(--forest);
+  background: var(--accent);
 }
 
 .loginCard {
@@ -26,7 +26,7 @@
 .loginLogo {
   width: 106px;
   height: auto;
-  color: var(--forest);
+  color: var(--accent);
 }
 
 .loginKicker {
@@ -96,7 +96,7 @@
   top: 0;
   height: 100vh;
   padding: 28px 20px;
-  background: var(--forest);
+  background: var(--accent);
   color: var(--on-dark);
 }
 
@@ -147,7 +147,7 @@
 }
 
 .sideLinkOn {
-  border-left-color: var(--brass);
+  border-left-color: var(--amber);
   color: var(--on-dark);
 }
 
@@ -266,8 +266,8 @@
 .hint {
   margin-top: 20px;
   padding: 14px 18px;
-  background: var(--forest-soft);
-  border-left: 2px solid var(--forest);
+  background: var(--accent-soft);
+  border-left: 2px solid var(--accent);
   font-size: var(--t-spec);
   line-height: 22px;
   color: var(--ink-2);
@@ -302,7 +302,7 @@
 }
 
 .blockLink:hover {
-  color: var(--forest);
+  color: var(--accent);
 }
 
 .empty {
@@ -336,7 +336,7 @@
 }
 
 .reset:hover {
-  color: var(--forest);
+  color: var(--accent);
 }
 
 .checkFilter {
@@ -352,7 +352,7 @@
 .checkFilter input {
   width: 18px;
   height: 18px;
-  accent-color: var(--forest);
+  accent-color: var(--accent);
 }
 
 .count {
@@ -410,7 +410,7 @@
 }
 
 .rowOpen {
-  background: var(--forest-soft);
+  background: var(--accent-soft);
 }
 
 .rowMuted td {
@@ -436,9 +436,9 @@
 }
 
 .table a:hover {
-  color: var(--forest);
+  color: var(--accent);
   text-decoration: underline;
-  text-decoration-color: var(--brass);
+  text-decoration-color: var(--amber);
   text-underline-offset: 3px;
 }
 
@@ -477,19 +477,19 @@
 
 .state_nou,
 .status_activ {
-  border-color: var(--forest);
-  color: var(--forest);
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .state_contactat,
 .status_rezervat {
-  border-color: var(--brass);
+  border-color: var(--amber);
 }
 
 .state_programat {
-  border-color: var(--forest);
-  background: var(--forest-soft);
-  color: var(--forest);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
 }
 
 .state_inchis,
@@ -524,8 +524,8 @@
 }
 
 .callBtn:hover {
-  border-color: var(--forest);
-  background: var(--forest-soft);
+  border-color: var(--accent);
+  background: var(--accent-soft);
   text-decoration: none;
 }
 
@@ -549,8 +549,8 @@
 }
 
 .rowAction:hover {
-  border-color: var(--forest);
-  background: var(--forest-soft);
+  border-color: var(--accent);
+  background: var(--accent-soft);
 }
 
 .rowActionDanger:hover {
@@ -825,7 +825,7 @@
   position: absolute;
   inset: 0 auto 0 0;
   width: var(--w, 0%);
-  background: var(--forest);
+  background: var(--accent);
 }
 
 .barValue {
@@ -941,7 +941,7 @@
 .fieldCheck input {
   width: 18px;
   height: 18px;
-  accent-color: var(--forest);
+  accent-color: var(--accent);
 }
 
 .computed {
@@ -981,12 +981,12 @@
 }
 
 .chip:hover {
-  border-color: var(--forest);
+  border-color: var(--accent);
 }
 
 .chipOn {
-  border-color: var(--forest);
-  background: var(--forest);
+  border-color: var(--accent);
+  background: var(--accent);
   color: var(--on-dark);
 }
 
@@ -1058,7 +1058,7 @@
 
   .sideLinkOn {
     border-left-color: transparent;
-    border-bottom-color: var(--brass);
+    border-bottom-color: var(--amber);
   }
 
   .sideFoot {

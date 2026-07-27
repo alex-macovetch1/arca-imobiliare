@@ -12,7 +12,7 @@ export default function SimilarList({ properties }: { properties: Property[] }) 
   return (
     <div className="grid-cards">
       {properties.map((p, i) => (
-        <PropertyCard key={p.slug} property={p} delay={i * 90} />
+        <PropertyCard key={p.slug} property={p} delay={Math.min(i, 5) * 60} />
       ))}
     </div>
   );

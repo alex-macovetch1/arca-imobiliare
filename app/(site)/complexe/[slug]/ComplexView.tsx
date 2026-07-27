@@ -227,7 +227,7 @@ export default function ComplexView({ complex, agent, properties }: Props) {
             <p className={`${styles.offersNote} rv`}>{t(C.offersNote)}</p>
             <div className="grid-cards">
               {properties.map((p, i) => (
-                <PropertyCard key={p.id} property={p} delay={i * 90} />
+                <PropertyCard key={p.id} property={p} delay={Math.min(i, 5) * 60} />
               ))}
             </div>
           </>

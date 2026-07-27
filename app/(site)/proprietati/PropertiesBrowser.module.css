@@ -65,7 +65,7 @@
 }
 
 .chip:hover {
-  border-color: var(--forest);
+  border-color: var(--accent);
   color: var(--ink);
 }
 
@@ -83,7 +83,7 @@
 }
 
 .clearAll:hover {
-  text-decoration-color: var(--brass);
+  text-decoration-color: var(--amber);
 }
 
 /* ---- results ---- */
@@ -113,7 +113,7 @@
   flex-direction: column;
   gap: 12px;
   padding: 28px;
-  background: var(--forest);
+  background: var(--accent);
   color: var(--on-dark);
 }
 
@@ -206,7 +206,7 @@
 .emptyArch {
   width: 44px;
   height: 22px;
-  color: var(--brass);
+  color: var(--amber);
 }
 
 .emptyTitle {
@@ -265,12 +265,12 @@
 }
 
 .pageBtn:hover {
-  background: var(--forest-soft);
+  background: var(--accent-soft);
 }
 
 .pageOn,
 .pageOn:hover {
-  background: var(--forest);
+  background: var(--accent);
   color: var(--on-dark);
 }
 
@@ -285,7 +285,7 @@
 }
 
 .pageArrow:hover:not(:disabled) {
-  border-color: var(--forest);
+  border-color: var(--accent);
 }
 
 .pageArrow:disabled {
@@ -340,6 +340,62 @@
   background: var(--line-2);
 }
 
+/* ---------- the searches people arrive with ---------- */
+/* Rooms and property types are the two shortcut sets the footer no longer
+   carries. They belong under the results, where they are also the fastest way
+   to widen a search that came up short. */
+.searches {
+  margin-top: 56px;
+  padding-top: 40px;
+  border-top: 1px solid var(--line);
+}
+
+.searchCols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+  margin-top: 22px;
+}
+
+.searchCol {
+  min-width: 0;
+}
+
+.searchTitle {
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.searchList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.searchLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-full);
+  font-size: 14px;
+  line-height: 1;
+  color: var(--ink-2);
+  transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease),
+    color 0.2s var(--ease);
+}
+.searchLink:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
 .srOnly {
   position: absolute;
   width: 1px;
@@ -352,6 +408,11 @@
 @media (max-width: 700px) {
   .main {
     padding-bottom: var(--sec-m);
+  }
+
+  .searchCols {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 26px;
   }
 
   .head {

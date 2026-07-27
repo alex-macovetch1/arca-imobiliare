@@ -42,7 +42,7 @@ export default function ComplexStrip({ items }: { items: ComplexItem[] }) {
           <li
             key={complex.slug}
             className={`${styles.item} rv`}
-            style={{ "--d": `${i * 70}ms` } as React.CSSProperties}
+            style={{ "--d": `${Math.min(i, 5) * 60}ms` } as React.CSSProperties}
           >
             <Link href={`/complexe/${complex.slug}`} className={styles.link}>
               <span className={`ph ${styles.photo} rvimg`}>

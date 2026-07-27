@@ -46,7 +46,7 @@
 }
 
 .big:hover {
-  color: var(--forest);
+  color: var(--accent);
 }
 
 .value {
@@ -130,7 +130,7 @@
 }
 
 .agentsAll:hover {
-  color: var(--forest);
+  color: var(--accent);
 }
 
 .agents {
@@ -169,7 +169,7 @@
 }
 
 .agentPhone:hover {
-  color: var(--forest);
+  color: var(--accent);
 }
 
 /* ---------- faq ---------- */

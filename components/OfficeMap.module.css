@@ -24,8 +24,8 @@
   height: 18px;
   margin: -9px 0 0 -9px;
   border-radius: var(--r-full);
-  background: var(--forest);
-  box-shadow: 0 0 0 4px var(--paper), 0 0 0 5px var(--forest);
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--paper), 0 0 0 5px var(--accent);
 }
 
 .plate {

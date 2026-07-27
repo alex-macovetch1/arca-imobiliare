@@ -147,7 +147,7 @@ export default function AboutView({ portfolio }: { portfolio: number }) {
               <p
                 key={paragraph.ro.slice(0, 24)}
                 className="rv"
-                style={{ "--d": `${i * 60}ms` } as React.CSSProperties}
+                style={{ "--d": `${Math.min(i, 5) * 60}ms` } as React.CSSProperties}
               >
                 {t(paragraph)}
               </p>
@@ -208,7 +208,7 @@ export default function AboutView({ portfolio }: { portfolio: number }) {
             <li
               key={service.title.ro}
               className={`rv ${styles.service}`}
-              style={{ "--d": `${i * 70}ms` } as React.CSSProperties}
+              style={{ "--d": `${Math.min(i, 5) * 60}ms` } as React.CSSProperties}
             >
               <h3 className={styles.serviceTitle}>{t(service.title)}</h3>
               <p className={styles.serviceText}>{t(service.text)}</p>
@@ -240,7 +240,7 @@ export default function AboutView({ portfolio }: { portfolio: number }) {
             <li
               key={agent.slug}
               className={`rv ${styles.member}`}
-              style={{ "--d": `${i * 60}ms` } as React.CSSProperties}
+              style={{ "--d": `${Math.min(i, 5) * 60}ms` } as React.CSSProperties}
             >
               <Link href={`/agenti/${agent.slug}`}>
                 <div className="ph ph-portrait">
@@ -296,7 +296,7 @@ export default function AboutView({ portfolio }: { portfolio: number }) {
             </Link>
           </div>
 
-          <div className="rv" style={{ "--d": "80ms" } as React.CSSProperties}>
+          <div className="rv" style={{ "--d": "120ms" } as React.CSSProperties}>
             <OfficeMap ratio="tall" />
           </div>
         </div>

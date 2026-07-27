@@ -60,7 +60,7 @@ export default function GuideCards() {
           <article
             key={card.href}
             className={`${styles.card} rv`}
-            style={{ "--d": `${i * 90}ms` } as React.CSSProperties}
+            style={{ "--d": `${Math.min(i, 5) * 60}ms` } as React.CSSProperties}
           >
             <Link href={card.href} className={styles.link}>
               <span className={`ph ${styles.photo} rvimg`}>

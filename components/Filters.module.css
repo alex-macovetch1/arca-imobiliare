@@ -46,7 +46,7 @@
 }
 
 .controlOn {
-  border-color: var(--forest);
+  border-color: var(--accent);
 }
 
 .selectWrap {
@@ -112,12 +112,12 @@
 }
 
 .seg:hover {
-  background: var(--forest-soft);
+  background: var(--accent-soft);
 }
 
 .segOn,
 .segOn:hover {
-  background: var(--forest);
+  background: var(--accent);
   color: var(--on-dark);
 }
 
@@ -143,12 +143,12 @@
 }
 
 .room:hover:not(:disabled) {
-  background: var(--forest-soft);
+  background: var(--accent-soft);
 }
 
 .roomOn,
 .roomOn:hover {
-  background: var(--forest);
+  background: var(--accent);
   color: var(--on-dark);
 }
 
@@ -240,7 +240,7 @@
   width: 17px;
   height: 17px;
   flex: none;
-  accent-color: var(--forest);
+  accent-color: var(--accent);
   cursor: pointer;
 }
 
@@ -277,17 +277,19 @@
 }
 
 .panelOn {
-  border-color: var(--forest);
-  background: var(--forest-soft);
+  border-color: var(--accent);
+  background: var(--accent-soft);
 }
 
+/* A count, not a label — the same disc the saved counter wears in the header. */
 .badge {
   display: inline-grid;
   place-items: center;
   min-width: 20px;
   height: 20px;
   padding: 0 6px;
-  background: var(--forest);
+  border-radius: var(--r-full);
+  background: var(--accent);
   color: var(--on-dark);
   font-weight: 700;
   font-size: 11px;

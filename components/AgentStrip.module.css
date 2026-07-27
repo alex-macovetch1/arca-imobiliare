@@ -23,7 +23,7 @@
   transition: border-color 0.25s var(--ease);
 }
 .all:hover {
-  border-bottom-color: var(--brass);
+  border-bottom-color: var(--amber);
 }
 
 .grid {
@@ -51,7 +51,7 @@
   transition: border-color 0.25s var(--ease);
 }
 .nameLink:hover {
-  border-bottom-color: var(--brass);
+  border-bottom-color: var(--amber);
 }
 
 .role {
@@ -78,7 +78,7 @@
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 4px;
-  text-decoration-color: var(--brass);
+  text-decoration-color: var(--amber);
 }
 
 .link {

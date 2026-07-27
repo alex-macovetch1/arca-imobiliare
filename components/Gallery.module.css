@@ -74,11 +74,11 @@
 
 .more {
   inset: 0;
-  background: rgba(16, 20, 17, 0.55);
+  background: rgba(12, 14, 19, 0.55);
   transition: background-color 0.25s var(--ease);
 }
 .thumb:hover .more {
-  background: rgba(16, 20, 17, 0.68);
+  background: rgba(12, 14, 19, 0.68);
 }
 
 /* Below 700px the thumbnails go away and the cover carries the entry point. */
@@ -112,7 +112,7 @@
   z-index: 90;
   display: flex;
   flex-direction: column;
-  background: #101411;
+  background: var(--ink);
   color: var(--on-dark);
 }
 
@@ -172,13 +172,13 @@
   height: 48px;
   /* One of the three round exceptions on the site. */
   border-radius: var(--r-full);
-  border: 1px solid rgba(242, 239, 232, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   color: var(--on-dark);
   transform: translateY(-50%);
   transition: background-color 0.25s var(--ease), border-color 0.25s var(--ease);
 }
 .arrow:hover {
-  background: rgba(242, 239, 232, 0.12);
+  background: rgba(255, 255, 255, 0.12);
   border-color: var(--on-dark);
 }
 
@@ -229,7 +229,7 @@
 
 .stripOn {
   opacity: 1;
-  outline-color: var(--brass);
+  outline-color: var(--amber);
 }
 
 @media (max-width: 700px) {
@@ -239,7 +239,7 @@
   .arrow {
     width: 44px;
     height: 44px;
-    background: rgba(16, 20, 17, 0.5);
+    background: rgba(12, 14, 19, 0.5);
   }
   .arrowPrev {
     left: 6px;

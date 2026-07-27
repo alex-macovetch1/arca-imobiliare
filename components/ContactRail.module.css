@@ -1,34 +1,189 @@
+/* Bottom-right column. Reversed, so the button is first in the DOM — the
+   keyboard reaches it before the pills it controls. */
 .rail {
   position: fixed;
-  top: 50%;
-  right: 0;
-  z-index: 50;
+  right: 18px;
+  bottom: 18px;
+  right: max(18px, env(safe-area-inset-right, 0px));
+  bottom: max(18px, env(safe-area-inset-bottom, 0px));
+  z-index: 70;
   display: flex;
-  flex-direction: column;
-  transform: translateY(-50%);
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  gap: 12px;
+  /* The column is tall and mostly empty. Only the pressable parts take the
+     pointer back, or the invisible area steals clicks from the page. */
+  pointer-events: none;
 }
 
-.btn {
+/* ---------- the button ---------- */
+.toggle {
+  position: relative;
   display: grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
-  background: var(--surface);
+  width: 60px;
+  height: 60px;
+  border-radius: var(--r-full);
+  background: var(--accent);
+  color: var(--on-dark);
+  box-shadow: var(--sh-2);
+  pointer-events: auto;
+  transition: transform 0.28s var(--ease), background-color 0.25s var(--ease);
+}
+.toggle:hover {
+  background: var(--accent-2);
+  transform: translateY(-2px);
+}
+.toggle:active {
+  transform: translateY(0) scale(0.95);
+}
+.toggle:focus-visible {
+  box-shadow: var(--focus), var(--sh-2);
+}
+
+.face {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  transition: transform 0.3s var(--ease), opacity 0.2s var(--ease);
+}
+.faceChat {
+  transform: none;
+  opacity: 1;
+}
+.faceShut {
+  transform: rotate(-90deg) scale(0.6);
+  opacity: 0;
+}
+.rail[data-open="true"] .faceChat {
+  transform: rotate(90deg) scale(0.6);
+  opacity: 0;
+}
+.rail[data-open="true"] .faceShut {
+  transform: none;
+  opacity: 1;
+}
+
+/* ---------- the channels ---------- */
+.list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.row {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: var(--r-full);
+  /* Grows out of the button, so the corner nearest it stays put. */
+  transform-origin: 100% 50%;
+  transform: translateY(14px) scale(0.8);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.16s var(--ease), opacity 0.16s var(--ease);
+}
+
+.label {
+  display: block;
+  height: 30px;
+  padding: 0 12px;
+  border-radius: var(--r-full);
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 600;
+  font-size: 12.5px;
+  line-height: 30px;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  box-shadow: var(--sh-1);
+  transform: translateX(8px);
+  opacity: 0;
+  transition: transform 0.16s var(--ease), opacity 0.16s var(--ease);
+}
+
+.puck {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  flex: none;
   border: 1px solid var(--line);
-  border-right: 0;
-  color: var(--forest);
-  transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
+  border-radius: var(--r-full);
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: var(--sh-1);
+  transition: transform 0.2s var(--ease), background-color 0.2s var(--ease),
+    border-color 0.2s var(--ease), color 0.2s var(--ease);
 }
-.btn + .btn {
-  border-top: 0;
-}
-.btn:hover {
-  background: var(--forest);
+.link:hover .puck {
+  transform: scale(1.07);
+  background: var(--accent);
+  border-color: var(--accent);
   color: var(--on-dark);
 }
 
-@media (max-width: 1023px) {
+/* Open. The last two selectors are the no-script path: without the flag the
+   stylesheet still opens the panel on hover and on keyboard focus. */
+.rail[data-open="true"] .link,
+.rail:not([data-js]):hover .link,
+.rail:not([data-js]):focus-within .link {
+  transform: none;
+  opacity: 1;
+  pointer-events: auto;
+  transition-duration: 0.34s;
+  transition-delay: calc(var(--i, 0) * 40ms);
+}
+.rail[data-open="true"] .label,
+.rail:not([data-js]):hover .label,
+.rail:not([data-js]):focus-within .label {
+  transform: none;
+  opacity: 1;
+  transition-duration: 0.3s;
+  transition-delay: calc(var(--i, 0) * 40ms + 60ms);
+}
+
+@media (max-width: 700px) {
   .rail {
-    display: none;
+    right: 14px;
+    bottom: 14px;
+    right: max(14px, env(safe-area-inset-right, 0px));
+    bottom: max(14px, env(safe-area-inset-bottom, 0px));
+    gap: 10px;
+  }
+  .toggle {
+    width: 56px;
+    height: 56px;
+  }
+  .puck {
+    width: 46px;
+    height: 46px;
+  }
+  .label {
+    height: 28px;
+    font-size: 12px;
+    line-height: 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link,
+  .label,
+  .face {
+    transition-delay: 0s !important;
+  }
+  /* A lift with no duration is a jump; the button answers with colour alone. */
+  .toggle:hover,
+  .toggle:active,
+  .link:hover .puck {
+    transform: none;
   }
 }

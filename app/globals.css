@@ -31,15 +31,12 @@
   /* --- amber: numbers that carry weight. Never a background, never body text. --- */
   --amber: #b9761a;
   --amber-soft: #fdf3e4;
+  /* Amber does not survive a photographic scrim at full strength; this is the
+     one lightened form, so a card and a sector tile cannot disagree. */
+  --amber-on-dark: color-mix(in srgb, var(--amber) 55%, #ffffff);
 
   /* --- state --- */
   --clay: #a3341d;
-
-  /* --- legacy names, kept so existing modules keep resolving --- */
-  --forest: var(--accent);
-  --forest-2: var(--accent-2);
-  --forest-soft: var(--accent-soft);
-  --brass: var(--amber);
 
   /* --- on dark --- */
   --on-dark: #ffffff;
@@ -211,6 +208,41 @@ button {
   cursor: pointer;
 }
 
+/* Anything you press should feel pressable and should not turn into a text
+   selection when a tap turns into a small drag. */
+button,
+summary,
+[role="button"],
+label {
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+button,
+summary,
+[role="button"],
+a {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+/* cursor and user-select both inherit, so a field wrapped in a label would
+   otherwise stop behaving like a field. */
+label input,
+label textarea,
+label select {
+  cursor: auto;
+  -webkit-user-select: auto;
+  user-select: auto;
+}
+label input[type="text"],
+label input[type="search"],
+label input[type="email"],
+label input[type="tel"],
+label input[type="number"],
+label textarea {
+  cursor: text;
+}
+
 ul,
 ol {
   margin: 0;
@@ -229,7 +261,7 @@ table {
 }
 
 ::selection {
-  background: var(--forest);
+  background: var(--accent);
   color: var(--on-dark);
 }
 
@@ -298,15 +330,37 @@ table {
   text-transform: uppercase;
   color: var(--ink-3);
 }
+/* The rule draws itself left to right before the label reads. Its resting
+   state is the full-width line, and the animation only plays it in — so a
+   killed animation leaves the line drawn rather than gone. */
 .kicker::before {
   content: "";
   width: 24px;
   height: 1px;
   flex: none;
-  background: var(--brass);
+  background: var(--amber);
+  transform-origin: left center;
+  animation: draw-x 0.56s var(--ease) both;
+  animation-delay: var(--d, 0ms);
+}
+/* Inside a reveal the rule waits for its block to arrive, then draws. */
+.rv .kicker::before {
+  animation-play-state: paused;
+}
+.rv.in .kicker::before {
+  animation-play-state: running;
 }
 .kicker-dark {
   color: var(--on-dark-2);
+}
+
+@keyframes draw-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
 }
 
 .lead {
@@ -340,8 +394,11 @@ table {
   color: var(--ink-3);
 }
 
-/* Inline link inside running text: only the underline colour moves. */
+/* Inline link inside running text. A grey hairline is always there — a link
+   in a paragraph has to be visible without hovering — and an amber rule is
+   drawn over it from the left on hover. */
 .link {
+  position: relative;
   font-weight: 500;
   font-size: 15px;
   line-height: 24px;
@@ -349,10 +406,60 @@ table {
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
   text-decoration-color: var(--line-2);
-  transition: text-decoration-color 0.25s var(--ease);
+  transition: text-decoration-color 0.2s var(--ease), color 0.2s var(--ease);
 }
-.link:hover {
-  text-decoration-color: var(--brass);
+.link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 1px;
+  background: var(--amber);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s var(--ease);
+  pointer-events: none;
+}
+.link:hover,
+.link:focus-visible {
+  text-decoration-color: transparent;
+}
+.link:hover::after,
+.link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* Standalone underline utility, for links that are not running text — footer
+   columns, tabs, breadcrumbs. Same grammar as .link: grows from the left, 260ms.
+   The header does not use it: its row carries a single rule that slides between
+   items, which one underline per link cannot do. */
+.uline {
+  position: relative;
+}
+.uline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.26s var(--ease);
+  pointer-events: none;
+}
+.uline:hover::after,
+.uline:focus-visible::after,
+.uline[aria-current="page"]::after,
+.uline[data-on="1"]::after {
+  transform: scaleX(1);
+}
+/* Leaving pulls the rule out to the right, so it never rewinds over itself. */
+.uline:not(:hover):not([aria-current="page"]):not([data-on="1"])::after {
+  transform-origin: right center;
 }
 
 .clamp-2 {
@@ -365,15 +472,17 @@ table {
 
 /* ---------- buttons ---------- */
 .btn {
+  position: relative;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   min-height: 48px;
   padding: 0 24px;
-  border: 1px solid var(--forest);
+  border: 1px solid var(--accent);
   border-radius: var(--r);
-  background: var(--forest);
+  background: var(--accent);
   color: var(--on-dark);
   font-family: var(--f-sans);
   font-weight: 600;
@@ -382,19 +491,63 @@ table {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background-color 0.25s var(--ease), border-color 0.25s var(--ease);
+  transition: background-color 0.2s var(--ease), border-color 0.2s var(--ease),
+    transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
 }
-.btn:hover {
-  background: var(--forest-2);
-  border-color: var(--forest-2);
+/* The sheen: a narrow bright band parked off the left edge, moved across on
+   hover with a transform. It has no transition at rest, so pulling the mouse
+   away resets it instantly instead of sliding backwards. */
+.btn::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: 0;
+  width: 28%;
+  height: 200%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.26) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: translate3d(-160%, 0, 0) rotate(16deg);
+  pointer-events: none;
 }
-.btn:disabled {
+/* `.btn.btn-line` is a real combination on this site, so the solid fill and
+   the sheen are both scoped away from it. */
+.btn:not(.btn-line):not(:disabled):not([aria-disabled="true"]):hover {
+  background: var(--accent-2);
+  border-color: var(--accent-2);
+}
+.btn:not(.btn-line):not(:disabled):not([aria-disabled="true"]):hover::after {
+  transform: translate3d(500%, 0, 0) rotate(16deg);
+  transition: transform 0.66s var(--ease);
+}
+.btn:not(:disabled):not([aria-disabled="true"]):hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sh-1);
+}
+.btn:not(:disabled):not([aria-disabled="true"]):active {
+  transform: translateY(1px);
+  transition-duration: 90ms;
+}
+.btn:focus-visible {
+  box-shadow: var(--focus);
+}
+.btn:disabled,
+.btn[aria-disabled="true"] {
   opacity: 0.45;
   cursor: not-allowed;
+}
+.btn.btn-line::after,
+.btn:disabled::after,
+.btn[aria-disabled="true"]::after {
+  display: none;
 }
 
 /* Outlined button: 1px --line-2 on transparent. */
 .btn-line {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -412,21 +565,38 @@ table {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: border-color 0.25s var(--ease), background-color 0.25s var(--ease);
+  transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease),
+    transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
 }
 .btn-line:hover {
-  border-color: var(--forest);
-  background: var(--forest-soft);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.btn-line:not(:disabled):not([aria-disabled="true"]):hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sh-1);
+}
+.btn-line:not(:disabled):not([aria-disabled="true"]):active {
+  transform: translateY(1px);
+  transition-duration: 90ms;
+}
+.btn-line:focus-visible {
+  box-shadow: var(--focus);
+}
+.btn-line:disabled,
+.btn-line[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
-/* Same outline, but sitting on a photo or on the forest band. */
+/* Same outline, but sitting on a photo or on the accent band. */
 .btn-line-dark {
-  border-color: rgba(242, 239, 232, 0.7);
+  border-color: rgba(255, 255, 255, 0.7);
   color: var(--on-dark);
 }
 .btn-line-dark:hover {
   border-color: var(--on-dark);
-  background: rgba(242, 239, 232, 0.1);
+  background: rgba(255, 255, 255, 0.12);
 }
 
 @media (max-width: 700px) {
@@ -448,13 +618,26 @@ table {
   font-size: 16px;
   line-height: 1;
   color: var(--ink);
-  transition: border-color 0.2s var(--ease);
+  transition: border-color 0.16s var(--ease), box-shadow 0.16s var(--ease),
+    background-color 0.16s var(--ease);
 }
 .field::placeholder {
   color: var(--ink-3);
+  transition: color 0.16s var(--ease);
 }
 .field:hover {
   border-color: var(--ink-3);
+}
+.field:focus,
+.field:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  /* A soft ring rather than the hard two-tone --focus: fields are already
+     framed, so the accent border is the signal and the ring is the halo. */
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.field:focus::placeholder {
+  color: var(--line-2);
 }
 textarea.field {
   height: auto;
@@ -488,18 +671,22 @@ textarea.field {
   pointer-events: none;
 }
 
+/* The mark that sits on a photograph. Same pill on a card, in the gallery and
+   on a complex tile — one shape, so the listing page and the card agree. */
 .badge {
   display: inline-flex;
   align-items: center;
-  height: 24px;
-  padding: 0 10px;
+  height: 25px;
+  padding: 0 11px;
+  border-radius: var(--r-full);
   background: var(--badge-bg);
   color: var(--on-dark);
   font-weight: 700;
   font-size: 11px;
   line-height: 1;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 .badge-clay {
   background: var(--clay);
@@ -510,30 +697,106 @@ textarea.field {
   width: 24px;
   height: 12px;
   flex: none;
-  color: var(--brass);
+  color: var(--amber);
 }
 
-/* ---------- scroll reveal ---------- */
+/* ---------- scroll reveal ----------
+   The grammar, so every component uses the same one:
+
+     class="rv"              arrives from below — the default for any block
+     class="rv rv-left"      arrives from the left
+     class="rv rv-right"     arrives from the right
+     class="rv rv-scale"     settles forward, for large photography
+     class="rvimg"           photo frame: the blur and the overscale clear
+     class="rv rvd2"         or style={{ "--d": "120ms" }}, to stagger a row
+
+   Only transform and opacity move. Nothing reserves or releases space, so a
+   reveal can never shift the page. Keep rv-right off full-bleed blocks: the
+   24px it travels would push past the right edge for the length of the
+   transition. */
 .rv {
   opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  transform: translate3d(0, 18px, 0);
+  transition: opacity 0.62s var(--ease), transform 0.62s var(--ease);
   transition-delay: var(--d, 0ms);
+}
+/* Direction modifiers: they only replace the starting transform, so they must
+   stay after .rv and before .rv.in. */
+.rv-left {
+  transform: translate3d(-24px, 0, 0);
+}
+.rv-right {
+  transform: translate3d(24px, 0, 0);
+}
+.rv-scale {
+  transform: scale(0.985);
 }
 .rv.in {
   opacity: 1;
   transform: none;
 }
 
-/* Photos settle in place instead of sliding — only opacity moves, so a card
-   never nudges the text under it. */
+/* Photos clear rather than slide. The blur runs on the image inside the
+   frame, which is clipped by .ph, so the 2% overscale can never leak out and
+   put a scrollbar on the page. */
 .rvimg > * {
   opacity: 0;
-  transition: opacity 0.9s var(--ease);
+  transition: opacity 0.7s var(--ease);
   transition-delay: var(--d, 0ms);
 }
 .rvimg.in > * {
   opacity: 1;
+}
+.rvimg img,
+.rvimg video {
+  transform: scale(1.02);
+  filter: blur(4px);
+  transition: transform 0.7s var(--ease), filter 0.7s var(--ease);
+  transition-delay: var(--d, 0ms);
+}
+.rvimg.in img,
+.rvimg.in video {
+  transform: none;
+  filter: blur(0);
+}
+
+/* Stagger steps. Six is enough for a card row; past that the last card in the
+   row waits long enough to read as a bug. */
+.rvd1 {
+  --d: 60ms;
+}
+.rvd2 {
+  --d: 120ms;
+}
+.rvd3 {
+  --d: 180ms;
+}
+.rvd4 {
+  --d: 240ms;
+}
+.rvd5 {
+  --d: 300ms;
+}
+.rvd6 {
+  --d: 360ms;
+}
+
+/* Reveal is driven by an observer. With scripting off the observer never
+   runs, so the page has to hand back its content unconditionally. */
+@media (scripting: none) {
+  .rv,
+  .rvimg > * {
+    opacity: 1;
+    transform: none;
+  }
+  .rvimg img,
+  .rvimg video {
+    transform: none;
+    filter: none;
+  }
+  .rv .kicker::before {
+    animation-play-state: running;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -541,6 +804,43 @@ textarea.field {
   .rvimg > * {
     opacity: 1 !important;
     transform: none !important;
+  }
+  .rvimg img,
+  .rvimg video,
+  .rv-left,
+  .rv-right,
+  .rv-scale {
+    transform: none !important;
+    filter: none !important;
+  }
+  /* The sheen has nowhere to travel to, so it is simply gone. */
+  .btn::after {
+    display: none !important;
+  }
+  /* A 2px lift with no duration is a jump, which is the opposite of the
+     request. Buttons answer with colour alone here. */
+  .btn:hover,
+  .btn:active,
+  .btn-line:hover,
+  .btn-line:active {
+    transform: none !important;
+  }
+  /* Rules that are drawn appear whole instead of sweeping. */
+  .link::after,
+  .uline::after {
+    transition: none !important;
+  }
+  .link:hover::after,
+  .link:focus-visible::after,
+  .uline:hover::after,
+  .uline:focus-visible::after,
+  .uline[aria-current="page"]::after,
+  .uline[data-on="1"]::after {
+    transform: scaleX(1) !important;
+  }
+  /* A paused animation with 0.01ms duration never lands, so let it run. */
+  .rv .kicker::before {
+    animation-play-state: running !important;
   }
   html {
     scroll-behavior: auto;
@@ -553,5 +853,6 @@ textarea.field {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

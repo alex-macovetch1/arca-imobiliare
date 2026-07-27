@@ -109,13 +109,13 @@
 }
 
 .chip:hover:not(:disabled) {
-  border-color: var(--forest);
+  border-color: var(--accent);
 }
 
 .chipOn,
 .chipOn:hover {
-  border-color: var(--forest);
-  background: var(--forest);
+  border-color: var(--accent);
+  background: var(--accent);
   color: var(--on-dark);
 }
 
@@ -200,7 +200,7 @@
   width: 17px;
   height: 17px;
   flex: none;
-  accent-color: var(--forest);
+  accent-color: var(--accent);
   cursor: pointer;
 }
 

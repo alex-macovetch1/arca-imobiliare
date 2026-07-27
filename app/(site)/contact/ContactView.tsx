@@ -128,7 +128,7 @@ export default function ContactView() {
           </p>
         </div>
 
-        <div className={`rv ${styles.formBox}`} style={{ "--d": "80ms" } as React.CSSProperties}>
+        <div className={`rv ${styles.formBox}`} style={{ "--d": "120ms" } as React.CSSProperties}>
           <h2 className={styles.formTitle}>{t({ ro: "Scrieți-ne", ru: "Напишите нам" })}</h2>
           <p className={styles.formLead}>
             {t({
@@ -173,7 +173,7 @@ export default function ContactView() {
             <li
               key={agent.slug}
               className={`rv ${styles.agent}`}
-              style={{ "--d": `${i * 60}ms` } as React.CSSProperties}
+              style={{ "--d": `${Math.min(i, 5) * 60}ms` } as React.CSSProperties}
             >
               <Link href={`/agenti/${agent.slug}`} className="ph ph-portrait">
                 <Image
@@ -205,7 +205,7 @@ export default function ContactView() {
             <li
               key={item.q.ro}
               className={`rv ${styles.faqItem}`}
-              style={{ "--d": `${i * 50}ms` } as React.CSSProperties}
+              style={{ "--d": `${Math.min(i, 5) * 60}ms` } as React.CSSProperties}
             >
               <h3 className={styles.faqQ}>{t(item.q)}</h3>
               <p className={styles.faqA}>{t(item.a)}</p>

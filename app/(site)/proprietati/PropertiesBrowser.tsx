@@ -22,7 +22,15 @@ import { Arch } from "@/components/Logo";
 import MapPanel from "@/components/MapPanel";
 import PropertyCard from "@/components/PropertyCard";
 import SortBar from "@/components/SortBar";
-import { AGENCY, DEAL_LABEL, KIND_PLURAL, SECTOR_IN, SECTOR_LABEL, UI } from "@/lib/content";
+import {
+  AGENCY,
+  DEAL_LABEL,
+  KIND_PLURAL,
+  LINK_GROUPS,
+  SECTOR_IN,
+  SECTOR_LABEL,
+  UI,
+} from "@/lib/content";
 import { formatCount, formatPricePerSqm, normalizePhone } from "@/lib/format";
 import { useLang } from "@/lib/lang";
 import { sectorMedian } from "@/lib/market-index";
@@ -57,8 +65,13 @@ const COPY = {
     ru: "Медиана предложений ARCA в этом секторе",
   },
   indexLink: { ro: "Vezi Indicele ARCA", ru: "Смотреть Индекс ARCA" },
+  searchesTitle: { ro: "Căutări frecvente", ru: "Частые запросы" },
   page: { ro: "Pagina", ru: "Страница" },
 };
+
+/* The two shortcut sets the footer stopped carrying: they are filter links, so
+   the results page is where they belong. */
+const SEARCH_GROUPS = [LINK_GROUPS.camere, LINK_GROUPS.tipuri];
 
 const ROOMS_TITLE: Record<number, T> = {
   1: { ro: "cu 1 cameră", ru: "1-комнатные" },
@@ -265,6 +278,24 @@ export default function PropertiesBrowser({ items }: { items: Property[] }) {
             </Link>
           </section>
         )}
+
+        <section className={`${styles.searches} rv`} aria-label={t(COPY.searchesTitle)}>
+          <p className="kicker">{t(COPY.searchesTitle)}</p>
+          <div className={styles.searchCols}>
+            {SEARCH_GROUPS.map((group) => (
+              <div key={group.title.ro} className={styles.searchCol}>
+                <h2 className={styles.searchTitle}>{t(group.title)}</h2>
+                <div className={styles.searchList}>
+                  {group.links.map((l) => (
+                    <Link key={l.href} href={l.href} className={styles.searchLink}>
+                      {t(l.label)}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
       </div>
     </>
   );

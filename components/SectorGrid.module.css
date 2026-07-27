@@ -1,33 +1,76 @@
 .title {
   margin-top: 14px;
-  margin-bottom: 36px;
+  margin-bottom: clamp(28px, 2.4vw, 40px);
 }
 
+/* Four columns, two rows: the two busiest sectors take a double column and sit
+   at opposite ends, which is what breaks the six-identical-squares look. */
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: clamp(232px, 24vw, 336px);
   gap: var(--gap);
 }
 
 .tile {
+  position: relative;
   display: block;
   min-width: 0;
+  overflow: hidden;
+  border-radius: var(--r);
+  background: var(--surface-2);
+  box-shadow: var(--sh-1);
+  color: var(--on-dark);
 }
 
-/* The scrim is the only thing that moves on hover — the photograph itself
-   stays still, which is what keeps a wall of tiles calm. */
+.wide {
+  grid-column: span 2;
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.img {
+  object-fit: cover;
+  transition: transform 0.6s var(--ease);
+}
+
+/* Deeper than the shared --photo-scrim: the name sits on the tile itself, and a
+   pale facade photograph would otherwise swallow white type. On hover the layer
+   pulls back just enough to be felt, never far enough to lose the words. */
 .scrim {
   position: absolute;
   inset: 0;
-  /* Deeper than the shared --photo-scrim: the name sits on the tile itself, and
-     a pale facade photograph would otherwise swallow 13px of white type. */
-  background: linear-gradient(180deg, rgba(16, 20, 17, 0) 34%, rgba(16, 20, 17, 0.74) 100%);
-  opacity: 0.9;
-  transition: opacity 0.35s var(--ease);
+  background: linear-gradient(180deg, rgba(6, 8, 12, 0) 30%, rgba(6, 8, 12, 0.8) 100%);
+  transition: opacity 0.4s var(--ease);
   pointer-events: none;
 }
-.tile:hover .scrim {
-  opacity: 1;
+
+/* Doubled class throughout: the reveal helper styles the same tree, and the
+   hover state has to win whichever sheet lands last. */
+@media (hover: hover) {
+  .tile.tile:hover .img {
+    transform: scale(1.05);
+  }
+  .tile.tile:hover .scrim {
+    opacity: 0.82;
+  }
+  .tile.tile:hover .arrow {
+    transform: translateX(5px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile.tile:hover .img,
+  .tile.tile:hover .arrow {
+    transform: none;
+  }
+  .tile.tile:hover .scrim {
+    opacity: 1;
+  }
 }
 
 .body {
@@ -35,33 +78,101 @@
   inset: auto 0 0 0;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding: 20px;
-  color: var(--on-dark);
+  gap: 5px;
+  padding: 20px 22px;
 }
 
 .name {
-  font-family: var(--f-serif);
-  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--f-sans);
+  font-weight: 560;
   font-size: var(--t-card);
   line-height: var(--lh-card);
+  letter-spacing: -0.02em;
 }
 
-.count {
+.wide .name {
+  font-size: var(--t-h3);
+  line-height: var(--lh-h3);
+}
+
+.arrow {
+  font-weight: 400;
+  transition: transform 0.3s var(--ease);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
   font-weight: 500;
   font-size: var(--t-spec);
   line-height: var(--lh-spec);
   font-variant-numeric: tabular-nums;
+}
+
+.count {
   color: var(--on-dark-2);
+}
+
+/* The median is the one figure on the tile that has to be believed. */
+.median {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--amber-on-dark);
+}
+
+.median::before {
+  content: "";
+  width: 1px;
+  height: 11px;
+  background: var(--line-dark);
 }
 
 @media (max-width: 1099px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: clamp(200px, 30vw, 280px);
   }
 }
 
+/* One tile per screen with the next one peeking: the row reads as scrollable
+   without a hint under it. */
 @media (max-width: 700px) {
+  .grid {
+    display: flex;
+    gap: 14px;
+    margin-inline: calc(var(--gut) * -1);
+    padding-inline: var(--gut);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline-start: var(--gut);
+    scrollbar-width: none;
+  }
+  .grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tile {
+    flex: 0 0 78%;
+    height: clamp(208px, 56vw, 268px);
+    scroll-snap-align: start;
+  }
+
+  .wide {
+    grid-column: auto;
+  }
+
+  .wide .name {
+    font-size: var(--t-card);
+    line-height: var(--lh-card);
+  }
+
   .body {
     padding: 16px;
   }

@@ -5,19 +5,47 @@
   height: var(--h-header);
   background: transparent;
   color: var(--on-dark);
-  /* Only colour moves between the two states. The height never changes, so the
-     page below never shifts by a pixel. */
-  transition: background-color 0.3s var(--ease), color 0.3s var(--ease),
-    box-shadow 0.3s var(--ease);
+  /* Height never changes and the surface is a separate layer, so the page below
+     never shifts by a pixel. */
+  transition: transform 0.38s var(--ease), color 0.3s var(--ease);
+}
+
+/* The paper surface lives on its own layer purely so the switch is an opacity
+   fade rather than a repaint of the header itself. */
+.bar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.84);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  box-shadow: inset 0 -1px 0 var(--line);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s var(--ease);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .bar::before {
+    background: var(--paper);
+  }
 }
 
 .solid {
-  background: var(--surface);
   color: var(--ink);
-  box-shadow: inset 0 -1px 0 var(--line);
+}
+.solid::before {
+  opacity: 1;
+}
+
+/* Retracts on the way down, returns the moment the reader scrolls back up. */
+.away {
+  transform: translateY(-100%);
 }
 
 .inner {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   gap: 32px;
@@ -32,6 +60,13 @@
   display: flex;
   align-items: center;
   flex: none;
+  transition: transform 0.3s var(--ease), opacity 0.2s var(--ease);
+}
+.brand:hover {
+  transform: translateY(-1px);
+}
+.brand:active {
+  transform: scale(0.97);
 }
 
 .logo {
@@ -40,6 +75,7 @@
 }
 
 .nav {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 26px;
@@ -50,21 +86,38 @@
   display: inline-flex;
   align-items: center;
   height: 44px;
-  border-bottom: 1px solid transparent;
   font-weight: 500;
   font-size: 14px;
   line-height: 1;
   color: inherit;
-  transition: border-color 0.2s var(--ease), opacity 0.2s var(--ease);
-  opacity: 0.86;
+  opacity: 0.8;
+  transition: opacity 0.2s var(--ease);
 }
-.link:hover {
-  opacity: 1;
-  border-bottom-color: var(--brass);
-}
+.link:hover,
+.link:focus-visible,
 .linkOn {
   opacity: 1;
-  border-bottom-color: var(--brass);
+}
+
+/* One rule under the whole row. It is 1px wide and scaled, so position and
+   width both travel on transform — nothing here touches layout. */
+.ink {
+  position: absolute;
+  left: 0;
+  bottom: 9px;
+  width: 1px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transform-origin: 0 50%;
+  transform: translateX(var(--x, 0px)) scaleX(var(--w, 0));
+  opacity: var(--o, 0);
+  pointer-events: none;
+  transition: transform 0.4s var(--ease), opacity 0.25s var(--ease),
+    background-color 0.3s var(--ease);
+}
+.solid .ink {
+  background: var(--accent);
 }
 
 .side {
@@ -85,12 +138,17 @@
   height: 44px;
   margin-right: -6px;
   color: inherit;
+  opacity: 0.82;
   transition: opacity 0.2s var(--ease);
-  opacity: 0.86;
 }
-
 .saved:hover {
   opacity: 1;
+}
+.saved svg {
+  transition: transform 0.28s var(--ease);
+}
+.saved:hover svg {
+  transform: scale(1.14);
 }
 
 .savedCount {
@@ -101,18 +159,31 @@
   height: 17px;
   padding: 0 4px;
   border-radius: var(--r-full);
-  background: var(--brass);
-  color: #14170f;
+  background: var(--accent);
+  color: var(--on-dark);
   font-weight: 700;
   font-size: 10px;
   line-height: 17px;
   text-align: center;
+  /* Fires once, when the first property is saved. Never loops. */
+  animation: pop 0.32s var(--ease) both;
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .drawerCount {
   margin-left: 10px;
   font-size: 15px;
-  color: var(--brass);
+  color: var(--on-dark-2);
 }
 
 .phone {
@@ -125,14 +196,25 @@
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
   color: inherit;
+  opacity: 0.9;
+  transition: opacity 0.2s var(--ease);
+}
+.phone svg {
+  transition: transform 0.3s var(--ease);
 }
 .phone:hover {
+  opacity: 1;
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 4px;
-  text-decoration-color: var(--brass);
+}
+.phone:hover svg {
+  transform: rotate(-12deg) scale(1.08);
 }
 
+/* Size only. The lift, the press and the sheen are the .btn grammar in
+   globals.css, whose :not() chain outranks anything a single class here could
+   say — writing them again would only make dead rules. */
 .cta {
   min-height: 40px;
   padding: 0 18px;
@@ -142,11 +224,11 @@
    outlined treatment until the header goes solid. */
 .bar:not(.solid) .cta {
   background: transparent;
-  border-color: rgba(242, 239, 232, 0.7);
+  border-color: rgba(255, 255, 255, 0.7);
   color: var(--on-dark);
 }
 .bar:not(.solid) .cta:hover {
-  background: rgba(242, 239, 232, 0.12);
+  background: rgba(255, 255, 255, 0.14);
   border-color: var(--on-dark);
 }
 
@@ -158,6 +240,10 @@
   height: 44px;
   margin-right: -10px;
   color: inherit;
+  transition: transform 0.2s var(--ease);
+}
+.burger:active {
+  transform: scale(0.9);
 }
 
 @media (max-width: 1099px) {
@@ -193,10 +279,37 @@
   z-index: 80;
   display: flex;
   flex-direction: column;
-  background: var(--forest);
+  background: var(--accent);
   color: var(--on-dark);
   padding-inline: var(--gut);
   overflow-y: auto;
+  animation: sheetIn 0.34s var(--ease) both;
+}
+
+.drawerOut {
+  animation: sheetOut 0.24s var(--ease) both;
+}
+
+@keyframes sheetIn {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes sheetOut {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
 }
 
 .drawerTop {
@@ -221,6 +334,10 @@
   height: 44px;
   margin-right: -10px;
   color: var(--on-dark);
+  transition: transform 0.3s var(--ease);
+}
+.close:hover {
+  transform: rotate(90deg);
 }
 
 .drawerNav {
@@ -234,11 +351,13 @@
   align-items: center;
   min-height: 60px;
   border-bottom: 1px solid var(--line-dark);
-  font-family: var(--f-serif);
-  font-weight: 500;
-  font-size: 24px;
+  font-weight: 560;
+  font-size: 26px;
   line-height: 32px;
+  letter-spacing: -0.028em;
   color: var(--on-dark);
+  animation: rowIn 0.46s var(--ease) both;
+  animation-delay: calc(90ms + var(--i, 0) * 45ms);
 }
 
 .drawerFoot {
@@ -248,6 +367,25 @@
   gap: 16px;
   margin-top: auto;
   padding-block: 28px 40px;
+  animation: rowIn 0.46s var(--ease) both;
+  animation-delay: calc(90ms + var(--i, 0) * 45ms);
+}
+
+@keyframes rowIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* On the way out the sheet leaves as one piece; the rows stay where they are. */
+.drawerOut .drawerLink,
+.drawerOut .drawerFoot {
+  animation: none;
 }
 
 .drawerPhone {
@@ -255,4 +393,28 @@
   font-size: 20px;
   font-variant-numeric: tabular-nums;
   color: var(--on-dark);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drawerLink,
+  .drawerFoot,
+  .savedCount {
+    animation-delay: 0s !important;
+  }
+  /* With durations forced to nothing a lift stops being motion and becomes a
+     jump, so the small hovers answer with colour alone. The header itself keeps
+     its place rather than snapping out of view. */
+  .away {
+    transform: none;
+  }
+  .brand:hover,
+  .brand:active,
+  .burger:active,
+  .close:hover {
+    transform: none;
+  }
+  .saved:hover svg,
+  .phone:hover svg {
+    transform: none;
+  }
 }

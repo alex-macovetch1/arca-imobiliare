@@ -3,7 +3,7 @@
   align-items: flex-end;
   justify-content: space-between;
   gap: 24px;
-  margin-bottom: 36px;
+  margin-bottom: clamp(28px, 2.4vw, 40px);
 }
 
 .title {
@@ -29,10 +29,16 @@
   line-height: 1;
   letter-spacing: 0.02em;
   color: var(--ink);
-  transition: border-color 0.25s var(--ease);
+  transition: border-color 0.25s var(--ease), transform 0.28s var(--ease);
 }
 .all:hover {
-  border-bottom-color: var(--brass);
+  border-bottom-color: var(--amber);
+}
+/* The label already ends in an arrow, so the whole link leans into the hover. */
+@media (hover: hover) {
+  .all:hover {
+    transform: translateX(3px);
+  }
 }
 
 .grid {
@@ -81,5 +87,11 @@
   .rail > * {
     flex: 0 0 84%;
     scroll-snap-align: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .all:hover {
+    transform: none;
   }
 }

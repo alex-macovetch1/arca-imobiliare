@@ -1,90 +1,98 @@
+/* Graphite, not cobalt: the home page already spends its one colour band on
+   the market index, and keeping the accent for the two buttons down here is
+   what makes them read as the last call to action rather than decoration. */
 .foot {
-  background: var(--forest);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--ink);
   color: var(--on-dark);
 }
 
-.inner {
+/* A cobalt haze at the seam, so the footer starts warm instead of slamming
+   shut on a flat black edge. */
+.foot::before {
+  content: "";
+  position: absolute;
+  top: -300px;
+  left: 50%;
+  z-index: -1;
+  width: 140vw;
+  height: 640px;
+  transform: translateX(-50%);
+  background: radial-gradient(50% 50% at 50% 50%, rgba(22, 48, 122, 0.72), rgba(12, 14, 19, 0) 72%);
+  pointer-events: none;
+}
+
+/* ---------- the closing ask ---------- */
+.top {
   display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: 64px;
-  padding-block: 72px 56px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 28px 48px;
+  padding-block: clamp(56px, 5vw, 88px) clamp(36px, 3.4vw, 56px);
 }
 
-.brand {
-  display: flex;
-  flex-direction: column;
+.ask {
+  min-width: 0;
 }
 
-.logo {
-  width: 96px;
-  height: 24px;
+.askTitle {
+  margin-top: 16px;
+  font-size: var(--t-h1);
+  line-height: var(--lh-h1);
+  letter-spacing: -0.035em;
   color: var(--on-dark);
 }
 
-.tagline {
-  margin-top: 18px;
-  font-family: var(--f-serif);
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 28px;
-  color: var(--on-dark);
-}
-
-.contact {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 4px;
-  margin: 28px 0 0;
-}
-
-.dt {
-  margin-top: 14px;
-  font-weight: 600;
-  font-size: 11px;
-  line-height: 16px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+.askLead {
+  max-width: 44ch;
+  margin-top: 16px;
+  font-size: var(--t-lead);
+  line-height: var(--lh-lead);
   color: var(--on-dark-2);
 }
 
-.dd {
+.acts {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
-  margin: 0;
-  font-size: 14px;
-  line-height: 22px;
-  color: var(--on-dark);
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-bottom: 6px;
 }
 
-.a {
-  font-variant-numeric: tabular-nums;
-  transition: text-decoration-color 0.2s var(--ease);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-  text-decoration-color: transparent;
+/* The lift and the press are the .btn grammar in globals.css, whose :not()
+   chain outranks anything two classes here could say. Only the arrow is local:
+   it moves with the button, at the same 200ms. */
+.arrow {
+  display: inline-block;
+  transition: transform 0.2s var(--ease);
 }
-.a:hover {
-  text-decoration-color: var(--brass);
+.acts .act:hover .arrow {
+  transform: translateX(3px);
 }
 
-.cols {
+/* ---------- contact and links ---------- */
+.mid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 32px;
+  grid-template-columns: minmax(0, 1.15fr) repeat(3, minmax(0, 1fr));
+  gap: 44px 36px;
+  padding-block: clamp(36px, 3.4vw, 56px);
+  border-top: 1px solid var(--line-dark);
 }
 
+.contact,
 .col {
+  display: flex;
   min-width: 0;
+  flex-direction: column;
 }
 
 .colTitle {
   font-family: var(--f-sans);
   font-weight: 600;
-  font-size: 11px;
-  line-height: 16px;
-  letter-spacing: 0.14em;
+  font-size: 13px;
+  line-height: 20px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--on-dark-2);
 }
@@ -92,95 +100,169 @@
 .list {
   display: flex;
   flex-direction: column;
-  margin-top: 14px;
+  margin-top: 10px;
+}
+
+.item {
+  display: flex;
+}
+
+/* The phone is the one thing in this block worth a headline. */
+.tel {
+  margin-top: 16px;
+  font-weight: 600;
+  font-size: clamp(24px, 1.1rem + 1.1vw, 32px);
+  line-height: 1.24;
+  letter-spacing: -0.02em;
+  color: var(--on-dark);
 }
 
 .link {
-  display: flex;
-  align-items: center;
-  min-height: 32px;
-  font-size: 14px;
-  line-height: 20px;
-  color: var(--on-dark);
-  opacity: 0.86;
-  transition: opacity 0.2s var(--ease);
-}
-.link:hover {
-  opacity: 1;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-  text-decoration-color: var(--brass);
+  padding-block: 7px;
+  font-size: 15px;
+  line-height: 22px;
+  color: rgba(255, 255, 255, 0.82);
+  transition: color 0.22s var(--ease);
 }
 
-.utility {
+/* Both link shapes carry the same hairline that draws itself left to right. */
+.link,
+.tel {
+  position: relative;
+  align-self: flex-start;
+  max-width: 100%;
+}
+
+.link::after,
+.tel::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 4px;
+  left: 0;
+  height: 1px;
+  background: var(--amber);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s var(--ease);
+}
+
+.link:hover,
+.link:focus-visible,
+.tel:hover,
+.tel:focus-visible {
+  color: var(--on-dark);
+}
+
+.link:hover::after,
+.link:focus-visible::after,
+.tel:hover::after,
+.tel:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.line {
+  max-width: 34ch;
+  margin-top: 12px;
+  font-size: 14.5px;
+  line-height: 22px;
+  color: var(--on-dark-2);
+}
+
+/* Cobalt on graphite is unreadable as a focus ring, so the footer inverts it. */
+.foot a:focus-visible,
+.foot button:focus-visible {
+  border-radius: var(--r-sm);
+  box-shadow: 0 0 0 2px var(--ink), 0 0 0 4px var(--on-dark);
+}
+
+/* ---------- bottom line ---------- */
+.bottom {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px 26px;
-  padding-block: 22px;
+  align-items: center;
+  gap: 8px 26px;
+  padding-block: 16px;
   border-top: 1px solid var(--line-dark);
 }
 
-.utilityLink {
-  font-weight: 500;
+.copy {
   font-size: 13px;
   line-height: 20px;
   color: var(--on-dark-2);
-  transition: color 0.2s var(--ease);
-}
-
-.utilityLink:hover {
-  color: var(--on-dark);
-}
-
-.bottom {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  padding-block: 20px;
-  border-top: 1px solid var(--line-dark);
-}
-
-.copy,
-.small {
-  font-size: 12px;
-  line-height: 18px;
-  color: var(--on-dark-2);
 }
 
 .small {
-  transition: color 0.2s var(--ease);
-}
-.small:hover {
-  color: var(--on-dark);
+  font-size: 13px;
 }
 
 .lang {
   margin-left: auto;
 }
 
-@media (max-width: 1099px) {
-  .inner {
-    grid-template-columns: 1fr;
-    gap: 48px;
-    padding-block: 56px 40px;
-  }
-  .cols {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 28px 32px;
+/* ---------- the signature ---------- */
+/* Cropped by the footer edge: the negative margin pulls the block box up
+   while the glyphs keep their height, so the bottom of the name runs off. */
+.sign {
+  overflow: hidden;
+  padding-top: clamp(4px, 1vw, 14px);
+}
+
+.signWord {
+  display: block;
+  margin-bottom: -0.17em;
+  font-weight: 700;
+  font-size: clamp(84px, 21vw, 300px);
+  line-height: 0.78;
+  letter-spacing: -0.055em;
+  text-align: center;
+  color: var(--on-dark);
+  opacity: 0.12;
+}
+
+/* Without a script the shared reveal observer never runs, and the name would
+   stay at opacity 0 forever. */
+@media (scripting: none) {
+  .foot .sign {
+    opacity: 1;
+    transform: none;
   }
 }
 
-@media (max-width: 560px) {
-  .cols {
-    grid-template-columns: 1fr;
+/* ---------- responsive ---------- */
+@media (max-width: 1099px) {
+  .top {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
   }
-  .bottom {
-    flex-wrap: wrap;
-    gap: 12px 20px;
+  .mid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 36px 32px;
+  }
+  .contact {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 619px) {
+  .mid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+  .acts {
+    width: 100%;
+  }
+  .acts .act {
+    flex: 1 1 220px;
   }
   .lang {
-    margin-left: 0;
     width: 100%;
+    margin-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .acts .act:hover .arrow {
+    transform: none;
   }
 }

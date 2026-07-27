@@ -56,7 +56,7 @@
 .stepsSection {
   margin-top: var(--sec);
   padding-block: var(--sec-accent);
-  background: var(--forest);
+  background: var(--accent);
   color: var(--on-dark);
 }
 
@@ -97,7 +97,7 @@
   font-size: var(--t-spec);
   line-height: 30px;
   letter-spacing: 0.1em;
-  color: var(--brass);
+  color: var(--amber);
 }
 
 .stepTitle {
@@ -181,7 +181,7 @@
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 4px;
-  text-decoration-color: var(--brass);
+  text-decoration-color: var(--amber);
 }
 
 .form {
@@ -209,7 +209,7 @@
 }
 
 .link:hover {
-  color: var(--forest);
+  color: var(--accent);
 }
 
 @media (max-width: 1099px) {

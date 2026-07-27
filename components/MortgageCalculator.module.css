@@ -101,14 +101,14 @@
   margin-top: -8px;
   border: 0;
   border-radius: var(--r);
-  background: var(--forest);
+  background: var(--accent);
 }
 .range::-moz-range-thumb {
   width: 16px;
   height: 16px;
   border: 0;
   border-radius: var(--r);
-  background: var(--forest);
+  background: var(--accent);
 }
 
 .range:focus-visible {

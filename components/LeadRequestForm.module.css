@@ -55,7 +55,7 @@
   width: 18px;
   height: 18px;
   margin: 1px 0 0;
-  accent-color: var(--forest);
+  accent-color: var(--accent);
 }
 
 .badConsent {
@@ -111,7 +111,7 @@
   margin-top: 8px;
 }
 
-/* ---------- on a forest band ---------- */
+/* ---------- on an accent band ---------- */
 
 .dark .labelText {
   color: var(--on-dark-2);
@@ -126,7 +126,7 @@
 }
 
 .dark .error {
-  background: var(--forest-2);
+  background: var(--accent-2);
   border-left-color: var(--on-dark);
   color: var(--on-dark);
 }
@@ -147,7 +147,7 @@
 .submitDark {
   border-color: var(--on-dark);
   background: var(--on-dark);
-  color: var(--forest);
+  color: var(--accent);
 }
 
 .submitDark:hover {

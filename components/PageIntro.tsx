@@ -29,7 +29,7 @@ export default function PageIntro({ kicker, title, lead, meta, children }: Props
         </p>
       )}
       {meta && (
-        <p className={`spec num rv ${styles.meta}`} style={{ "--d": "160ms" } as React.CSSProperties}>
+        <p className={`spec num rv ${styles.meta}`} style={{ "--d": "180ms" } as React.CSSProperties}>
           {t(meta)}
         </p>
       )}

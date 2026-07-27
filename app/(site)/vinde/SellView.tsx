@@ -184,7 +184,7 @@ export default function SellView({
           ru: "Письменная оценка за 24 часа, фотограф за счёт агентства и один агент, который доводит продажу до нотариуса. Комиссия платится при подписании — до этого вы не платите ничего.",
         }}
       >
-        <div className={`rv ${styles.introActions}`} style={{ "--d": "200ms" } as React.CSSProperties}>
+        <div className={`rv ${styles.introActions}`} style={{ "--d": "240ms" } as React.CSSProperties}>
           <a href="#evaluare" className="btn">
             {t({ ro: "Solicită evaluarea gratuită", ru: "Заказать бесплатную оценку" })}
           </a>
@@ -217,7 +217,7 @@ export default function SellView({
             <li
               key={step.title.ro}
               className={`rv ${styles.step}`}
-              style={{ "--d": `${i * 70}ms` } as React.CSSProperties}
+              style={{ "--d": `${Math.min(i, 5) * 60}ms` } as React.CSSProperties}
             >
               <span className={`num ${styles.stepNumber}`}>{i + 1}</span>
               <h2 className={styles.stepTitle}>{t(step.title)}</h2>
@@ -247,7 +247,7 @@ export default function SellView({
               <li
                 key={item.ro}
                 className={`rv ${styles.includedItem}`}
-                style={{ "--d": `${i * 40}ms` } as React.CSSProperties}
+                style={{ "--d": `${Math.min(i, 5) * 60}ms` } as React.CSSProperties}
               >
                 <span className={`num ${styles.includedIndex}`}>{String(i + 1).padStart(2, "0")}</span>
                 <span>{t(item)}</span>
@@ -276,7 +276,7 @@ export default function SellView({
             </Link>
           </div>
 
-          <div className={`rv ${styles.card}`} style={{ "--d": "80ms" } as React.CSSProperties}>
+          <div className={`rv ${styles.card}`} style={{ "--d": "120ms" } as React.CSSProperties}>
             <div className={styles.controls}>
               <label className={styles.control}>
                 <span className={styles.controlLabel}>{t({ ro: "Sector", ru: "Сектор" })}</span>
@@ -415,7 +415,7 @@ export default function SellView({
             <li
               key={agent.slug}
               className={`rv ${styles.agent}`}
-              style={{ "--d": `${i * 60}ms` } as React.CSSProperties}
+              style={{ "--d": `${Math.min(i, 5) * 60}ms` } as React.CSSProperties}
             >
               <Link href={`/agenti/${agent.slug}`} className="ph ph-portrait">
                 <Image
@@ -445,7 +445,7 @@ export default function SellView({
             <li
               key={item.q.ro}
               className={`rv ${styles.faqItem}`}
-              style={{ "--d": `${i * 40}ms` } as React.CSSProperties}
+              style={{ "--d": `${Math.min(i, 5) * 60}ms` } as React.CSSProperties}
             >
               <h3 className={styles.faqQ}>{t(item.q)}</h3>
               <p className={styles.faqA}>{t(item.a)}</p>

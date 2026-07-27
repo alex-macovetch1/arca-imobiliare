@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { FLAG_LABEL, SECTOR_LABEL, UI } from "@/lib/content";
+import { useState } from "react";
+import { FLAG_LABEL, UI } from "@/lib/content";
 import {
   formatArea,
   formatDealPrice,
@@ -44,6 +45,9 @@ export default function PropertyCard({
 }: Props) {
   const { t, lang } = useLang();
   const saved = useIsFavorite(p.id);
+  // Counts taps rather than storing a boolean: remounting the disc on a new key
+  // is what replays the pulse when the same heart is pressed twice.
+  const [taps, setTaps] = useState(0);
   const photo = p.photos[0];
 
   const specs: string[] = [];
@@ -62,77 +66,92 @@ export default function PropertyCard({
   const intro = t(p.description).split("\n\n")[0];
 
   return (
-    <article
-      className={`${styles.card} ${layout === "list" ? styles.horizontal : ""} rv`}
+    // The reveal sits on a wrapper: one element cannot carry the 700ms entrance
+    // and the 340ms hover lift on the same property.
+    <div
+      className={`${styles.reveal} rv`}
       style={delay ? ({ "--d": `${delay}ms` } as React.CSSProperties) : undefined}
     >
-      <div className={`ph ${styles.photo} rvimg`}>
-        <Image
-          src={photo.src}
-          alt={t(photo.alt)}
-          fill
-          sizes={sizes ?? (layout === "list" ? LIST_SIZES : GRID_SIZES)}
-          priority={priority}
-          className={styles.img}
-        />
+      <article className={`${styles.card} ${layout === "list" ? styles.horizontal : ""}`}>
+        <div className={`${styles.frame} rvimg`}>
+          <Image
+            src={photo.src}
+            alt={t(photo.alt)}
+            fill
+            sizes={sizes ?? (layout === "list" ? LIST_SIZES : GRID_SIZES)}
+            priority={priority}
+            className={styles.img}
+          />
 
-        {badges.length > 0 && (
-          <div className={styles.badges}>
-            {badges.map((flag) => (
-              <span
-                key={flag}
-                className={`badge ${flag === "pret-redus" ? "badge-clay" : ""}`}
-              >
-                {t(FLAG_LABEL[flag])}
-              </span>
-            ))}
-          </div>
-        )}
-
-        <span className={styles.counter}>
-          <span className="num">1/{p.photos.length}</span>
-          <span className={styles.srOnly}> {t(PHOTOS_LABEL)}</span>
-        </span>
-
-        <button
-          type="button"
-          className={styles.heart}
-          onClick={() => toggleFavorite(p.id)}
-          aria-pressed={saved}
-          aria-label={t(saved ? UNSAVE_LABEL : SAVE_LABEL)}
-        >
-          <IconHeart size={18} filled={saved} />
-        </button>
-      </div>
-
-      <div className={styles.body}>
-        <p className={styles.sector}>{t(SECTOR_LABEL[p.sector])}</p>
-
-        <h3 className={styles.title}>
-          <Link href={`/proprietati/${p.slug}`} className={styles.link}>
-            <span className="clamp-2">{t(p.title)}</span>
-          </Link>
-        </h3>
-
-        <ul className={styles.specs}>
-          {specs.map((s) => (
-            <li key={s}>{s}</li>
-          ))}
-        </ul>
-
-        {layout === "list" && <p className={styles.intro}>{intro}</p>}
-
-        <div className={styles.foot}>
-          <p className={styles.price}>
-            {formatDealPrice(p, lang)}
-            {cut && <span className={styles.cut}>{formatPrice(cut)}</span>}
-          </p>
-          {p.deal === "vanzare" && (
-            <p className={styles.sqm}>{formatPricePerSqm(p.pricePerSqm, lang)}</p>
+          {badges.length > 0 && (
+            <div className={styles.badges}>
+              {badges.map((flag) => (
+                <span
+                  key={flag}
+                  className={`badge ${flag === "pret-redus" ? styles.badgeCut : ""}`}
+                >
+                  {t(FLAG_LABEL[flag])}
+                </span>
+              ))}
+            </div>
           )}
-          {p.deal === "chirie" && <p className={styles.sqm}>{t(UI.code)} {p.id}</p>}
+
+          <span className={styles.counter}>
+            <span className="num">1/{p.photos.length}</span>
+            <span className={styles.srOnly}> {t(PHOTOS_LABEL)}</span>
+          </span>
+
+          <button
+            type="button"
+            className={styles.heart}
+            onClick={() => {
+              toggleFavorite(p.id);
+              setTaps((n) => n + 1);
+            }}
+            aria-pressed={saved}
+            aria-label={t(saved ? UNSAVE_LABEL : SAVE_LABEL)}
+          >
+            <span
+              key={taps}
+              className={`${styles.disc} ${taps ? styles.pulse : ""}`}
+              aria-hidden="true"
+            />
+            <IconHeart size={17} filled={saved} />
+          </button>
         </div>
-      </div>
-    </article>
+
+        <div className={styles.body}>
+          {/* The price leads: it is the first thing a buyer reads after the photo. */}
+          <div className={styles.priceRow}>
+            <p className={styles.price}>
+              {formatDealPrice(p, lang)}
+              {cut && <span className={styles.cut}>{formatPrice(cut)}</span>}
+            </p>
+            {p.deal === "vanzare" && p.pricePerSqm > 0 && (
+              <p className={styles.sqm}>{formatPricePerSqm(p.pricePerSqm, lang)}</p>
+            )}
+            {p.deal === "chirie" && (
+              <p className={styles.sqm}>
+                {t(UI.code)} {p.id}
+              </p>
+            )}
+          </div>
+
+          <h3 className={styles.title}>
+            <Link href={`/proprietati/${p.slug}`} className={styles.link}>
+              <span className="clamp-2">{t(p.title)}</span>
+            </Link>
+          </h3>
+
+          <ul className={styles.specs}>
+            {specs.map((s) => (
+              <li key={s}>{s}</li>
+            ))}
+          </ul>
+
+          {layout === "list" && <p className={styles.intro}>{intro}</p>}
+        </div>
+      </article>
+    </div>
   );
 }

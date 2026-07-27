@@ -154,7 +154,7 @@ export default function IndexView({ rows, city, cityRent, max, updated }: Props)
               <li
                 key={row.sector}
                 className={`${styles.row} rv`}
-                style={{ "--d": `${Math.min(i, 6) * 50}ms` } as React.CSSProperties}
+                style={{ "--d": `${Math.min(i, 5) * 60}ms` } as React.CSSProperties}
               >
                 <Link href={`/proprietati?sector=${row.sector}`} className={styles.rowLink}>
                   <span className={styles.colSector}>
@@ -225,7 +225,7 @@ export default function IndexView({ rows, city, cityRent, max, updated }: Props)
               <li
                 key={step.ro}
                 className={`${styles.methodStep} rv`}
-                style={{ "--d": `${i * 70}ms` } as React.CSSProperties}
+                style={{ "--d": `${Math.min(i, 5) * 60}ms` } as React.CSSProperties}
               >
                 <span className={`num ${styles.methodNo}`}>{String(i + 1).padStart(2, "0")}</span>
                 <p>{t(step)}</p>
@@ -244,7 +244,7 @@ export default function IndexView({ rows, city, cityRent, max, updated }: Props)
               {t(C.sellLink)}
             </Link>
           </div>
-          <div className={`${styles.card} rv`} style={{ "--d": "80ms" } as React.CSSProperties}>
+          <div className={`${styles.card} rv`} style={{ "--d": "120ms" } as React.CSSProperties}>
             <h2 className={styles.cardTitle}>{t(C.buyCard)}</h2>
             <p className={styles.cardText}>{t(C.buyText)}</p>
             <Link href="/proprietati" className="btn-line">

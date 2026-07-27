@@ -76,7 +76,7 @@ export default function AgentView({ agent, properties }: { agent: Agent; propert
             </blockquote>
           )}
 
-          <dl className={`rv ${styles.facts}`} style={{ "--d": "160ms" } as React.CSSProperties}>
+          <dl className={`rv ${styles.facts}`} style={{ "--d": "180ms" } as React.CSSProperties}>
             <div className={styles.fact}>
               <dt className={styles.factLabel}>{t({ ro: "Sectoare", ru: "Секторы" })}</dt>
               <dd className={styles.factValue}>
@@ -95,7 +95,7 @@ export default function AgentView({ agent, properties }: { agent: Agent; propert
             </div>
           </dl>
 
-          <div className={`rv ${styles.contact}`} style={{ "--d": "200ms" } as React.CSSProperties}>
+          <div className={`rv ${styles.contact}`} style={{ "--d": "240ms" } as React.CSSProperties}>
             <a href={agent.phoneHref} className={`btn ${styles.callBtn}`}>
               <IconPhone size={17} />
               <span className="num">{agent.phone}</span>
@@ -129,7 +129,7 @@ export default function AgentView({ agent, properties }: { agent: Agent; propert
 
       <section className={`wrap ${styles.bioSection}`}>
         <p className="kicker rv">{t({ ro: "Despre", ru: "О себе" })}</p>
-        <div className={`rv ${styles.bio}`} style={{ "--d": "80ms" } as React.CSSProperties}>
+        <div className={`rv ${styles.bio}`} style={{ "--d": "120ms" } as React.CSSProperties}>
           {t(agent.bio)
             .split("\n")
             .filter(Boolean)
@@ -158,7 +158,7 @@ export default function AgentView({ agent, properties }: { agent: Agent; propert
 
           <div className={`grid-cards ${styles.cards}`}>
             {properties.map((property, i) => (
-              <PropertyCard key={property.id} property={property} delay={i * 90} />
+              <PropertyCard key={property.id} property={property} delay={Math.min(i, 5) * 60} />
             ))}
           </div>
         </section>
@@ -180,7 +180,7 @@ export default function AgentView({ agent, properties }: { agent: Agent; propert
             </a>
           </div>
 
-          <div className={`rv ${styles.writeForm}`} style={{ "--d": "100ms" } as React.CSSProperties}>
+          <div className={`rv ${styles.writeForm}`} style={{ "--d": "120ms" } as React.CSSProperties}>
             <LeadRequestForm
               source="agent"
               agentSlug={agent.slug}

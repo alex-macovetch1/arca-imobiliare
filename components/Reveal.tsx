@@ -5,8 +5,16 @@ import { useEffect } from "react";
 
 /**
  * One observer for the whole page instead of a ref in every component.
- * Elements opt in with `.rv` (slide up) or `.rvimg` (fade the photo in) and
- * stagger themselves with `style={{ "--d": "120ms" }}`.
+ *
+ * Elements opt in with a class and the motion itself lives in globals.css:
+ *   .rv                       arrives from below
+ *   .rv.rv-left / .rv.rv-right  arrives from the side
+ *   .rv.rv-scale              settles forward, for large photography
+ *   .rvimg                    photo frame: the blur and overscale clear
+ * A row staggers with `.rvd1 … .rvd6` or `style={{ "--d": "120ms" }}`.
+ *
+ * This only ever adds a class. Reduced motion and a scripting-off document
+ * are both handled in CSS, so nothing here can strand content off-screen.
  */
 export default function Reveal() {
   const path = usePathname();
@@ -30,7 +38,13 @@ export default function Reveal() {
           }
         }
       },
-      { rootMargin: "0px 0px -12% 0px", threshold: 0.08 }
+      // threshold 0, not a fraction: a block taller than the viewport can
+      // never expose 8% of itself, and would sit there unrevealed. The
+      // negative bottom margin is what holds the trigger off the fold; the
+      // wide side margins take the horizontal axis out of the question, or a
+      // card parked to the right of a swipe strip would stay at opacity 0
+      // until it is dragged into view.
+      { rootMargin: "0px 9999px -10% 9999px", threshold: 0 }
     );
 
     let safety: ReturnType<typeof setTimeout> | null = null;
@@ -52,6 +66,19 @@ export default function Reveal() {
       }, 1500);
     };
 
+    // The trigger line stands 10% above the fold, so a block that still sits
+    // inside that last strip once the page has run out of scroll can never
+    // cross it. The footer signature on a phone is exactly that block.
+    const atEnd = () => {
+      if (document.documentElement.scrollHeight - innerHeight - window.scrollY > 2) return;
+      for (const el of [...watched]) {
+        if (el.getBoundingClientRect().top >= innerHeight) continue;
+        el.classList.add("in");
+        io.unobserve(el);
+        watched.delete(el);
+      }
+    };
+
     const scan = (root: ParentNode) => {
       for (const el of root.querySelectorAll<HTMLElement>(".rv, .rvimg")) {
         if (el.classList.contains("in") || seen.has(el)) continue;
@@ -60,7 +87,11 @@ export default function Reveal() {
         io.observe(el);
       }
       armSafety();
+      // A page shorter than the viewport never fires a scroll event.
+      atEnd();
     };
+
+    window.addEventListener("scroll", atEnd, { passive: true });
 
     scan(document);
 
@@ -97,6 +128,7 @@ export default function Reveal() {
     return () => {
       io.disconnect();
       mo.disconnect();
+      window.removeEventListener("scroll", atEnd);
       if (safety) clearTimeout(safety);
       if (first) cancelAnimationFrame(first);
       if (pending) cancelAnimationFrame(pending);

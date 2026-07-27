@@ -154,7 +154,7 @@ export default function CreditView({ startPrice }: { startPrice: number }) {
             <article
               key={item.title.ro}
               className={`${styles.need} rv`}
-              style={{ "--d": `${i * 70}ms` } as React.CSSProperties}
+              style={{ "--d": `${Math.min(i, 5) * 60}ms` } as React.CSSProperties}
             >
               <h3 className={styles.needTitle}>{t(item.title)}</h3>
               <p className={styles.needText}>{t(item.text)}</p>
@@ -174,7 +174,7 @@ export default function CreditView({ startPrice }: { startPrice: number }) {
               <li
                 key={step.title.ro}
                 className={`${styles.step} rv`}
-                style={{ "--d": `${i * 70}ms` } as React.CSSProperties}
+                style={{ "--d": `${Math.min(i, 5) * 60}ms` } as React.CSSProperties}
               >
                 <span className={`num ${styles.stepNo}`}>{String(i + 1).padStart(2, "0")}</span>
                 <div>

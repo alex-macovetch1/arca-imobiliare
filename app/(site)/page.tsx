@@ -13,7 +13,7 @@ import { livePortfolio } from "@/app/api/_data/live";
 import { AGENTS } from "@/lib/agents";
 import { COMPLEXES, complexProperties } from "@/lib/complexes";
 import { formatCount } from "@/lib/format";
-import { CITY_SALE, INDEX_ROWS, INDEX_UPDATED } from "@/lib/market-index";
+import { CITY_SALE, INDEX_ROWS, INDEX_UPDATED, sectorSaleBand } from "@/lib/market-index";
 import { CITY_SECTORS } from "@/lib/sectors";
 
 /* The six dearest sectors that have enough offers for an honest median. */
@@ -52,6 +52,10 @@ export default async function Home() {
     // CITY_SECTORS is already filtered to the six sectors that have a tile photo.
     image: s.image as string,
     count: properties.filter((p) => p.sector === s.slug).length,
+    // Read here rather than inside SectorGrid: the grid is a client component,
+    // and importing the index into it would ship the whole portfolio to the
+    // browser just to print six numbers.
+    median: sectorSaleBand(s.slug)?.median,
   }));
 
   const team: AgentCard[] = AGENTS.map((agent) => ({
@@ -83,7 +87,7 @@ export default async function Home() {
         {/* No priority on these: the hero photograph is the LCP element and
             nothing else on the page should compete with it for bandwidth. */}
         {picks.map((p, i) => (
-          <PropertyCard key={p.slug} property={p} delay={i * 90} />
+          <PropertyCard key={p.slug} property={p} delay={Math.min(i, 5) * 60} />
         ))}
       </HomePicks>
 
@@ -102,7 +106,7 @@ export default async function Home() {
           <PropertyCard
             key={p.slug}
             property={p}
-            delay={i * 90}
+            delay={Math.min(i, 5) * 60}
             // The rail shows one card at 84% of the screen, not a full-width one.
             sizes="(max-width: 699px) 84vw, (max-width: 1099px) 50vw, 358px"
           />

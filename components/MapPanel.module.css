@@ -26,7 +26,7 @@
   position: absolute;
   transform: translate(-50%, calc(-50% - 22px));
   padding: 2px 6px;
-  background: rgba(246, 244, 239, 0.72);
+  background: rgba(255, 255, 255, 0.72);
   font-weight: 600;
   font-size: var(--t-eyebrow);
   line-height: var(--lh-eyebrow);
@@ -52,7 +52,7 @@
   width: 14px;
   height: 14px;
   border-radius: var(--r-full);
-  background: var(--forest);
+  background: var(--accent);
   box-shadow: var(--sh-1);
   transition: transform 0.25s var(--ease);
 }
@@ -63,7 +63,7 @@
 
 .pinOn .dot {
   transform: scale(1.5);
-  outline: 1px solid var(--brass);
+  outline: 1px solid var(--amber);
   outline-offset: 3px;
 }
 
@@ -164,5 +164,15 @@
 
   .cardPhoto {
     width: 96px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pin:hover .dot {
+    transform: none;
+  }
+  /* The picked marker keeps its size — that is a state, not motion. */
+  .pinOn.pinOn:hover .dot {
+    transform: scale(1.5);
   }
 }

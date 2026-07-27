@@ -107,7 +107,7 @@ export default function Stats({ properties }: { properties: number }) {
             <div
               key={f.label.ro}
               className={`${styles.fig} rv`}
-              style={{ "--d": `${i * 90}ms` } as React.CSSProperties}
+              style={{ "--d": `${Math.min(i, 5) * 60}ms` } as React.CSSProperties}
             >
               <p className={styles.value}>
                 <Counter value={f.value} />

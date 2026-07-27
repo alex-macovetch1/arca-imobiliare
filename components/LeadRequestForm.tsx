@@ -34,7 +34,7 @@ interface Props {
   submitLabel?: T;
   /** Rendered above the button, smaller than the fields. */
   note?: T;
-  /** On a forest band the whole thing flips to the light-on-dark palette. */
+  /** On an accent band the whole thing flips to the light-on-dark palette. */
   dark?: boolean;
 }
 

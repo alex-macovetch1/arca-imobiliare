@@ -75,7 +75,7 @@
 }
 
 .phone:hover {
-  color: var(--forest);
+  color: var(--accent);
 }
 
 .more {
@@ -97,7 +97,7 @@
 }
 
 .more:hover {
-  color: var(--forest);
+  color: var(--accent);
 }
 
 .more:hover svg {
@@ -107,7 +107,7 @@
 /* ---------- the hiring band ---------- */
 
 .hiring {
-  background: var(--forest);
+  background: var(--accent);
   color: var(--on-dark);
   padding-block: var(--sec);
 }
@@ -164,5 +164,13 @@
 
   .gridSection {
     padding-block: 32px var(--sec-m);
+  }
+}
+
+/* Durations are already forced to nothing globally; without this the arrow
+   would jump rather than travel. */
+@media (prefers-reduced-motion: reduce) {
+  .more:hover svg {
+    transform: none;
   }
 }

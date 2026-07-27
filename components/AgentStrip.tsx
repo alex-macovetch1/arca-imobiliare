@@ -33,7 +33,7 @@ export default function AgentStrip({ items }: { items: AgentCard[] }) {
           <article
             key={agent.slug}
             className={`${styles.card} rv`}
-            style={{ "--d": `${i * 80}ms` } as React.CSSProperties}
+            style={{ "--d": `${Math.min(i, 5) * 60}ms` } as React.CSSProperties}
           >
             <Link href={`/agenti/${agent.slug}`} className={`ph ph-portrait ${styles.ph}`}>
               <Image

@@ -42,7 +42,7 @@
 .quote {
   margin: 24px 0 0;
   padding-left: 20px;
-  border-left: 1px solid var(--brass);
+  border-left: 1px solid var(--amber);
   font-family: var(--f-serif);
   font-weight: 500;
   font-size: var(--t-h3);
@@ -229,7 +229,7 @@
 }
 
 .writePhone:hover {
-  text-decoration-color: var(--brass);
+  text-decoration-color: var(--amber);
 }
 
 @media (max-width: 1099px) {

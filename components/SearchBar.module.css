@@ -35,10 +35,8 @@
   line-height: 1;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  transition: color 0.25s var(--ease), background-color 0.25s var(--ease);
-}
-.tab {
   border-radius: var(--r-full);
+  transition: color 0.25s var(--ease), background-color 0.25s var(--ease);
 }
 .tab:hover {
   color: var(--ink);
@@ -47,7 +45,7 @@
 .tabOn,
 .tabOn:hover {
   background: var(--ink);
-  color: #fff;
+  color: var(--on-dark);
 }
 
 /* ---------- the four fields and the button ---------- */
@@ -131,7 +129,7 @@
 .dot {
   width: 1px;
   height: 10px;
-  background: var(--brass);
+  background: var(--amber);
 }
 
 /* ---------- quick chips ---------- */
@@ -163,8 +161,8 @@
     color 0.25s var(--ease);
 }
 .chip:hover {
-  border-color: var(--forest);
-  background: var(--forest-soft);
+  border-color: var(--accent);
+  background: var(--accent-soft);
   color: var(--ink);
 }
 

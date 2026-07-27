@@ -88,12 +88,12 @@
 }
 
 .view:hover {
-  background: var(--forest-soft);
+  background: var(--accent-soft);
 }
 
 .viewOn,
 .viewOn:hover {
-  background: var(--forest);
+  background: var(--accent);
   color: var(--on-dark);
 }
 
