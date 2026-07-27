@@ -1,113 +1,119 @@
 /* ==========================================================================
    ARCA — design tokens.
-   The Chisinau market sits on blue, red and turquoise over blue-grey neutrals.
-   We sit on warm paper with one deep forest accent: photography carries the
-   colour, the interface is paper, ink and a single brass hairline.
+
+   The room, not the brochure. Everything an apartment listing shows is
+   photography, so the interface gets out of the way: white paper, graphite
+   ink, and one deep cobalt that only ever marks what is live or clickable.
+   Amber shows up rarely, and only where a number needs to be believed.
+
+   Type is set large on purpose. Buyers scan a listing in seconds; the price
+   and the size have to land before anything else does.
    ========================================================================== */
 :root {
   /* --- surfaces --- */
-  --paper: #f6f4ef;
+  --paper: #ffffff;
   --surface: #ffffff;
-  --surface-2: #edeae3;
-  --line: #e3dfd6;
-  --line-2: #cfc9bc;
+  --surface-2: #f3f4f7;
+  --surface-3: #eceef2;
+  --line: #e4e6ec;
+  --line-2: #cfd3dc;
 
-  /* --- ink (contrast checked against --paper) --- */
-  --ink: #1a1d1a;
-  --ink-2: #4e5249;
-  --ink-3: #6b6f66;
+  /* --- ink, graphite with a cold cast --- */
+  --ink: #0c0e13;
+  --ink-2: #454b57;
+  --ink-3: #6f7684;
 
-  /* --- the single accent --- */
-  --forest: #1e3b32;
-  --forest-2: #162c25;
-  --forest-soft: #e7ede9;
+  /* --- the accent: live, clickable, current --- */
+  --accent: #16307a;
+  --accent-2: #0f2258;
+  --accent-soft: #eaeef8;
 
-  /* --- brass: 1px lines and underlines only, never text, never a fill --- */
-  --brass: #b58b4c;
+  /* --- amber: numbers that carry weight. Never a background, never body text. --- */
+  --amber: #b9761a;
+  --amber-soft: #fdf3e4;
 
-  /* --- the only state colour --- */
-  --clay: #9e4a2e;
+  /* --- state --- */
+  --clay: #a3341d;
+
+  /* --- legacy names, kept so existing modules keep resolving --- */
+  --forest: var(--accent);
+  --forest-2: var(--accent-2);
+  --forest-soft: var(--accent-soft);
+  --brass: var(--amber);
 
   /* --- on dark --- */
-  --on-dark: #f2efe8;
-  --on-dark-2: rgba(242, 239, 232, 0.62);
-  --line-dark: rgba(242, 239, 232, 0.18);
+  --on-dark: #ffffff;
+  --on-dark-2: rgba(255, 255, 255, 0.66);
+  --line-dark: rgba(255, 255, 255, 0.16);
 
   /* --- over photography --- */
-  --photo-scrim: linear-gradient(180deg, rgba(16, 20, 17, 0) 45%, rgba(16, 20, 17, 0.55) 100%);
-  --badge-bg: rgba(16, 20, 17, 0.86);
+  --photo-scrim: linear-gradient(180deg, rgba(6, 8, 12, 0) 38%, rgba(6, 8, 12, 0.72) 100%);
+  --badge-bg: rgba(6, 8, 12, 0.82);
 
-  /* --- shadows: the only thing that changes on card hover --- */
-  --sh-1: 0 3px 4px -1px rgba(16, 20, 17, 0.1);
-  --sh-2: 0 5px 5px -3px rgba(16, 20, 17, 0.2);
-  --focus: 0 0 0 2px var(--paper), 0 0 0 4px var(--brass);
+  /* --- shadows: soft and wide, so cards lift instead of stamping --- */
+  --sh-1: 0 1px 2px rgba(12, 14, 19, 0.05), 0 8px 24px -12px rgba(12, 14, 19, 0.18);
+  --sh-2: 0 2px 4px rgba(12, 14, 19, 0.06), 0 18px 44px -18px rgba(12, 14, 19, 0.3);
+  --focus: 0 0 0 2px var(--paper), 0 0 0 4px var(--accent);
 
-  /* --- shape: square corners everywhere. The local market is on 8-12px. --- */
-  --r: 0;
+  /* --- shape --- */
+  --r: 12px;
+  --r-sm: 8px;
   --r-full: 9999px;
 
-  /* --- rhythm --- */
-  --maxw: 1170px;
-  --maxw-wide: 1440px;
-  --gut: 24px;
-  --sec: 96px;
-  --sec-m: 56px;
-  --sec-accent: 128px;
-  --gap: 24px;
+  /* --- rhythm: wider and airier than a listings board usually is --- */
+  --maxw: 1280px;
+  --maxw-wide: 1560px;
+  --gut: 28px;
+  --sec: clamp(76px, 4rem + 5vw, 152px);
+  --sec-m: 64px;
+  --sec-accent: clamp(88px, 4.5rem + 6vw, 176px);
+  --gap: 28px;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* --- type families --- */
-  --f-serif: var(--font-literata), Georgia, "Times New Roman", serif;
-  --f-sans: var(--font-manrope), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  /* --- type families ---
+         serif is a guest: it appears on one word of a heading and on nothing
+         else, which is what makes it read as a choice rather than a texture. */
+  --f-serif: var(--font-display), Georgia, "Times New Roman", serif;
+  --f-sans: var(--font-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
 
-  /* --- type scale. serif = headings, card title, address, quotes;
-         sans = price, specs, labels, buttons, inputs, tables, nav, figures. --- */
-  --t-h1-hero: clamp(32px, 2.1rem + 1.6vw, 48px);
-  --t-h1: 34px;
-  --t-h2: 32px;
-  --t-h3: 22px;
-  --t-card: 19px;
-  --t-lead: 18px;
-  --t-body: 16px;
-  --t-spec: 13px;
-  --t-eyebrow: 11px;
-  --t-price-card: 22px;
-  --t-price-detail: 34px;
-  --t-figure: 40px;
+  /* --- type scale --- */
+  --t-h1-hero: clamp(42px, 2.6rem + 3.4vw, 92px);
+  --t-h1: clamp(34px, 2.1rem + 2.1vw, 62px);
+  --t-h2: clamp(28px, 1.7rem + 1.8vw, 50px);
+  --t-h3: clamp(20px, 1.15rem + 0.7vw, 27px);
+  --t-card: clamp(18px, 1.05rem + 0.35vw, 21px);
+  --t-lead: clamp(17px, 1rem + 0.45vw, 22px);
+  --t-body: 16.5px;
+  --t-spec: 13.5px;
+  --t-eyebrow: 11.5px;
+  --t-price-card: clamp(21px, 1.2rem + 0.6vw, 27px);
+  --t-price-detail: clamp(32px, 1.9rem + 2vw, 56px);
+  --t-figure: clamp(40px, 2.2rem + 2.6vw, 76px);
 
-  --lh-h1-hero: 1.12;
-  --lh-h1: 42px;
-  --lh-h2: 40px;
-  --lh-h3: 30px;
-  --lh-card: 26px;
-  --lh-lead: 30px;
-  --lh-body: 26px;
-  --lh-spec: 20px;
-  --lh-eyebrow: 16px;
-  --lh-price-card: 28px;
-  --lh-price-detail: 40px;
-  --lh-figure: 44px;
+  /* unitless, so every clamp above keeps its proportions as it scales */
+  --lh-h1-hero: 0.98;
+  --lh-h1: 1.04;
+  --lh-h2: 1.08;
+  --lh-h3: 1.28;
+  --lh-card: 1.32;
+  --lh-lead: 1.5;
+  --lh-body: 1.62;
+  --lh-spec: 1.45;
+  --lh-eyebrow: 1.4;
+  --lh-price-card: 1.15;
+  --lh-price-detail: 1.02;
+  --lh-figure: 1;
 
   /* --- fixed chrome heights, so sticky offsets agree across pages --- */
   --h-header: 72px;
   --h-subbar: 56px;
 }
 
+/* The scale above is already fluid, so phones only need the frame tightened. */
 @media (max-width: 700px) {
   :root {
-    --gut: 16px;
-    --t-h1: 26px;
-    --t-h2: 24px;
-    --t-h3: 20px;
-    --t-card: 18px;
-    --t-lead: 17px;
-    --t-price-detail: 26px;
-    --lh-h1: 34px;
-    --lh-h2: 31px;
-    --lh-h3: 28px;
-    --lh-card: 25px;
-    --lh-lead: 28px;
-    --lh-price-detail: 32px;
+    --gut: 18px;
+    --gap: 20px;
     --h-header: 60px;
   }
 }
@@ -135,13 +141,15 @@ body {
   overflow-x: hidden;
 }
 
+/* Headings are sans and tight. The serif enters through .say, one word at a
+   time — see below. */
 h1,
 h2,
 h3,
 h4 {
   margin: 0;
-  font-family: var(--f-serif);
-  font-weight: 500;
+  font-family: var(--f-sans);
+  font-weight: 560;
   color: var(--ink);
   text-wrap: balance;
 }
@@ -149,16 +157,27 @@ h4 {
 h1 {
   font-size: var(--t-h1);
   line-height: var(--lh-h1);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.035em;
 }
 h2 {
   font-size: var(--t-h2);
   line-height: var(--lh-h2);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.032em;
 }
 h3 {
   font-size: var(--t-h3);
   line-height: var(--lh-h3);
+  letter-spacing: -0.018em;
+}
+
+/* The one serif moment: a single word inside a heading, italic, optically
+   enlarged because the serif runs smaller than the sans at the same size. */
+.say {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.1em;
+  letter-spacing: -0.012em;
 }
 
 p {

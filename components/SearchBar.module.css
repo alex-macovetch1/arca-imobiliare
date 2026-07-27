@@ -1,37 +1,27 @@
-/* The card overlaps the photograph instead of sitting under it: the search is
-   the first thing the page asks for, and the overlap makes that unmissable. */
+/* The card straddles the edge of the photograph: half on the picture, half on
+   the page. It reads as the instrument the hero hands you. */
 .zone {
   position: relative;
-  z-index: 1;
-  margin-top: -72px;
+  z-index: 2;
+  margin-top: -52px;
   padding-bottom: 8px;
 }
 
 .card {
-  padding: 40px;
+  padding: 26px;
   background: var(--surface);
   border: 1px solid var(--line);
-  box-shadow: var(--sh-1);
-}
-
-.h1 {
-  margin-top: 14px;
-  font-size: var(--t-h1-hero);
-  line-height: var(--lh-h1-hero);
-  letter-spacing: -0.015em;
-}
-
-.sub {
-  max-width: 52ch;
-  margin-top: 12px;
-  color: var(--ink-2);
+  border-radius: var(--r);
+  box-shadow: var(--sh-2);
 }
 
 /* ---------- deal tabs ---------- */
 .tabs {
   display: inline-flex;
-  margin-top: 30px;
   border: 1px solid var(--line-2);
+  border-radius: var(--r-full);
+  padding: 3px;
+  background: var(--surface-2);
 }
 
 .tab {
@@ -47,17 +37,17 @@
   text-transform: uppercase;
   transition: color 0.25s var(--ease), background-color 0.25s var(--ease);
 }
+.tab {
+  border-radius: var(--r-full);
+}
 .tab:hover {
   color: var(--ink);
-}
-.tab + .tab {
-  border-left: 1px solid var(--line-2);
 }
 
 .tabOn,
 .tabOn:hover {
-  background: var(--forest);
-  color: var(--on-dark);
+  background: var(--ink);
+  color: #fff;
 }
 
 /* ---------- the four fields and the button ---------- */

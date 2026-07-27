@@ -91,21 +91,8 @@ export default function SearchBar({ total }: { total: number }) {
     <section className={styles.zone}>
       <div className="wrap">
         <div className={styles.card}>
-          <p className="kicker">
-            {t({ ro: "Agenție imobiliară · Chișinău", ru: "Агентство недвижимости · Кишинёв" })}
-          </p>
-
-          <h1 className={styles.h1}>
-            {t({ ro: "Acasă începe aici.", ru: "Дом начинается здесь." })}
-          </h1>
-
-          <p className={styles.sub}>
-            {t({
-              ro: "Apartamente, case și spații comerciale în Chișinău și suburbii.",
-              ru: "Квартиры, дома и коммерческие помещения в Кишинёве и пригородах.",
-            })}
-          </p>
-
+          {/* The headline moved onto the photograph above; this card is now
+              purely the instrument. */}
           <div
             className={styles.tabs}
             role="group"

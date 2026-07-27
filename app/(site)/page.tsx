@@ -61,7 +61,7 @@ export default async function Home() {
 
   return (
     <>
-      <Hero />
+      <Hero total={total} />
       <SearchBar total={total} />
 
       <HomePicks

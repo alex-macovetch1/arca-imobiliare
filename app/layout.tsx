@@ -1,20 +1,25 @@
 import type { Metadata, Viewport } from "next";
-import { Literata, Manrope } from "next/font/google";
+import { Instrument_Serif, Manrope } from "next/font/google";
 import { LangProvider } from "@/lib/lang";
 import { AGENCY } from "@/lib/content";
 import "./globals.css";
 
-// Both are variable fonts, so no `weight` key — passing one makes next/font
-// throw at build. Cyrillic is not optional here: half the site is in Russian.
-const literata = Literata({
-  variable: "--font-literata",
+// Manrope is variable, so no `weight` key — passing one makes next/font throw
+// at build. Cyrillic is not optional here: half the site is in Russian.
+const sans = Manrope({
+  variable: "--font-sans",
   subsets: ["latin", "latin-ext", "cyrillic"],
   display: "swap",
 });
 
-const manrope = Manrope({
-  variable: "--font-manrope",
-  subsets: ["latin", "latin-ext", "cyrillic"],
+// Instrument Serif ships a single weight and has no Cyrillic cut. That is
+// fine: it is only ever used for one accented word, and the Russian side
+// falls back to Georgia there rather than losing the whole heading.
+const display = Instrument_Serif({
+  variable: "--font-display",
+  weight: "400",
+  style: ["italic", "normal"],
+  subsets: ["latin", "latin-ext"],
   display: "swap",
 });
 
@@ -46,13 +51,13 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#1e3b32",
+  themeColor: "#16307a",
   colorScheme: "light",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ro" data-lang="ro" className={`${literata.variable} ${manrope.variable}`}>
+    <html lang="ro" data-lang="ro" className={`${sans.variable} ${display.variable}`}>
       <body>
         <LangProvider>{children}</LangProvider>
       </body>

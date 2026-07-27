@@ -1,8 +1,9 @@
-/* The one dark band on the homepage. It sits between two paper sections, so
-   the page has a middle instead of a long single tone. */
+﻿/* Paper, not a colour block. The market band above is the only place on this
+   page that goes full cobalt â€” two of them would read as two websites glued
+   together. Here the figures carry the weight instead of the background. */
 .band {
-  background: var(--forest);
-  color: var(--on-dark);
+  background: var(--surface-2);
+  color: var(--ink);
 }
 
 .top {
@@ -15,21 +16,21 @@
 
 .title {
   margin-top: 14px;
-  color: var(--on-dark);
+  color: var(--ink);
 }
 
 .lead {
   max-width: 46ch;
   font-size: var(--t-body);
   line-height: var(--lh-body);
-  color: var(--on-dark-2);
+  color: var(--ink-3);
 }
 
 .figures {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   padding-top: 40px;
-  border-top: 1px solid var(--line-dark);
+  border-top: 1px solid var(--line);
 }
 
 .fig {
@@ -42,7 +43,7 @@
   padding-right: 0;
 }
 .fig + .fig {
-  border-left: 1px solid var(--line-dark);
+  border-left: 1px solid var(--line);
 }
 
 .value {
@@ -52,15 +53,16 @@
   font-weight: 600;
   font-size: var(--t-figure);
   line-height: var(--lh-figure);
-  letter-spacing: -0.02em;
-  color: var(--on-dark);
+  letter-spacing: -0.04em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
 }
 
 .suffix {
   font-size: var(--t-lead);
   line-height: 1;
   font-weight: 500;
-  color: var(--on-dark-2);
+  color: var(--ink-3);
 }
 
 .label {
@@ -70,7 +72,7 @@
   line-height: var(--lh-eyebrow);
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--on-dark-2);
+  color: var(--ink-3);
 }
 
 @media (max-width: 899px) {
@@ -93,6 +95,7 @@
   }
   .fig:nth-child(even) {
     padding-left: 24px;
-    border-left: 1px solid var(--line-dark);
+    border-left: 1px solid var(--line);
   }
 }
+

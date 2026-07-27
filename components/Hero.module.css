@@ -1,49 +1,163 @@
-.hero {
+﻿.hero {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
   /* Pulled under the sticky header, which is why the header starts transparent
-     on this route. The height is fixed, so nothing below it ever moves. */
+     on this route. */
   margin-top: calc(var(--h-header) * -1);
-  height: 64vh;
-  min-height: 520px;
-  max-height: 640px;
+  height: 88vh;
+  min-height: 620px;
+  max-height: 900px;
   overflow: hidden;
-  background: var(--surface-2);
+  background: var(--ink);
+  isolation: isolate;
 }
 
 .img {
   object-fit: cover;
-  /* Slightly below centre: the sky matters less than the street. */
-  object-position: 50% 58%;
+  object-position: 50% 52%;
+  z-index: -2;
 }
 
-/* Scrim in the lower third, where the search card meets the photo. */
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: var(--photo-scrim);
-  pointer-events: none;
-}
-
-/* The same scrim, flipped, at a third of the strength: the header is white
-   type on bare photograph, and a bright sky would eat it. A pseudo-element
-   paints under the image unless it is lifted out of the flow order. */
+/* Two scrims: a heavy one under the type, a light one under the header. */
+.hero::after,
 .hero::before {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 1;
-  background: var(--photo-scrim);
-  transform: scaleY(-1);
-  opacity: 0.6;
+  z-index: -1;
   pointer-events: none;
 }
 
-@media (max-width: 700px) {
-  .hero {
-    height: 44vh;
-    min-height: 380px;
-    max-height: none;
-  }
+.hero::after {
+  background: linear-gradient(
+    180deg,
+    rgba(6, 8, 12, 0) 30%,
+    rgba(6, 8, 12, 0.42) 62%,
+    rgba(6, 8, 12, 0.86) 100%
+  );
 }
+
+.hero::before {
+  background: linear-gradient(180deg, rgba(6, 8, 12, 0.5) 0%, rgba(6, 8, 12, 0) 30%);
+}
+
+.inner {
+  position: relative;
+  /* Clears the search card that rides up over the lower edge. */
+  padding-bottom: 132px;
+  max-width: var(--maxw);
+}
+
+.title {
+  max-width: 15ch;
+  font-size: var(--t-h1-hero);
+  line-height: var(--lh-h1-hero);
+  letter-spacing: -0.045em;
+  font-weight: 600;
+  color: #fff;
+  text-wrap: balance;
+}
+
+/* The serif word carries the whole type idea, so it gets the optical bump and
+   a hair of tracking back. */
+.say {
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+.lead {
+  margin: 22px 0 0;
+  max-width: 46ch;
+  font-size: var(--t-lead);
+  line-height: var(--lh-lead);
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 34px;
+}
+
+.primary,
+.ghost {
+  display: inline-flex;
+  align-items: center;
+  height: 54px;
+  padding: 0 30px;
+  border-radius: var(--r-full);
+  font-size: 15.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  transition:
+    transform 0.25s var(--ease),
+    background-color 0.25s var(--ease),
+    border-color 0.25s var(--ease);
+}
+
+.primary {
+  background: #fff;
+  color: var(--ink);
+  border: 1px solid #fff;
+}
+
+.ghost {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+}
+
+.primary:hover,
+.ghost:hover {
+  transform: translateY(-2px);
+}
+
+.ghost:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+.primary:focus-visible,
+.ghost:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(6, 8, 12, 0.6), 0 0 0 4px #fff;
+}
+
+@media (max-width: 860px) {
+  .hero {
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    padding-top: calc(var(--h-header) + 108px);
+  }
+
+  .inner {
+    padding-bottom: 56px;
+  }
+
+  .title {
+    max-width: 100%;
+  }
+
+  .lead {
+    margin-top: 16px;
+  }
+
+  .actions {
+    margin-top: 26px;
+  }
+
+  .primary,
+  .ghost {
+    flex: 1 1 auto;
+    justify-content: center;
+    height: 50px;
+    padding: 0 20px;
+  }
+
+}
+
