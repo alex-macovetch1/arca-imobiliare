@@ -259,8 +259,13 @@ export default function SearchBar({ total }: { total: number }) {
         </p>
 
         <div className={styles.chips}>
-          {CHIPS.map((c) => (
-            <Link key={c.href} href={c.href} className={styles.chip}>
+          {CHIPS.map((c, i) => (
+            <Link
+              key={c.href}
+              href={c.href}
+              className={styles.chip}
+              style={{ "--i": i } as React.CSSProperties}
+            >
               {t(c.label)}
             </Link>
           ))}

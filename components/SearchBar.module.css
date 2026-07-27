@@ -1,13 +1,15 @@
 /* The card straddles the edge of the photograph: half on the picture, half on
    the page. It reads as the instrument the hero hands you. */
+/* Only the card rides up onto the photograph. Everything under it stays in
+   normal flow, on paper — dark grey type on a dark picture is unreadable. */
 .zone {
   position: relative;
   z-index: 2;
-  margin-top: -52px;
   padding-bottom: 8px;
 }
 
 .card {
+  margin-top: -52px;
   padding: 26px;
   background: var(--surface);
   border: 1px solid var(--line);
@@ -149,21 +151,58 @@
   align-items: center;
   flex: none;
   min-height: 44px;
-  padding: 0 18px;
+  padding: 0 20px;
   background: var(--surface);
   border: 1px solid var(--line-2);
-  font-weight: 500;
+  border-radius: var(--r-full);
+  font-weight: 600;
   font-size: var(--t-spec);
   line-height: 1;
   color: var(--ink-2);
   white-space: nowrap;
-  transition: border-color 0.25s var(--ease), background-color 0.25s var(--ease),
-    color 0.25s var(--ease);
+  box-shadow: 0 1px 2px rgba(12, 14, 19, 0.04);
+  transition:
+    transform 0.22s var(--ease),
+    box-shadow 0.22s var(--ease),
+    border-color 0.22s var(--ease),
+    background-color 0.22s var(--ease),
+    color 0.22s var(--ease);
 }
+
 .chip:hover {
+  transform: translateY(-2px);
   border-color: var(--accent);
   background: var(--accent-soft);
-  color: var(--ink);
+  color: var(--accent);
+  box-shadow: var(--sh-1);
+}
+
+.chip:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(12, 14, 19, 0.04);
+}
+
+/* The row arrives after the card it belongs to, one chip at a time. */
+.chip {
+  animation: chipIn 0.5s var(--ease) both;
+  animation-delay: calc(var(--i, 0) * 55ms + 120ms);
+}
+
+@keyframes chipIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip {
+    animation: none;
+  }
+  .chip:hover,
+  .chip:active {
+    transform: none;
+  }
 }
 
 @media (max-width: 1099px) {
@@ -188,10 +227,8 @@
 }
 
 @media (max-width: 700px) {
-  .zone {
-    margin-top: -40px;
-  }
   .card {
+    margin-top: -40px;
     padding: 24px;
   }
   .form {
