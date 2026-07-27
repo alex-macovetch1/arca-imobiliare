@@ -1,0 +1,233 @@
+.calc {
+  padding-top: 8px;
+}
+
+.calcHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 12px 32px;
+  padding-bottom: 22px;
+}
+
+.calcNote {
+  max-width: 64ch;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--ink-2);
+}
+
+.head {
+  padding-bottom: 28px;
+}
+
+.h2 {
+  margin-top: 10px;
+  max-width: 22ch;
+}
+
+/* ---------- what the bank asks ---------- */
+
+.needs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--gap);
+}
+
+.need {
+  padding: 28px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.needTitle {
+  font-size: var(--t-h3);
+  line-height: var(--lh-h3);
+}
+
+.needText {
+  margin-top: 10px;
+  max-width: 48ch;
+  color: var(--ink-2);
+}
+
+/* ---------- steps band ---------- */
+
+.stepsSection {
+  margin-top: var(--sec);
+  padding-block: var(--sec-accent);
+  background: var(--forest);
+  color: var(--on-dark);
+}
+
+.stepsInner {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: calc(var(--gap) * 2);
+  align-items: start;
+}
+
+.stepsTitle {
+  margin-top: 12px;
+  max-width: 14ch;
+  color: var(--on-dark);
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 46px 1fr;
+  gap: 12px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--line-dark);
+}
+
+.step:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.stepNo {
+  font-weight: 600;
+  font-size: var(--t-spec);
+  line-height: 30px;
+  letter-spacing: 0.1em;
+  color: var(--brass);
+}
+
+.stepTitle {
+  font-size: var(--t-h3);
+  line-height: var(--lh-h3);
+  color: var(--on-dark);
+}
+
+.stepText {
+  margin-top: 8px;
+  max-width: 56ch;
+  color: var(--on-dark-2);
+}
+
+/* ---------- costs ---------- */
+
+.costsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: calc(var(--gap) * 2);
+  align-items: start;
+}
+
+.costsNote {
+  margin-top: 16px;
+}
+
+.costs {
+  margin: 0;
+  border-top: 1px solid var(--ink);
+}
+
+.costRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.costRow dt {
+  color: var(--ink-2);
+}
+
+.costRow dd {
+  margin: 0;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ---------- help ---------- */
+
+.help {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: calc(var(--gap) * 2);
+  align-items: start;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+.helpText {
+  margin-top: 14px;
+}
+
+.helpNote {
+  margin-top: 14px;
+  max-width: 56ch;
+}
+
+.helpPhone {
+  display: inline-block;
+  margin-top: 18px;
+  font-weight: 600;
+  font-size: var(--t-h3);
+  line-height: var(--lh-h3);
+}
+
+.helpPhone:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--brass);
+}
+
+.form {
+  padding: 28px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+/* ---------- links ---------- */
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 40px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+}
+
+.link {
+  font-family: var(--f-serif);
+  font-weight: 500;
+  font-size: var(--t-h3);
+  line-height: var(--lh-h3);
+  transition: color 0.2s var(--ease);
+}
+
+.link:hover {
+  color: var(--forest);
+}
+
+@media (max-width: 1099px) {
+  .stepsInner,
+  .costsGrid,
+  .help {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 699px) {
+  .needs {
+    grid-template-columns: 1fr;
+  }
+
+  .need,
+  .form {
+    padding: 22px 18px;
+  }
+}

@@ -1,0 +1,146 @@
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.count {
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--ink-2);
+}
+
+.tools {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sort {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sortLabel {
+  font-weight: 500;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--ink-3);
+}
+
+.select {
+  height: 44px;
+  padding: 0 34px 0 12px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r);
+  background: var(--surface);
+  font-weight: 500;
+  font-size: var(--t-spec);
+  line-height: 1;
+  color: var(--ink);
+  appearance: none;
+  cursor: pointer;
+  transition: border-color 0.2s var(--ease);
+}
+
+.select:hover {
+  border-color: var(--ink-3);
+}
+
+/* A hairline chevron instead of the operating system arrow. */
+.sort::after {
+  content: "";
+  position: absolute;
+  right: 14px;
+  width: 7px;
+  height: 7px;
+  border-right: 1px solid var(--ink-3);
+  border-bottom: 1px solid var(--ink-3);
+  transform: translateY(-2px) rotate(45deg);
+  pointer-events: none;
+}
+
+.views {
+  display: flex;
+  border: 1px solid var(--line-2);
+}
+
+.view {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 14px;
+  color: var(--ink-2);
+  font-weight: 600;
+  font-size: var(--t-spec);
+  line-height: 1;
+  transition: background-color 0.25s var(--ease), color 0.25s var(--ease);
+}
+
+.view + .view {
+  border-left: 1px solid var(--line-2);
+}
+
+.view:hover {
+  background: var(--forest-soft);
+}
+
+.viewOn,
+.viewOn:hover {
+  background: var(--forest);
+  color: var(--on-dark);
+}
+
+@media (max-width: 899px) {
+  .viewText {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .view {
+    width: 46px;
+    padding: 0;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 520px) {
+  .row {
+    gap: 12px;
+  }
+
+  .sortLabel {
+    display: none;
+  }
+
+  .tools {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* On a 320px screen the sort label is long enough to push the view switcher
+     off the edge. The three icons are the fixed part; the select gives way. */
+  .sort {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .select {
+    width: 100%;
+    min-width: 0;
+    text-overflow: ellipsis;
+  }
+
+  .views {
+    flex: none;
+  }
+}

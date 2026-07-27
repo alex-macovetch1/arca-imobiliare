@@ -1,0 +1,49 @@
+.hero {
+  position: relative;
+  /* Pulled under the sticky header, which is why the header starts transparent
+     on this route. The height is fixed, so nothing below it ever moves. */
+  margin-top: calc(var(--h-header) * -1);
+  height: 64vh;
+  min-height: 520px;
+  max-height: 640px;
+  overflow: hidden;
+  background: var(--surface-2);
+}
+
+.img {
+  object-fit: cover;
+  /* Slightly below centre: the sky matters less than the street. */
+  object-position: 50% 58%;
+}
+
+/* Scrim in the lower third, where the search card meets the photo. */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--photo-scrim);
+  pointer-events: none;
+}
+
+/* The same scrim, flipped, at a third of the strength: the header is white
+   type on bare photograph, and a bright sky would eat it. A pseudo-element
+   paints under the image unless it is lifted out of the flow order. */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--photo-scrim);
+  transform: scaleY(-1);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+@media (max-width: 700px) {
+  .hero {
+    height: 44vh;
+    min-height: 380px;
+    max-height: none;
+  }
+}

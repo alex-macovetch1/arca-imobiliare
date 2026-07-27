@@ -1,0 +1,628 @@
+.page {
+  padding-top: 28px;
+}
+
+/* Desktop reads title first, then the photographs. On a phone the photograph
+   has to arrive before anything else, so the block reorders itself. */
+.top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "crumbs crumbs"
+    "title stats"
+    "actions actions"
+    "gallery gallery";
+  column-gap: 40px;
+}
+
+.crumbs {
+  grid-area: crumbs;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--ink-3);
+}
+.crumbs a:hover {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--brass);
+}
+
+.crumbMeta {
+  margin-left: auto;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.title {
+  grid-area: title;
+  margin-top: 26px;
+}
+
+.h1 {
+  margin-top: 12px;
+  max-width: 18ch;
+  text-wrap: pretty;
+}
+
+.address {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  font-size: var(--t-body);
+  line-height: 24px;
+  color: var(--ink-2);
+}
+.address svg {
+  flex: none;
+  color: var(--ink-3);
+}
+
+.landmark {
+  color: var(--ink-3);
+}
+
+/* ---------- the price and the four figures beside it ---------- */
+.stats {
+  grid-area: stats;
+  display: flex;
+  align-items: flex-start;
+  margin-top: 26px;
+}
+
+.priceCell {
+  padding-right: 28px;
+}
+
+.price {
+  font-weight: 600;
+  font-size: var(--t-price-detail);
+  line-height: var(--lh-price-detail);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.sqm {
+  margin-top: 2px;
+  font-weight: 500;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+/* One of the two places on the site where clay is allowed. */
+.oldPrice {
+  margin-top: 4px;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--clay);
+  text-decoration: line-through;
+}
+
+.negotiable {
+  margin-top: 4px;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--ink-3);
+}
+
+.statCell {
+  padding: 4px 20px 0;
+  border-left: 1px solid var(--line-2);
+  text-align: center;
+}
+
+.statValue {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.statLabel {
+  margin-top: 4px;
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* ---------- actions ---------- */
+.actions {
+  grid-area: actions;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.action {
+  min-height: 44px;
+  padding: 0 18px;
+  gap: 8px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.actionOn {
+  border-color: var(--forest);
+  background: var(--forest-soft);
+}
+
+.flags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-left: auto;
+}
+
+/* Hairline chip, brass border: the badge treatment used off the photograph. */
+.flag {
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 12px;
+  border: 1px solid var(--brass);
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.gallery {
+  grid-area: gallery;
+  margin-top: 24px;
+}
+
+/* ---------- sticky anchors ---------- */
+.anchors {
+  position: sticky;
+  top: var(--h-header);
+  z-index: 40;
+  margin-top: 40px;
+  background: var(--surface);
+  box-shadow: inset 0 1px 0 var(--line), inset 0 -1px 0 var(--line);
+}
+
+.anchorsInner {
+  display: flex;
+  gap: 28px;
+  height: var(--h-subbar);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.anchorsInner::-webkit-scrollbar {
+  display: none;
+}
+
+.anchor {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  height: 100%;
+  border-bottom: 1px solid transparent;
+  font-weight: 500;
+  font-size: 14px;
+  white-space: nowrap;
+  color: var(--ink-3);
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+.anchor:hover {
+  color: var(--ink);
+}
+
+.anchorOn {
+  color: var(--ink);
+  border-bottom-color: var(--brass);
+}
+
+/* ---------- two columns ---------- */
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 366px;
+  gap: 32px;
+  align-items: start;
+  padding-block: 48px 24px;
+}
+
+.main {
+  min-width: 0;
+}
+
+.side {
+  position: sticky;
+  top: calc(var(--h-header) + var(--h-subbar) + 24px);
+}
+
+.sideMeta {
+  margin-top: 12px;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--ink-3);
+}
+
+/* ---------- four key facts ---------- */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.fact {
+  padding: 16px 18px;
+}
+.fact + .fact {
+  border-left: 1px solid var(--line);
+}
+
+.factLabel {
+  display: block;
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.factValue {
+  display: block;
+  margin-top: 6px;
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--ink);
+}
+
+/* ---------- sections ---------- */
+/* Clears the header and the anchor bar when a link jumps here. */
+.section,
+.anchored {
+  scroll-margin-top: calc(var(--h-header) + var(--h-subbar) + 16px);
+}
+
+.section {
+  padding-top: 48px;
+}
+
+.h3 {
+  margin-top: 28px;
+}
+
+.sectionLead {
+  margin-block: 12px 24px;
+}
+
+/* The index band opens the costs section, before the monthly-payment maths. */
+.position {
+  margin-top: 20px;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+  max-width: 66ch;
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  color: var(--ink-2);
+}
+
+.readAll {
+  display: inline-block;
+  margin-top: 16px;
+  cursor: pointer;
+}
+
+/* ---------- feature table ---------- */
+.table {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 40px;
+  margin-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.tableRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.dt {
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--ink-2);
+}
+
+.dd {
+  margin: 0;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  color: var(--ink);
+}
+
+/* ---------- amenities ---------- */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--line-2);
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+/* ---------- location ---------- */
+.mapAddress {
+  margin-top: 12px;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--ink-3);
+}
+
+.map {
+  position: relative;
+  margin-top: 16px;
+  aspect-ratio: 732 / 380;
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+}
+.map iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.mapLink {
+  display: inline-block;
+  margin-top: 14px;
+}
+
+.poi {
+  margin-top: 8px;
+}
+
+.poiGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 18px;
+}
+
+.poiTitle {
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.poiItem {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--ink-2);
+}
+
+.poiMeters {
+  flex: none;
+  color: var(--ink-3);
+}
+
+.mdl {
+  margin-top: 16px;
+}
+
+/* ---------- similar ---------- */
+.similar {
+  margin-top: 28px;
+}
+
+.more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+/* ---------- mobile action bar ---------- */
+.bottomBar {
+  display: none;
+}
+
+@media (max-width: 1099px) {
+  .body {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+  .side {
+    position: static;
+  }
+  .poiGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* The title and the figures stop sharing a row before either of them has to
+   wrap awkwardly. */
+@media (max-width: 999px) {
+  .top {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "crumbs"
+      "title"
+      "stats"
+      "actions"
+      "gallery";
+  }
+  .stats {
+    margin-top: 22px;
+  }
+}
+
+@media (max-width: 899px) {
+  .table {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+  }
+  .facts {
+    grid-template-columns: 1fr 1fr;
+  }
+  .fact:nth-child(odd) {
+    border-left: 0;
+  }
+  .fact:nth-child(n + 3) {
+    border-top: 1px solid var(--line);
+  }
+}
+
+@media (max-width: 700px) {
+  .page {
+    padding-top: 16px;
+  }
+
+  .top {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "crumbs"
+      "gallery"
+      "stats"
+      "title"
+      "actions";
+  }
+
+  .crumbs {
+    font-size: 12px;
+    gap: 6px;
+  }
+  .crumbMeta {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  /* Edge to edge: on a phone the photograph owns the full width. */
+  .gallery {
+    margin-inline: calc(var(--gut) * -1);
+    margin-top: 18px;
+  }
+
+  .title {
+    margin-top: 18px;
+  }
+  .h1 {
+    max-width: none;
+  }
+
+  .stats {
+    margin-top: 20px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .stats::-webkit-scrollbar {
+    display: none;
+  }
+  .priceCell {
+    flex: none;
+    padding-right: 18px;
+  }
+  .statCell {
+    flex: none;
+    padding-inline: 14px;
+  }
+
+  .actions {
+    margin-top: 20px;
+  }
+  .flags {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .anchors {
+    margin-top: 28px;
+  }
+  .anchorsInner {
+    gap: 20px;
+  }
+
+  .body {
+    padding-block: 32px 16px;
+  }
+
+  .section {
+    padding-top: 40px;
+  }
+
+  .facts {
+    grid-template-columns: 1fr;
+  }
+  .fact {
+    border-left: 0;
+  }
+  .fact + .fact {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .poiGrid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .bottomBar {
+    position: sticky;
+    bottom: 0;
+    z-index: 45;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 10px;
+    padding: 10px var(--gut);
+    background: var(--surface);
+    box-shadow: inset 0 1px 0 var(--line), 0 -3px 4px -1px rgba(16, 20, 17, 0.1);
+  }
+
+  .bottomBtn {
+    width: 100%;
+    min-height: 46px;
+    padding-inline: 8px;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+  }
+}

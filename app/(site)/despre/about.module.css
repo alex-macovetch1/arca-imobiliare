@@ -1,0 +1,424 @@
+.heroWrap {
+  margin-top: 40px;
+}
+
+.hero {
+  /* Wider than the site's 3:2 rule on purpose: it is a band, not a listing photo. */
+  aspect-ratio: 12 / 5;
+}
+
+/* ---------- story ---------- */
+
+.storySection {
+  padding-top: var(--sec);
+}
+
+.storyGrid {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: var(--gap);
+}
+
+.story {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  max-width: 68ch;
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  color: var(--ink-2);
+}
+
+.quote {
+  margin: 14px 0 0;
+  padding-left: 24px;
+  border-left: 1px solid var(--brass);
+}
+
+.quote p {
+  font-family: var(--f-serif);
+  font-weight: 500;
+  font-size: var(--t-h3);
+  line-height: var(--lh-h3);
+  color: var(--ink);
+}
+
+.quoteFoot {
+  margin-top: 12px;
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* ---------- figures ---------- */
+
+.figuresSection {
+  padding-top: var(--sec);
+}
+
+.figures {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.figure {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 28px 20px;
+  border-left: 1px solid var(--line);
+}
+
+.figure:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.figureValue {
+  font-weight: 600;
+  font-size: var(--t-figure);
+  line-height: var(--lh-figure);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.figureLabel {
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* ---------- how we work ---------- */
+
+.methodSection {
+  padding-top: var(--sec);
+}
+
+.methodTitle {
+  margin-top: 16px;
+}
+
+.method {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.band {
+  display: grid;
+  grid-template-columns: 480px 1fr;
+  gap: 40px;
+  align-items: center;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+.band:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.bandFlip .bandPhoto {
+  order: 2;
+}
+
+.bandPhoto {
+  height: 300px;
+  aspect-ratio: auto;
+}
+
+.bandBody {
+  max-width: 52ch;
+}
+
+.bandNumber {
+  display: block;
+  font-weight: 600;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  letter-spacing: 0.12em;
+  color: var(--ink-3);
+}
+
+.bandTitle {
+  margin-top: 10px;
+}
+
+.bandText {
+  margin-top: 14px;
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  color: var(--ink-2);
+}
+
+/* ---------- services ---------- */
+
+.servicesSection {
+  padding-top: var(--sec);
+}
+
+.services {
+  margin-top: 28px;
+}
+
+.service {
+  display: flex;
+  flex-direction: column;
+  padding: 32px 28px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.serviceTitle {
+  font-size: var(--t-h3);
+  line-height: var(--lh-h3);
+}
+
+.serviceText {
+  flex: 1;
+  margin-top: 14px;
+  font-size: var(--t-spec);
+  line-height: 22px;
+  color: var(--ink-2);
+}
+
+.serviceLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.serviceLink svg {
+  transition: transform 0.3s var(--ease);
+}
+
+.serviceLink:hover svg {
+  transform: translateX(4px);
+}
+
+/* ---------- team ---------- */
+
+.teamSection {
+  padding-top: var(--sec);
+}
+
+.teamHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+.teamTitle {
+  margin-top: 14px;
+}
+
+.teamAll {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.teamAll:hover {
+  color: var(--forest);
+}
+
+.teamAll svg {
+  transition: transform 0.3s var(--ease);
+}
+
+.teamAll:hover svg {
+  transform: translateX(4px);
+}
+
+.team {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap);
+  margin-top: 32px;
+}
+
+.member {
+  min-width: 0;
+}
+
+.memberName {
+  margin-top: 14px;
+  font-size: var(--t-card);
+  line-height: var(--lh-card);
+}
+
+.memberRole {
+  margin-top: 2px;
+  font-weight: 500;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--ink-3);
+}
+
+/* ---------- office ---------- */
+
+.officeSection {
+  padding-block: var(--sec);
+}
+
+.officeGrid {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 56px;
+  align-items: start;
+}
+
+.officeTitle {
+  margin-top: 16px;
+}
+
+.officeFacts {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 0;
+  margin-top: 28px;
+  border-top: 1px solid var(--line);
+}
+
+.officeDt {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: 22px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.officeDd {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--ink);
+}
+
+.officeDd a:hover {
+  color: var(--forest);
+}
+
+.officeBtn {
+  margin-top: 28px;
+}
+
+@media (max-width: 1099px) {
+  .storyGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .figures {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .figure:nth-child(4) {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .band {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .bandFlip .bandPhoto {
+    order: 0;
+  }
+
+  .bandPhoto {
+    height: auto;
+    aspect-ratio: 3 / 2;
+  }
+
+  .team {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .officeGrid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 700px) {
+  .hero {
+    aspect-ratio: 4 / 3;
+  }
+
+  .heroWrap {
+    margin-top: 28px;
+  }
+
+  .storySection,
+  .figuresSection,
+  .methodSection,
+  .servicesSection,
+  .teamSection {
+    padding-top: var(--sec-m);
+  }
+
+  .officeSection {
+    padding-block: var(--sec-m);
+  }
+
+  .figures {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .figure {
+    padding: 20px 16px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .figure:nth-child(odd) {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .figure:last-child {
+    border-bottom: 0;
+  }
+
+  .officeFacts {
+    grid-template-columns: 1fr;
+  }
+
+  .officeDt {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+}

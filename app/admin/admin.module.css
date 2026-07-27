@@ -1,0 +1,1091 @@
+/* ==========================================================================
+   The panel. Same palette and same typography as the public site, arranged for
+   work rather than for browsing: denser rows, tabular figures everywhere, and
+   every action reachable without a manual.
+   ========================================================================== */
+
+/* ---------- login ---------- */
+
+.login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+  background: var(--forest);
+}
+
+.loginCard {
+  width: 100%;
+  max-width: 400px;
+  padding: 40px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.loginLogo {
+  width: 106px;
+  height: auto;
+  color: var(--forest);
+}
+
+.loginKicker {
+  margin-top: 14px;
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.loginForm {
+  margin-top: 28px;
+}
+
+.loginLabel {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--ink-2);
+}
+
+.loginError {
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-left: 2px solid var(--clay);
+  background: var(--surface-2);
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--clay);
+}
+
+.loginBtn {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.loginHint {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--ink-3);
+}
+
+.loginFoot {
+  margin-top: 24px;
+}
+
+/* ---------- shell ---------- */
+
+.shell {
+  display: grid;
+  grid-template-columns: 232px 1fr;
+  min-height: 100vh;
+  background: var(--paper);
+}
+
+.side {
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  padding: 28px 20px;
+  background: var(--forest);
+  color: var(--on-dark);
+}
+
+.sideTop {
+  flex: none;
+}
+
+.sideBrand {
+  display: block;
+}
+
+.sideLogo {
+  width: 84px;
+  height: auto;
+  color: var(--on-dark);
+}
+
+.sideKicker {
+  margin-top: 10px;
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--on-dark-2);
+}
+
+.sideNav {
+  display: flex;
+  flex-direction: column;
+  margin-top: 36px;
+}
+
+.sideLink {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 12px;
+  border-left: 2px solid transparent;
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--on-dark-2);
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+
+.sideLink:hover {
+  color: var(--on-dark);
+}
+
+.sideLinkOn {
+  border-left-color: var(--brass);
+  color: var(--on-dark);
+}
+
+.sideFoot {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 24px;
+  border-top: 1px solid var(--line-dark);
+}
+
+.sideSmall {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  font-size: var(--t-spec);
+  color: var(--on-dark-2);
+}
+
+.sideSmall:hover {
+  color: var(--on-dark);
+}
+
+/* Sizing only: the colours come from the global .btn-line .btn-line-dark pair. */
+.logout {
+  min-height: 40px;
+  padding: 0 16px;
+  font-size: 12px;
+}
+
+.main {
+  min-width: 0;
+  padding: 40px;
+}
+
+/* ---------- page head ---------- */
+
+.pageHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+.pageKicker {
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.pageTitle {
+  margin-top: 10px;
+  font-size: 28px;
+  line-height: 36px;
+}
+
+.headActions {
+  display: flex;
+  gap: 12px;
+}
+
+/* ---------- tiles ---------- */
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--sh-1);
+  transition: box-shadow 0.3s var(--ease);
+}
+
+.tile:hover {
+  box-shadow: var(--sh-2);
+}
+
+.tileAlert {
+  border-left: 2px solid var(--clay);
+}
+
+.tileValue {
+  font-weight: 600;
+  font-size: var(--t-figure);
+  line-height: var(--lh-figure);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.tileLabel {
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.hint {
+  margin-top: 20px;
+  padding: 14px 18px;
+  background: var(--forest-soft);
+  border-left: 2px solid var(--forest);
+  font-size: var(--t-spec);
+  line-height: 22px;
+  color: var(--ink-2);
+}
+
+/* ---------- blocks ---------- */
+
+.block {
+  margin-top: 40px;
+}
+
+.blockHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.blockTitle {
+  font-size: var(--t-h3);
+  line-height: var(--lh-h3);
+}
+
+.blockLink {
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.blockLink:hover {
+  color: var(--forest);
+}
+
+.empty {
+  margin-top: 24px;
+  padding: 32px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  font-size: var(--t-spec);
+  line-height: 22px;
+  color: var(--ink-2);
+}
+
+/* ---------- filters ---------- */
+
+.filters {
+  display: grid;
+  grid-template-columns: 2fr repeat(4, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.reset {
+  min-height: 44px;
+  padding: 0 14px;
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.reset:hover {
+  color: var(--forest);
+}
+
+.checkFilter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-size: var(--t-spec);
+  color: var(--ink-2);
+  cursor: pointer;
+}
+
+.checkFilter input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--forest);
+}
+
+.count {
+  margin-top: 18px;
+  font-weight: 500;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--ink-3);
+}
+
+/* ---------- tables ---------- */
+
+.tableWrap {
+  margin-top: 12px;
+  overflow-x: auto;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.table {
+  min-width: 900px;
+  font-size: var(--t-spec);
+  line-height: 20px;
+}
+
+.table th {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line-2);
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+.table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+  color: var(--ink-2);
+}
+
+.table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.table tbody tr:hover {
+  background: var(--surface-2);
+}
+
+.rowClickable {
+  cursor: pointer;
+}
+
+.rowOpen {
+  background: var(--forest-soft);
+}
+
+.rowMuted td {
+  opacity: 0.55;
+}
+
+.cellStrong {
+  display: block;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.cellSub {
+  display: block;
+  margin-top: 3px;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--ink-3);
+}
+
+.cellRight {
+  text-align: right;
+}
+
+.table a:hover {
+  color: var(--forest);
+  text-decoration: underline;
+  text-decoration-color: var(--brass);
+  text-underline-offset: 3px;
+}
+
+.code {
+  display: inline-block;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.originTag {
+  display: block;
+  margin-top: 3px;
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* ---------- state pills: a hairline outline, never a coloured fill ---------- */
+
+.state {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  border: 1px solid var(--line-2);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+
+.state_nou,
+.status_activ {
+  border-color: var(--forest);
+  color: var(--forest);
+}
+
+.state_contactat,
+.status_rezervat {
+  border-color: var(--brass);
+}
+
+.state_programat {
+  border-color: var(--forest);
+  background: var(--forest-soft);
+  color: var(--forest);
+}
+
+.state_inchis,
+.status_vandut,
+.status_arhivat,
+.stateHidden {
+  color: var(--ink-3);
+}
+
+.stateSelect {
+  height: 34px;
+  padding: 0 8px;
+  border: 1px solid var(--line-2);
+  background: var(--surface);
+  font-size: var(--t-spec);
+  color: var(--ink);
+}
+
+.callBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid var(--line-2);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.callBtn:hover {
+  border-color: var(--forest);
+  background: var(--forest-soft);
+  text-decoration: none;
+}
+
+.rowActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.rowAction {
+  min-height: 34px;
+  padding: 0 10px;
+  border: 1px solid var(--line-2);
+  background: var(--surface);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.rowAction:hover {
+  border-color: var(--forest);
+  background: var(--forest-soft);
+}
+
+.rowActionDanger:hover {
+  border-color: var(--clay);
+  background: transparent;
+  color: var(--clay);
+}
+
+.danger {
+  min-height: 34px;
+  padding: 0 10px;
+  border: 1px solid var(--clay);
+  background: var(--clay);
+  color: var(--on-dark);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dangerLine {
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--line-2);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.dangerLine:hover {
+  border-color: var(--clay);
+  color: var(--clay);
+}
+
+/* ---------- lead detail panel ---------- */
+
+.panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  width: 420px;
+  max-width: 100vw;
+  height: 100vh;
+  padding: 28px;
+  overflow-y: auto;
+  background: var(--surface);
+  border-left: 1px solid var(--line-2);
+  box-shadow: var(--sh-2);
+}
+
+.panelHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.panelKicker {
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.panelTitle {
+  margin-top: 8px;
+  font-size: var(--t-h3);
+  line-height: var(--lh-h3);
+}
+
+.panelClose {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin: -10px -10px 0 0;
+  color: var(--ink-3);
+}
+
+.panelClose:hover {
+  color: var(--ink);
+}
+
+.panelFacts {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 0;
+  margin-top: 4px;
+}
+
+.panelFacts dt {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: 20px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.panelFacts dd {
+  margin: 0;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: var(--t-spec);
+  line-height: 20px;
+  color: var(--ink);
+}
+
+.panelMessage {
+  margin-top: 20px;
+  padding: 16px;
+  background: var(--surface-2);
+}
+
+.panelMessage p:last-child {
+  margin-top: 8px;
+  font-size: var(--t-spec);
+  line-height: 22px;
+  color: var(--ink);
+  white-space: pre-wrap;
+}
+
+.panelLabel {
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.panelMessage .panelLabel {
+  margin-top: 0;
+}
+
+.panelActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.confirm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  font-size: var(--t-spec);
+  color: var(--ink-2);
+}
+
+/* ---------- checks column ---------- */
+
+.checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.check {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 6px;
+  border: 1px solid var(--clay);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--clay);
+  cursor: help;
+}
+
+.checkOk {
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+/* ---------- removed list ---------- */
+
+.removed {
+  margin-top: 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.removed li {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+  font-size: var(--t-spec);
+  color: var(--ink-2);
+}
+
+.removed li:last-child {
+  border-bottom: 0;
+}
+
+.removed li button {
+  margin-left: auto;
+}
+
+/* ---------- portfolio statistics ---------- */
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.statsCard {
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.statsTitle {
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.bars {
+  margin-top: 16px;
+}
+
+.bar {
+  display: grid;
+  grid-template-columns: 110px 1fr 32px;
+  gap: 10px;
+  align-items: center;
+  padding: 6px 0;
+  font-size: var(--t-spec);
+  color: var(--ink-2);
+}
+
+.barLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.barTrack {
+  position: relative;
+  height: 6px;
+  background: var(--surface-2);
+}
+
+.barTrack::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--w, 0%);
+  background: var(--forest);
+}
+
+.barValue {
+  text-align: right;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.statsList {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0;
+  margin-top: 12px;
+}
+
+.statsList dt {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: var(--t-spec);
+  color: var(--ink-2);
+}
+
+.statsList dd {
+  margin: 0;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+  font-weight: 600;
+  font-size: var(--t-spec);
+  text-align: right;
+  color: var(--ink);
+}
+
+/* ---------- the property form ---------- */
+
+.formGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.fieldset {
+  padding: 28px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.fieldsetTitle {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+  font-size: var(--t-h3);
+  line-height: var(--lh-h3);
+}
+
+.fieldRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.field {
+  display: block;
+  min-width: 0;
+}
+
+.field + .field {
+  margin-top: 20px;
+}
+
+.fieldRow .field + .field {
+  margin-top: 0;
+}
+
+.fieldWide {
+  grid-column: span 2;
+}
+
+.fieldLabel {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.fieldNote {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 17px;
+  color: var(--ink-3);
+}
+
+.fieldBad {
+  border-color: var(--clay);
+}
+
+.fieldCheck {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  align-self: end;
+  min-height: 48px;
+  font-size: var(--t-spec);
+  color: var(--ink-2);
+  cursor: pointer;
+}
+
+.fieldCheck input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--forest);
+}
+
+.computed {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 14px;
+  background: var(--surface-2);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--ink);
+}
+
+.preview {
+  align-self: end;
+}
+
+.preview > div {
+  border: 1px solid var(--line);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--line-2);
+  background: var(--surface);
+  font-weight: 500;
+  font-size: var(--t-spec);
+  color: var(--ink-2);
+  transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease);
+}
+
+.chip:hover {
+  border-color: var(--forest);
+}
+
+.chipOn {
+  border-color: var(--forest);
+  background: var(--forest);
+  color: var(--on-dark);
+}
+
+.formError {
+  margin-top: 20px;
+  padding: 14px 18px;
+  border-left: 2px solid var(--clay);
+  background: var(--surface-2);
+  font-size: var(--t-spec);
+  line-height: 22px;
+  color: var(--clay);
+}
+
+.formFoot {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+/* ---------- narrow screens: the panel still has to be usable on a laptop ---- */
+
+@media (max-width: 1200px) {
+  .tiles {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .filters {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .fieldRow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .fieldWide {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 860px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+
+  .side {
+    position: static;
+    height: auto;
+    padding: 20px;
+  }
+
+  .sideNav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 20px;
+  }
+
+  .sideLink {
+    padding: 0 14px;
+    border-left: 0;
+    border-bottom: 2px solid transparent;
+  }
+
+  .sideLinkOn {
+    border-left-color: transparent;
+    border-bottom-color: var(--brass);
+  }
+
+  .sideFoot {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .main {
+    padding: 24px 16px;
+  }
+
+  .panel {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .fieldRow {
+    grid-template-columns: 1fr;
+  }
+
+  .fieldWide {
+    grid-column: span 1;
+  }
+
+  .fieldset {
+    padding: 20px;
+  }
+}

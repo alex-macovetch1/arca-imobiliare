@@ -1,0 +1,368 @@
+.crumbs {
+  padding-top: 20px;
+  padding-bottom: 14px;
+}
+
+.crumbList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-weight: 500;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--ink-3);
+}
+
+.crumbList li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.crumbList li + li::before {
+  content: "›";
+  color: var(--line-2);
+}
+
+.crumbList a:hover {
+  color: var(--ink);
+}
+
+.main {
+  padding-bottom: var(--sec);
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 36px;
+  margin-bottom: 24px;
+}
+
+/* ---- active filters ---- */
+.chipRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--line-2);
+  background: var(--surface);
+  color: var(--ink-2);
+  font-weight: 500;
+  font-size: var(--t-spec);
+  line-height: 1;
+  transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+
+.chip:hover {
+  border-color: var(--forest);
+  color: var(--ink);
+}
+
+.clearAll {
+  height: 40px;
+  padding: 0 8px;
+  color: var(--ink-3);
+  font-weight: 500;
+  font-size: var(--t-spec);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--line-2);
+  transition: text-decoration-color 0.25s var(--ease);
+}
+
+.clearAll:hover {
+  text-decoration-color: var(--brass);
+}
+
+/* ---- results ---- */
+.results {
+  margin-top: 24px;
+  /* The sticky header and search bar must not cover the first row after paging. */
+  scroll-margin-top: calc(var(--h-header) + 76px);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+.listCta {
+  margin-top: var(--gap);
+}
+
+.mapBlock {
+  margin-bottom: 32px;
+}
+
+/* ---- the tile that turns a dead end into a call ---- */
+.cta {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 28px;
+  background: var(--forest);
+  color: var(--on-dark);
+}
+
+.ctaTitle {
+  font-family: var(--f-serif);
+  font-weight: 500;
+  font-size: var(--t-h3);
+  line-height: var(--lh-h3);
+  color: var(--on-dark);
+}
+
+.ctaText {
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--on-dark-2);
+}
+
+.ctaField {
+  width: 100%;
+  height: 48px;
+  padding: 0 14px;
+  border: 1px solid var(--line-dark);
+  border-radius: var(--r);
+  background: transparent;
+  color: var(--on-dark);
+  /* 16px, or iOS zooms the page the moment the field takes focus. */
+  font-size: 16px;
+  line-height: 1;
+  transition: border-color 0.2s var(--ease);
+}
+
+.ctaField::placeholder {
+  color: var(--on-dark-2);
+}
+
+.ctaField:focus {
+  border-color: var(--on-dark);
+}
+
+.ctaConsent {
+  display: flex;
+  gap: 10px;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--on-dark-2);
+  cursor: pointer;
+}
+
+.ctaConsent input {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  margin-top: 1px;
+  accent-color: var(--on-dark);
+  cursor: pointer;
+}
+
+.ctaError {
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--on-dark);
+}
+
+.ctaBtn {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.ctaPhone {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--on-dark);
+}
+
+/* ---- empty state ---- */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 56px 32px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  text-align: center;
+}
+
+.emptyArch {
+  width: 44px;
+  height: 22px;
+  color: var(--brass);
+}
+
+.emptyTitle {
+  font-family: var(--f-serif);
+  font-weight: 500;
+  font-size: var(--t-h3);
+  line-height: var(--lh-h3);
+}
+
+.emptyLead {
+  max-width: 52ch;
+  color: var(--ink-2);
+}
+
+.emptyOptions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.emptyCount {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.emptyReset {
+  color: var(--ink-3);
+}
+
+.emptyForm {
+  width: min(520px, 100%);
+  margin-top: 18px;
+  text-align: left;
+}
+
+/* ---- pagination ---- */
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 44px;
+}
+
+.pageBtn {
+  min-width: 44px;
+  height: 44px;
+  padding: 0 8px;
+  border: 1px solid transparent;
+  color: var(--ink-2);
+  font-weight: 600;
+  font-size: 14px;
+  transition: background-color 0.25s var(--ease), color 0.25s var(--ease);
+}
+
+.pageBtn:hover {
+  background: var(--forest-soft);
+}
+
+.pageOn,
+.pageOn:hover {
+  background: var(--forest);
+  color: var(--on-dark);
+}
+
+.pageArrow {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line-2);
+  color: var(--ink-2);
+  transition: border-color 0.25s var(--ease);
+}
+
+.pageArrow:hover:not(:disabled) {
+  border-color: var(--forest);
+}
+
+.pageArrow:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.arrowBack {
+  transform: rotate(180deg);
+}
+
+.pageGap {
+  width: 22px;
+  text-align: center;
+  color: var(--ink-3);
+}
+
+/* ---- the sector paragraph under the results ---- */
+.seo {
+  max-width: 74ch;
+  margin-top: 72px;
+  padding-top: 40px;
+  border-top: 1px solid var(--line);
+}
+
+.seoTitle {
+  margin-top: 14px;
+  font-size: var(--t-h3);
+  line-height: var(--lh-h3);
+}
+
+.seoText {
+  margin-top: 14px;
+  color: var(--ink-2);
+}
+
+.seoFacts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0;
+  font-weight: 500;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--ink-2);
+}
+
+.sep {
+  width: 1px;
+  height: 12px;
+  background: var(--line-2);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 700px) {
+  .main {
+    padding-bottom: var(--sec-m);
+  }
+
+  .head {
+    margin-top: 24px;
+  }
+
+  .empty {
+    padding: 40px 20px;
+  }
+
+  .cta {
+    padding: 24px 20px;
+  }
+}

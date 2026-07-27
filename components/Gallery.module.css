@@ -1,0 +1,253 @@
+.mosaic {
+  display: grid;
+  grid-template-columns: 1.77fr 1fr;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.big,
+.thumb {
+  position: relative;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  background: var(--surface-2);
+  cursor: zoom-in;
+}
+
+/* The one photo that declares a ratio. Everything beside it fills the row it
+   creates, so the block occupies its final height before any pixel arrives. */
+.big {
+  aspect-ratio: 3 / 2;
+}
+
+.img {
+  object-fit: cover;
+}
+
+.thumbs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 12px;
+  min-height: 0;
+}
+
+.thumb {
+  height: 100%;
+}
+
+.badges {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 1;
+  display: flex;
+  gap: 6px;
+}
+
+.counter {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  z-index: 1;
+  padding: 5px 9px;
+  background: var(--badge-bg);
+  color: var(--on-dark);
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.more,
+.allMobile {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--on-dark);
+}
+
+.more {
+  inset: 0;
+  background: rgba(16, 20, 17, 0.55);
+  transition: background-color 0.25s var(--ease);
+}
+.thumb:hover .more {
+  background: rgba(16, 20, 17, 0.68);
+}
+
+/* Below 700px the thumbnails go away and the cover carries the entry point. */
+.allMobile {
+  display: none;
+  right: 16px;
+  bottom: 16px;
+  height: 34px;
+  padding: 0 14px;
+  background: var(--badge-bg);
+}
+
+@media (max-width: 700px) {
+  .mosaic {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .thumbs {
+    display: none;
+  }
+  .allMobile {
+    display: flex;
+  }
+}
+
+/* ---------- full-screen viewer ---------- */
+.viewer {
+  position: fixed;
+  inset: 0;
+  /* Above the sticky header, which sits at 60. */
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  background: #101411;
+  color: var(--on-dark);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: none;
+  height: 60px;
+  padding-inline: 16px;
+  border-bottom: 1px solid var(--line-dark);
+}
+
+.count {
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--on-dark-2);
+}
+
+.close {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-right: -10px;
+  color: var(--on-dark);
+}
+
+.stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  min-height: 0;
+  padding: 16px 72px;
+}
+
+.frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.full {
+  object-fit: contain;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  /* One of the three round exceptions on the site. */
+  border-radius: var(--r-full);
+  border: 1px solid rgba(242, 239, 232, 0.4);
+  color: var(--on-dark);
+  transform: translateY(-50%);
+  transition: background-color 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+.arrow:hover {
+  background: rgba(242, 239, 232, 0.12);
+  border-color: var(--on-dark);
+}
+
+.arrowPrev {
+  left: 12px;
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.arrowNext {
+  right: 12px;
+}
+
+.caption {
+  flex: none;
+  padding: 0 24px 12px;
+  font-size: 13px;
+  line-height: 20px;
+  text-align: center;
+  color: var(--on-dark-2);
+}
+
+.strip {
+  display: flex;
+  gap: 8px;
+  flex: none;
+  padding: 0 16px 20px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.strip::-webkit-scrollbar {
+  display: none;
+}
+
+.stripItem {
+  position: relative;
+  flex: none;
+  width: 96px;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  opacity: 0.45;
+  outline: 1px solid transparent;
+  outline-offset: -1px;
+  transition: opacity 0.25s var(--ease);
+}
+.stripItem:hover {
+  opacity: 0.8;
+}
+
+.stripOn {
+  opacity: 1;
+  outline-color: var(--brass);
+}
+
+@media (max-width: 700px) {
+  .stage {
+    padding: 8px 12px;
+  }
+  .arrow {
+    width: 44px;
+    height: 44px;
+    background: rgba(16, 20, 17, 0.5);
+  }
+  .arrowPrev {
+    left: 6px;
+  }
+  .arrowNext {
+    right: 6px;
+  }
+  .caption {
+    display: none;
+  }
+}

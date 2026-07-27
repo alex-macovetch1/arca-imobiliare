@@ -1,0 +1,378 @@
+/* ---------- the city figure ---------- */
+
+.city {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: var(--gap);
+  align-items: end;
+  padding: 32px 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--line);
+}
+
+.cityFigure {
+  margin-top: 10px;
+  font-family: var(--f-sans);
+  font-weight: 600;
+  font-size: var(--t-figure);
+  line-height: var(--lh-figure);
+  letter-spacing: -0.02em;
+}
+
+.cityNote {
+  margin-top: 6px;
+  max-width: 46ch;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--ink-3);
+}
+
+.citySide {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.citySideRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--ink-3);
+}
+
+.citySideRow:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.citySideRow dd {
+  margin: 0;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* ---------- the table ---------- */
+
+.tableHead,
+.rowLink {
+  display: grid;
+  grid-template-columns: 1.1fr 1.6fr 0.8fr 0.7fr;
+  gap: 20px;
+  align-items: center;
+}
+
+.tableHead {
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line-2);
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.rows {
+  border-bottom: 1px solid var(--line);
+}
+
+.row {
+  border-bottom: 1px solid var(--line);
+}
+
+.row:last-child {
+  border-bottom: 0;
+}
+
+.rowLink {
+  padding: 18px 0;
+  transition: background-color 0.25s var(--ease);
+}
+
+.rowLink:hover {
+  background: var(--surface);
+}
+
+.colSector {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sectorName {
+  font-family: var(--f-serif);
+  font-weight: 500;
+  font-size: var(--t-card);
+  line-height: var(--lh-card);
+}
+
+.sectorMeta {
+  color: var(--ink-3);
+}
+
+.colBand {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.track {
+  position: relative;
+  display: block;
+  height: 6px;
+  background: var(--surface-2);
+}
+
+.fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: var(--forest-soft);
+  border-left: 1px solid var(--line-2);
+  border-right: 1px solid var(--line-2);
+}
+
+.tick {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--forest);
+}
+
+.bandFigures {
+  color: var(--ink-3);
+}
+
+.colMedian {
+  font-weight: 600;
+  font-size: var(--t-price-card);
+  line-height: var(--lh-price-card);
+  text-align: right;
+}
+
+.colRent {
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  text-align: right;
+  color: var(--ink-2);
+}
+
+.rentLabel {
+  display: none;
+  color: var(--ink-3);
+}
+
+.bandNote {
+  margin-top: 14px;
+}
+
+.thin {
+  margin-top: 32px;
+  padding: 20px 24px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.thinTitle {
+  font-weight: 600;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.thinList {
+  margin: 8px 0 10px;
+}
+
+.disclaimer {
+  margin-top: 24px;
+  max-width: 78ch;
+}
+
+/* ---------- method band ---------- */
+
+.methodSection {
+  padding-block: var(--sec-accent);
+  background: var(--forest);
+  color: var(--on-dark);
+}
+
+.methodInner {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: calc(var(--gap) * 2);
+}
+
+.methodTitle {
+  margin-top: 12px;
+  max-width: 16ch;
+  color: var(--on-dark);
+}
+
+.method {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.methodStep {
+  display: grid;
+  grid-template-columns: 46px 1fr;
+  gap: 12px;
+  padding-bottom: 26px;
+  border-bottom: 1px solid var(--line-dark);
+  color: var(--on-dark-2);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+}
+
+.methodStep:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.methodNo {
+  font-weight: 600;
+  font-size: var(--t-spec);
+  line-height: 28px;
+  letter-spacing: 0.1em;
+  color: var(--brass);
+}
+
+/* ---------- the two cards ---------- */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--gap);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 32px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.cardTitle {
+  font-size: var(--t-h3);
+  line-height: var(--lh-h3);
+}
+
+.cardText {
+  max-width: 46ch;
+  margin-bottom: 6px;
+  color: var(--ink-2);
+}
+
+/* ---------- sector notes ---------- */
+
+.sectors {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+.sectorCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding-top: 24px;
+}
+
+.sectorTitle {
+  font-size: var(--t-card);
+  line-height: var(--lh-card);
+}
+
+.sectorBlurb {
+  color: var(--ink-2);
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 1099px) {
+  .city {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 24px;
+  }
+
+  .methodInner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .sectors {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 899px) {
+  .tableHead {
+    display: none;
+  }
+
+  .rowLink {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "sector median"
+      "band band"
+      "rent rent";
+    gap: 10px;
+    padding: 20px 0;
+  }
+
+  .colSector {
+    grid-area: sector;
+  }
+
+  .colBand {
+    grid-area: band;
+  }
+
+  .colMedian {
+    grid-area: median;
+  }
+
+  .colRent {
+    grid-area: rent;
+    text-align: left;
+  }
+
+  .rentLabel {
+    display: inline;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 699px) {
+  .sectors {
+    grid-template-columns: 1fr;
+  }
+}

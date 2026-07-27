@@ -1,0 +1,36 @@
+.doc {
+  max-width: 720px;
+  padding-bottom: var(--sec);
+  border-top: 1px solid var(--line);
+}
+
+.section {
+  padding-top: 40px;
+}
+
+.title {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  font-size: var(--t-h3);
+  line-height: var(--lh-h3);
+}
+
+.no {
+  font-family: var(--f-sans);
+  font-weight: 600;
+  font-size: var(--t-spec);
+  letter-spacing: 0.1em;
+  color: var(--brass);
+}
+
+.para {
+  margin-top: 14px;
+  color: var(--ink-2);
+}
+
+.foot {
+  margin-top: 44px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}

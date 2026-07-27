@@ -1,0 +1,428 @@
+.introActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.introPhone {
+  letter-spacing: 0.04em;
+}
+
+.heroWrap {
+  margin-top: 40px;
+}
+
+.hero {
+  aspect-ratio: 12 / 5;
+}
+
+/* ---------- three steps ---------- */
+
+.stepsSection {
+  padding-top: var(--sec);
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+  margin-top: 32px;
+}
+
+.step {
+  padding-top: 20px;
+  border-top: 1px solid var(--line-2);
+}
+
+.stepNumber {
+  display: block;
+  font-weight: 600;
+  font-size: var(--t-figure);
+  line-height: var(--lh-figure);
+  letter-spacing: -0.02em;
+  color: var(--ink-3);
+}
+
+.stepTitle {
+  margin-top: 8px;
+  font-size: var(--t-h3);
+  line-height: var(--lh-h3);
+}
+
+.stepText {
+  margin-top: 12px;
+  font-size: var(--t-spec);
+  line-height: 22px;
+  color: var(--ink-2);
+}
+
+/* ---------- what is included ---------- */
+
+.includedSection {
+  padding-top: var(--sec);
+}
+
+.includedGrid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 56px;
+  align-items: start;
+}
+
+.includedTitle {
+  margin-top: 16px;
+}
+
+.includedLead {
+  max-width: 40ch;
+  margin-top: 16px;
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  color: var(--ink-2);
+}
+
+.included {
+  border-top: 1px solid var(--line);
+}
+
+.includedItem {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 12px;
+  align-items: baseline;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: var(--t-body);
+  line-height: 24px;
+  color: var(--ink);
+}
+
+.includedIndex {
+  font-weight: 600;
+  font-size: var(--t-spec);
+  letter-spacing: 0.12em;
+  color: var(--ink-3);
+}
+
+/* ---------- the estimator ---------- */
+
+.estimatorSection {
+  margin-top: var(--sec);
+  padding-block: var(--sec-accent);
+  background: var(--forest);
+  color: var(--on-dark);
+}
+
+.estimatorInner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: start;
+}
+
+.estimatorTitle {
+  margin-top: 18px;
+  color: var(--on-dark);
+}
+
+.estimatorLead {
+  max-width: 46ch;
+  margin-top: 20px;
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  color: var(--on-dark-2);
+}
+
+.estimatorNote {
+  max-width: 46ch;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line-dark);
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--on-dark-2);
+}
+
+.estimatorLink {
+  display: inline-block;
+  margin-top: 16px;
+  color: var(--on-dark);
+  text-decoration-color: var(--line-dark);
+}
+
+.estimatorLink:hover {
+  text-decoration-color: var(--brass);
+}
+
+.card {
+  padding: 36px;
+  border: 1px solid var(--line-dark);
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.control {
+  display: block;
+}
+
+.controlWide {
+  grid-column: 1 / -1;
+}
+
+.controlLabel {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--on-dark-2);
+}
+
+.result {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line-dark);
+}
+
+.resultLabel {
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--on-dark-2);
+}
+
+.resultRange {
+  margin-top: 10px;
+  font-weight: 600;
+  font-size: var(--t-price-detail);
+  line-height: var(--lh-price-detail);
+  letter-spacing: -0.02em;
+  color: var(--on-dark);
+}
+
+.scale {
+  position: relative;
+  height: 12px;
+  margin-top: 22px;
+}
+
+.scaleLine {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--line-dark);
+}
+
+.scaleMark {
+  position: absolute;
+  top: 0;
+  width: 2px;
+  height: 12px;
+  margin-left: -1px;
+  background: var(--on-dark-2);
+}
+
+.scaleMark:nth-child(3) {
+  height: 16px;
+  margin-top: -2px;
+  background: var(--brass);
+}
+
+.scaleLabels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-weight: 500;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--on-dark-2);
+}
+
+.scaleMid {
+  color: var(--on-dark);
+}
+
+.resultMeta {
+  margin-top: 14px;
+  font-weight: 500;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--on-dark-2);
+}
+
+.resultEmpty {
+  font-size: var(--t-spec);
+  line-height: 22px;
+  color: var(--on-dark-2);
+}
+
+.formInner {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line-dark);
+}
+
+.formTitle {
+  margin-bottom: 18px;
+  font-family: var(--f-serif);
+  font-weight: 500;
+  font-size: var(--t-h3);
+  line-height: var(--lh-h3);
+  color: var(--on-dark);
+}
+
+/* ---------- agents ---------- */
+
+.agentsSection {
+  padding-top: var(--sec);
+}
+
+.agentsHead {
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+.agentsTitle {
+  margin-top: 14px;
+}
+
+.agents {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+  margin-top: 32px;
+}
+
+.agent {
+  min-width: 0;
+}
+
+.agentName {
+  margin-top: 14px;
+  font-size: var(--t-card);
+  line-height: var(--lh-card);
+}
+
+.agentRole {
+  margin-top: 2px;
+  font-weight: 500;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--ink-3);
+}
+
+.agentPhone {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.agentPhone:hover {
+  color: var(--forest);
+}
+
+/* ---------- faq ---------- */
+
+.faqSection {
+  padding-block: var(--sec);
+}
+
+.faq {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px var(--gap);
+  margin-top: 32px;
+}
+
+.faqItem {
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.faqQ {
+  font-size: var(--t-card);
+  line-height: var(--lh-card);
+}
+
+.faqA {
+  max-width: 54ch;
+  margin-top: 10px;
+  font-size: var(--t-spec);
+  line-height: 22px;
+  color: var(--ink-2);
+}
+
+@media (max-width: 1099px) {
+  .steps {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .includedGrid,
+  .estimatorInner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .agents {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (max-width: 700px) {
+  .hero {
+    aspect-ratio: 4 / 3;
+  }
+
+  .heroWrap {
+    margin-top: 28px;
+  }
+
+  .stepsSection,
+  .includedSection,
+  .agentsSection {
+    padding-top: var(--sec-m);
+  }
+
+  .estimatorSection {
+    margin-top: var(--sec-m);
+  }
+
+  .faqSection {
+    padding-block: var(--sec-m);
+  }
+
+  .card {
+    padding: 24px 20px;
+  }
+
+  .controls {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .agents {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .faq {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}

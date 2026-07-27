@@ -1,0 +1,113 @@
+.card {
+  display: block;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-top: 0;
+  background: var(--surface);
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.field {
+  display: block;
+}
+
+.label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* Off-screen rather than display:none — a bot that reads styles skips hidden
+   fields, but fills anything it can focus. */
+.trap {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 16px;
+  cursor: pointer;
+}
+
+.check {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin: 1px 0 0;
+  accent-color: var(--forest);
+  cursor: pointer;
+}
+
+.error {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-left: 2px solid var(--clay);
+  background: var(--surface-2);
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--ink);
+}
+
+.submit {
+  width: 100%;
+  min-height: 56px;
+  margin-top: 16px;
+}
+
+/* Two lines' worth of room, so the slot line cannot shift the layout when the
+   clock is finally read on the client. */
+.slot {
+  min-height: 20px;
+  margin-top: 8px;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  text-align: center;
+  color: var(--ink-3);
+}
+
+/* ---------- success ---------- */
+.doneTitle {
+  margin-top: 16px;
+  font-size: var(--t-h3);
+  line-height: var(--lh-h3);
+}
+
+.doneText {
+  margin-top: 8px;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--ink-2);
+}
+
+.donePhone {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 600;
+  font-size: 20px;
+  color: var(--ink);
+}
+
+.doneClose {
+  width: 100%;
+  margin-top: 8px;
+}

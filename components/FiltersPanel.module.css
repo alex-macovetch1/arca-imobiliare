@@ -1,0 +1,329 @@
+/* On a desktop the extra filters open inline under the bar — a modal would hide
+   the results the numbers refer to. On a phone the same markup becomes a
+   full-screen drawer with the count pinned to the bottom. */
+.band {
+  background: var(--surface);
+  box-shadow: inset 0 -1px 0 var(--line);
+}
+
+.panel {
+  padding-block: 28px 24px;
+}
+
+.head {
+  display: none;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.blockTitle {
+  margin-bottom: 10px;
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* ---- the primary filters, phone only ---- */
+.basics {
+  display: none;
+}
+
+.searchRow {
+  position: relative;
+}
+
+.searchIcon {
+  position: absolute;
+  top: 50%;
+  left: 13px;
+  transform: translateY(-50%);
+  color: var(--ink-3);
+  pointer-events: none;
+}
+
+.search {
+  width: 100%;
+  height: 48px;
+  padding: 0 14px 0 40px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r);
+  background: var(--surface);
+  /* 16px, or iOS zooms the page on focus. */
+  font-size: 16px;
+  line-height: 1;
+}
+
+.search::placeholder {
+  color: var(--ink-3);
+}
+
+.sectors {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.groupTitle {
+  margin-bottom: 4px;
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r);
+  color: var(--ink-2);
+  font-weight: 500;
+  font-size: var(--t-spec);
+  line-height: 1;
+  transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease),
+    color 0.2s var(--ease);
+}
+
+.chip:hover:not(:disabled) {
+  border-color: var(--forest);
+}
+
+.chipOn,
+.chipOn:hover {
+  border-color: var(--forest);
+  background: var(--forest);
+  color: var(--on-dark);
+}
+
+.chip:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.n {
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+/* A hairline between the option and its count: "2 | 4" reads as two baths and
+   four results, "2 4" reads as nothing at all. */
+.chip .n {
+  padding-left: 7px;
+  border-left: 1px solid var(--line);
+}
+
+.chipOn .n {
+  border-left-color: var(--line-dark);
+  color: var(--on-dark-2);
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.selectWrap {
+  position: relative;
+  display: block;
+}
+
+.select {
+  width: 100%;
+  height: 44px;
+  padding: 0 32px 0 12px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r);
+  background: var(--surface);
+  font-weight: 500;
+  font-size: var(--t-spec);
+  line-height: 1;
+  color: var(--ink);
+  appearance: none;
+  cursor: pointer;
+  text-overflow: ellipsis;
+}
+
+.select:hover {
+  border-color: var(--ink-3);
+}
+
+.selectWrap::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 13px;
+  width: 7px;
+  height: 7px;
+  border-right: 1px solid var(--ink-3);
+  border-bottom: 1px solid var(--ink-3);
+  transform: translateY(-70%) rotate(45deg);
+  pointer-events: none;
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.check input {
+  width: 17px;
+  height: 17px;
+  flex: none;
+  accent-color: var(--forest);
+  cursor: pointer;
+}
+
+.check .n {
+  margin-left: auto;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 26px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.total {
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--ink-2);
+}
+
+.stickyFoot {
+  display: none;
+}
+
+@media (max-width: 1099px) {
+  .band {
+    position: fixed;
+    inset: 0;
+    z-index: 70;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: var(--paper);
+    box-shadow: none;
+  }
+
+  .panel {
+    padding-block: 0 120px;
+  }
+
+  .head {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    margin-inline: calc(var(--gut) * -1);
+    padding-inline: var(--gut);
+    background: var(--paper);
+    box-shadow: inset 0 -1px 0 var(--line);
+  }
+
+  .headTitle {
+    font-family: var(--f-serif);
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 26px;
+  }
+
+  .close {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    margin-right: -10px;
+    color: var(--ink);
+  }
+
+  .basics {
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+    margin-top: 24px;
+    padding-bottom: 26px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 26px;
+    margin-top: 26px;
+  }
+
+  .chip,
+  .check {
+    min-height: 44px;
+  }
+
+  .foot {
+    justify-content: flex-start;
+  }
+
+  .foot .total {
+    display: none;
+  }
+
+  .stickyFoot {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    display: block;
+    padding: 12px var(--gut);
+    background: var(--surface);
+    box-shadow: inset 0 1px 0 var(--line);
+  }
+
+  .showBtn {
+    width: 100%;
+  }
+}

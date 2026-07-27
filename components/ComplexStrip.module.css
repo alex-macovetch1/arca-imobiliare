@@ -1,0 +1,145 @@
+.head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 36px;
+}
+
+.title {
+  margin-top: 14px;
+}
+
+.all {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  border-bottom: 1px solid var(--line-2);
+  font-weight: 600;
+  font-size: var(--t-spec);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  transition: border-color 0.25s var(--ease);
+}
+
+.all:hover {
+  border-bottom-color: var(--brass);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap);
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.photo {
+  aspect-ratio: 4 / 3;
+}
+
+.photo img {
+  transition: transform 0.8s var(--ease);
+}
+
+.link:hover .photo img {
+  transform: scale(1.03);
+}
+
+.stage {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 16px;
+}
+
+.sector {
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.name {
+  font-family: var(--f-serif);
+  font-weight: 500;
+  font-size: var(--t-card);
+  line-height: var(--lh-card);
+}
+
+.meta {
+  color: var(--ink-3);
+}
+
+.foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.price {
+  font-weight: 600;
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+}
+
+.offers {
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--ink-3);
+}
+
+@media (max-width: 1099px) {
+  .row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 699px) {
+  .head {
+    display: block;
+  }
+
+  .all {
+    margin-top: 20px;
+  }
+
+  /* Same scrolling row as the listings rail, so the homepage keeps one gesture. */
+  .row {
+    display: flex;
+    gap: 16px;
+    margin-inline: calc(var(--gut) * -1);
+    padding-inline: var(--gut);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .row > * {
+    flex: 0 0 78%;
+    scroll-snap-align: start;
+  }
+}

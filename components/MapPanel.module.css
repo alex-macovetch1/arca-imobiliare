@@ -1,0 +1,168 @@
+/* A schematic of the city, not a mapping service: no API key, no third-party
+   script, no cookie banner. The markers are placed from the real coordinates,
+   the plan underneath is a drawing. */
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.map {
+  position: relative;
+  height: 520px;
+  overflow: hidden;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+}
+
+.plan {
+  object-fit: cover;
+  opacity: 0.9;
+}
+
+/* Lifted clear of the markers: the label names the district, it never sits on
+   top of a listing. */
+.sector {
+  position: absolute;
+  transform: translate(-50%, calc(-50% - 22px));
+  padding: 2px 6px;
+  background: rgba(246, 244, 239, 0.72);
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* 44px of hit area around a 14px dot: the marker is the smallest thing on the
+   page and still has to be tappable with a thumb. */
+.pin {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  transform: translate(-50%, -50%);
+}
+
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--r-full);
+  background: var(--forest);
+  box-shadow: var(--sh-1);
+  transition: transform 0.25s var(--ease);
+}
+
+.pin:hover .dot {
+  transform: scale(1.35);
+}
+
+.pinOn .dot {
+  transform: scale(1.5);
+  outline: 1px solid var(--brass);
+  outline-offset: 3px;
+}
+
+.card {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  display: flex;
+  gap: 14px;
+  width: min(420px, calc(100% - 32px));
+  padding: 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--sh-2);
+}
+
+.cardPhoto {
+  width: 120px;
+  flex: none;
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  padding-right: 24px;
+}
+
+.cardPrice {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--ink);
+}
+
+.cardTitle {
+  font-family: var(--f-serif);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
+.cardSpecs {
+  font-weight: 500;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--ink-3);
+}
+
+.cardClose {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  color: var(--ink-3);
+}
+
+.cardClose:hover {
+  color: var(--ink);
+}
+
+.hint {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  padding: 10px 14px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  font-weight: 500;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--ink-2);
+}
+
+.note {
+  max-width: 62ch;
+}
+
+@media (max-width: 899px) {
+  .map {
+    height: 420px;
+  }
+
+  .card {
+    right: 16px;
+    left: 16px;
+    width: auto;
+  }
+
+  .cardPhoto {
+    width: 96px;
+  }
+}

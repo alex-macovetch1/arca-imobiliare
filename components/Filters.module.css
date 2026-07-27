@@ -1,0 +1,375 @@
+/* The search bar sits under the header and stays there: on a results page the
+   filters are the navigation. Nothing here changes size between states, so the
+   grid below never jumps. */
+.wrap {
+  position: sticky;
+  top: var(--h-header);
+  z-index: 40;
+  background: var(--surface);
+  box-shadow: inset 0 -1px 0 var(--line);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-block: 8px;
+}
+
+.barMobile {
+  display: none;
+  gap: 8px;
+  padding-block: 8px;
+}
+
+/* ---- shared control shell ---- */
+.control {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r);
+  background: var(--surface);
+  color: var(--ink);
+  font-weight: 500;
+  font-size: var(--t-spec);
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease);
+}
+
+.control:hover {
+  border-color: var(--ink-3);
+}
+
+.controlOn {
+  border-color: var(--forest);
+}
+
+.selectWrap {
+  position: relative;
+  display: inline-flex;
+  min-width: 0;
+}
+
+/* Fixed widths, so the row keeps its rhythm whichever language is on and
+   whichever option is picked. */
+.kindSelect {
+  flex: 0 1 172px;
+  width: 172px;
+  min-width: 116px;
+}
+
+.priceSelect {
+  flex: 0 1 124px;
+  width: 124px;
+  min-width: 92px;
+}
+
+.selectWrap select {
+  width: 100%;
+  padding-right: 32px;
+  appearance: none;
+  text-overflow: ellipsis;
+}
+
+.selectWrap::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 13px;
+  width: 7px;
+  height: 7px;
+  border-right: 1px solid var(--ink-3);
+  border-bottom: 1px solid var(--ink-3);
+  transform: translateY(-70%) rotate(45deg);
+  pointer-events: none;
+}
+
+/* ---- deal tabs ---- */
+.segmented {
+  display: flex;
+  flex: none;
+  height: 44px;
+  border: 1px solid var(--line-2);
+}
+
+.seg {
+  padding: 0 15px;
+  color: var(--ink-2);
+  font-weight: 600;
+  font-size: var(--t-spec);
+  line-height: 1;
+  letter-spacing: 0.04em;
+  transition: background-color 0.25s var(--ease), color 0.25s var(--ease);
+}
+
+.seg + .seg {
+  border-left: 1px solid var(--line-2);
+}
+
+.seg:hover {
+  background: var(--forest-soft);
+}
+
+.segOn,
+.segOn:hover {
+  background: var(--forest);
+  color: var(--on-dark);
+}
+
+/* ---- rooms ---- */
+.rooms {
+  display: flex;
+  flex: none;
+  height: 44px;
+  border: 1px solid var(--line-2);
+}
+
+.room {
+  width: 40px;
+  color: var(--ink-2);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1;
+  transition: background-color 0.25s var(--ease), color 0.25s var(--ease);
+}
+
+.room + .room {
+  border-left: 1px solid var(--line-2);
+}
+
+.room:hover:not(:disabled) {
+  background: var(--forest-soft);
+}
+
+.roomOn,
+.roomOn:hover {
+  background: var(--forest);
+  color: var(--on-dark);
+}
+
+.room:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ---- location dropdown ---- */
+.pop {
+  position: relative;
+  flex: none;
+}
+
+.popPanel {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 5;
+  width: 460px;
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--sh-2);
+}
+
+.searchRow {
+  position: relative;
+}
+
+.searchIcon {
+  position: absolute;
+  top: 50%;
+  left: 13px;
+  transform: translateY(-50%);
+  color: var(--ink-3);
+  pointer-events: none;
+}
+
+.search {
+  width: 100%;
+  height: 48px;
+  padding: 0 14px 0 40px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r);
+  background: var(--surface);
+  /* 16px keeps iOS from zooming the page when the field takes focus. */
+  font-size: 16px;
+  line-height: 1;
+}
+
+.search::placeholder {
+  color: var(--ink-3);
+}
+
+.groups {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 18px;
+}
+
+.group {
+  min-width: 0;
+}
+
+.groupTitle {
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.check input {
+  width: 17px;
+  height: 17px;
+  flex: none;
+  accent-color: var(--forest);
+  cursor: pointer;
+}
+
+.check .n {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+/* Options that would return nothing stay visible: the shape of the portfolio
+   is information too. */
+.off {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.popFoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.popFoot button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ---- panel button and reset ---- */
+.panelBtn {
+  font-weight: 600;
+}
+
+.panelOn {
+  border-color: var(--forest);
+  background: var(--forest-soft);
+}
+
+.badge {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  background: var(--forest);
+  color: var(--on-dark);
+  font-weight: 700;
+  font-size: 11px;
+  line-height: 1;
+}
+
+.reset {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  height: 44px;
+  padding: 0 10px;
+  color: var(--ink-3);
+  font-weight: 500;
+  font-size: var(--t-spec);
+  transition: color 0.2s var(--ease);
+}
+
+.reset:hover {
+  color: var(--ink);
+}
+
+.resetMobile {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border: 1px solid var(--line-2);
+  color: var(--ink-2);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 1099px) {
+  .bar {
+    display: none;
+  }
+
+  .barMobile {
+    display: flex;
+  }
+
+  .barMobile .segmented {
+    flex: 1;
+  }
+
+  .barMobile .seg {
+    flex: 1;
+  }
+
+  .barMobile .panelBtn {
+    flex: 1;
+    justify-content: center;
+  }
+}
+
+/* Below 380px the three controls no longer fit at full padding, and the reset
+   button is the one that gets pushed off the screen. Tighten instead. */
+@media (max-width: 380px) {
+  .barMobile {
+    gap: 6px;
+  }
+
+  .barMobile .segmented,
+  .barMobile .panelBtn {
+    min-width: 0;
+  }
+
+  .barMobile .seg {
+    padding: 0 8px;
+  }
+
+  .barMobile .panelBtn {
+    padding: 0 8px;
+  }
+}

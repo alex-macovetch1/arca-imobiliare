@@ -1,0 +1,171 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.label {
+  display: block;
+}
+
+.labelText {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  letter-spacing: 0.01em;
+  color: var(--ink-2);
+}
+
+.bad {
+  border-color: var(--clay);
+}
+
+/* Off screen rather than display:none — a bot reads the computed style too. */
+.trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  /* 44px of target: the box alone is 18px and impossible to hit on a phone. */
+  min-height: 44px;
+  padding-block: 4px;
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+
+.check {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin: 1px 0 0;
+  accent-color: var(--forest);
+}
+
+.badConsent {
+  color: var(--clay);
+}
+
+.note {
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--ink-3);
+}
+
+.error {
+  padding: 10px 14px;
+  border-left: 2px solid var(--clay);
+  background: var(--surface-2);
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--clay);
+}
+
+.submit {
+  align-self: flex-start;
+  min-width: 220px;
+}
+
+/* ---------- the success card, in place of the fields ---------- */
+
+.done {
+  gap: 12px;
+  padding: 32px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.doneTitle {
+  font-family: var(--f-serif);
+  font-weight: 500;
+  font-size: var(--t-h3);
+  line-height: var(--lh-h3);
+  color: var(--ink);
+}
+
+.doneText {
+  max-width: 46ch;
+  font-size: var(--t-spec);
+  line-height: 22px;
+  color: var(--ink-2);
+}
+
+.doneBtn {
+  align-self: flex-start;
+  margin-top: 8px;
+}
+
+/* ---------- on a forest band ---------- */
+
+.dark .labelText {
+  color: var(--on-dark-2);
+}
+
+.dark .consent {
+  color: var(--on-dark-2);
+}
+
+.dark .note {
+  color: var(--on-dark-2);
+}
+
+.dark .error {
+  background: var(--forest-2);
+  border-left-color: var(--on-dark);
+  color: var(--on-dark);
+}
+
+.dark.done {
+  border-color: var(--line-dark);
+  background: transparent;
+}
+
+.dark .doneTitle {
+  color: var(--on-dark);
+}
+
+.dark .doneText {
+  color: var(--on-dark-2);
+}
+
+.submitDark {
+  border-color: var(--on-dark);
+  background: var(--on-dark);
+  color: var(--forest);
+}
+
+.submitDark:hover {
+  border-color: var(--surface);
+  background: var(--surface);
+}
+
+@media (max-width: 700px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+
+  .submit {
+    align-self: stretch;
+    min-width: 0;
+  }
+
+  .done {
+    padding: 24px;
+  }
+}

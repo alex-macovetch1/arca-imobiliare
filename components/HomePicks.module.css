@@ -1,0 +1,85 @@
+.head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 36px;
+}
+
+.title {
+  margin-top: 14px;
+}
+
+.note {
+  max-width: 56ch;
+  margin-top: 12px;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--ink-3);
+}
+
+.all {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  border-bottom: 1px solid var(--line-2);
+  font-weight: 600;
+  font-size: var(--t-spec);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  transition: border-color 0.25s var(--ease);
+}
+.all:hover {
+  border-bottom-color: var(--brass);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+}
+
+.rail {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+}
+
+@media (max-width: 1099px) {
+  .grid,
+  .rail {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 699px) {
+  .head {
+    display: block;
+  }
+  .all {
+    margin-top: 20px;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  /* One card per screen with the next one peeking: the row reads as scrollable
+     without a hint under it. */
+  .rail {
+    display: flex;
+    gap: 16px;
+    margin-inline: calc(var(--gut) * -1);
+    padding-inline: var(--gut);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .rail::-webkit-scrollbar {
+    display: none;
+  }
+  .rail > * {
+    flex: 0 0 84%;
+    scroll-snap-align: start;
+  }
+}

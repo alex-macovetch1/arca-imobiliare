@@ -1,0 +1,258 @@
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  height: var(--h-header);
+  background: transparent;
+  color: var(--on-dark);
+  /* Only colour moves between the two states. The height never changes, so the
+     page below never shifts by a pixel. */
+  transition: background-color 0.3s var(--ease), color 0.3s var(--ease),
+    box-shadow 0.3s var(--ease);
+}
+
+.solid {
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: inset 0 -1px 0 var(--line);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  width: 100%;
+  max-width: var(--maxw);
+  height: 100%;
+  margin-inline: auto;
+  padding-inline: var(--gut);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  flex: none;
+}
+
+.logo {
+  width: 82px;
+  height: 20px;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  margin-right: auto;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  height: 44px;
+  border-bottom: 1px solid transparent;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1;
+  color: inherit;
+  transition: border-color 0.2s var(--ease), opacity 0.2s var(--ease);
+  opacity: 0.86;
+}
+.link:hover {
+  opacity: 1;
+  border-bottom-color: var(--brass);
+}
+.linkOn {
+  opacity: 1;
+  border-bottom-color: var(--brass);
+}
+
+.side {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex: none;
+}
+
+/* The saved counter sits before the language switch and stays visible on a
+   phone: it is the only place the list can be reached from. */
+.saved {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 44px;
+  margin-right: -6px;
+  color: inherit;
+  transition: opacity 0.2s var(--ease);
+  opacity: 0.86;
+}
+
+.saved:hover {
+  opacity: 1;
+}
+
+.savedCount {
+  position: absolute;
+  top: 6px;
+  right: 0;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  border-radius: var(--r-full);
+  background: var(--brass);
+  color: #14170f;
+  font-weight: 700;
+  font-size: 10px;
+  line-height: 17px;
+  text-align: center;
+}
+
+.drawerCount {
+  margin-left: 10px;
+  font-size: 15px;
+  color: var(--brass);
+}
+
+.phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 44px;
+  font-weight: 600;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: inherit;
+}
+.phone:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--brass);
+}
+
+.cta {
+  min-height: 40px;
+  padding: 0 18px;
+}
+
+/* Over the hero the filled button would fight the photo, so it borrows the
+   outlined treatment until the header goes solid. */
+.bar:not(.solid) .cta {
+  background: transparent;
+  border-color: rgba(242, 239, 232, 0.7);
+  color: var(--on-dark);
+}
+.bar:not(.solid) .cta:hover {
+  background: rgba(242, 239, 232, 0.12);
+  border-color: var(--on-dark);
+}
+
+.burger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-right: -10px;
+  color: inherit;
+}
+
+@media (max-width: 1099px) {
+  .nav,
+  .phone {
+    display: none;
+  }
+  .inner {
+    gap: 16px;
+  }
+  .side {
+    margin-left: auto;
+  }
+  .burger {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 700px) {
+  .cta {
+    display: none;
+  }
+  .logo {
+    width: 72px;
+    height: 18px;
+  }
+}
+
+/* ---------- mobile drawer ---------- */
+.drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  flex-direction: column;
+  background: var(--forest);
+  color: var(--on-dark);
+  padding-inline: var(--gut);
+  overflow-y: auto;
+}
+
+.drawerTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--h-header);
+  flex: none;
+}
+
+.logoDark {
+  width: 82px;
+  height: 20px;
+  color: var(--on-dark);
+}
+
+.close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-right: -10px;
+  color: var(--on-dark);
+}
+
+.drawerNav {
+  display: flex;
+  flex-direction: column;
+  padding-block: 24px;
+}
+
+.drawerLink {
+  display: flex;
+  align-items: center;
+  min-height: 60px;
+  border-bottom: 1px solid var(--line-dark);
+  font-family: var(--f-serif);
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 32px;
+  color: var(--on-dark);
+}
+
+.drawerFoot {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  margin-top: auto;
+  padding-block: 28px 40px;
+}
+
+.drawerPhone {
+  font-weight: 600;
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
+  color: var(--on-dark);
+}

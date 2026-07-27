@@ -1,0 +1,168 @@
+.gridSection {
+  padding-block: 48px var(--sec);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px var(--gap);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+.portrait {
+  display: block;
+  background: var(--surface-2);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding-top: 18px;
+}
+
+.name {
+  font-size: var(--t-card);
+  line-height: var(--lh-card);
+}
+
+.role {
+  margin-top: 4px;
+  font-weight: 500;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--ink-3);
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 12px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.dt {
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: 20px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.dd {
+  font-size: var(--t-spec);
+  line-height: 20px;
+  color: var(--ink-2);
+}
+
+.phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  /* Every tappable thing on the site clears 44px. */
+  min-height: 44px;
+  margin-top: 12px;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.phone:hover {
+  color: var(--forest);
+}
+
+.more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-top: auto;
+  padding-top: 8px;
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.more svg {
+  transition: transform 0.3s var(--ease);
+}
+
+.more:hover {
+  color: var(--forest);
+}
+
+.more:hover svg {
+  transform: translateX(4px);
+}
+
+/* ---------- the hiring band ---------- */
+
+.hiring {
+  background: var(--forest);
+  color: var(--on-dark);
+  padding-block: var(--sec);
+}
+
+.hiringInner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: start;
+}
+
+.hiringTitle {
+  margin-top: 18px;
+  color: var(--on-dark);
+}
+
+.hiringText {
+  max-width: 46ch;
+  margin-top: 20px;
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  color: var(--on-dark-2);
+}
+
+.hiringNote {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line-dark);
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--on-dark-2);
+}
+
+.hiringForm {
+  padding-top: 6px;
+}
+
+@media (max-width: 1099px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px var(--gap);
+  }
+
+  .hiringInner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 560px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gridSection {
+    padding-block: 32px var(--sec-m);
+  }
+}

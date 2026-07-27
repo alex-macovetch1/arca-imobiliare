@@ -20,6 +20,9 @@
 # production
 /build
 
+# panel data file (arca.json) — never in the repo
+/data
+
 # misc
 .DS_Store
 *.pem

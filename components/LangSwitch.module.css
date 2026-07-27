@@ -1,0 +1,46 @@
+.wrap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn {
+  /* 44px tall so it clears the touch target floor, but visually reads as text */
+  display: inline-flex;
+  align-items: center;
+  height: 44px;
+  padding: 0 4px;
+  border-bottom: 1px solid transparent;
+  color: var(--ink-3);
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0.1em;
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+.btn:hover {
+  color: var(--ink);
+}
+
+.on {
+  color: var(--ink);
+  border-bottom-color: var(--brass);
+}
+
+.sep {
+  width: 1px;
+  height: 12px;
+  background: var(--line-2);
+}
+
+/* Over a photo or on the forest band. */
+.dark .btn {
+  color: var(--on-dark-2);
+}
+.dark .btn:hover,
+.dark .on {
+  color: var(--on-dark);
+}
+.dark .sep {
+  background: var(--line-dark);
+}

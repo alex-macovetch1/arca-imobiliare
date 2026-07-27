@@ -1,0 +1,69 @@
+.map {
+  position: relative;
+  display: block;
+  /* 1170 x 420, reserved before the file lands. */
+  aspect-ratio: 39 / 14;
+  overflow: hidden;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+}
+
+.tall {
+  aspect-ratio: 3 / 2;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.marker {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  margin: -9px 0 0 -9px;
+  border-radius: var(--r-full);
+  background: var(--forest);
+  box-shadow: 0 0 0 4px var(--paper), 0 0 0 5px var(--forest);
+}
+
+.plate {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 100%;
+  padding: 14px 18px;
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+}
+
+.plateAddress {
+  font-weight: 500;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--ink);
+}
+
+.plateAction {
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+@media (max-width: 700px) {
+  .map {
+    aspect-ratio: 4 / 3;
+  }
+
+  .plate {
+    padding: 12px 14px;
+  }
+}

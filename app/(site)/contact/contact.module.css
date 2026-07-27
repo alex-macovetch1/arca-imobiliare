@@ -1,0 +1,244 @@
+.main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: start;
+  padding-top: 56px;
+}
+
+/* ---------- left column ---------- */
+
+.details {
+  padding-top: 4px;
+}
+
+.list {
+  border-top: 1px solid var(--line);
+}
+
+.entry {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 16px;
+  align-items: baseline;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.dt {
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: 24px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.dd {
+  margin: 0;
+}
+
+.big {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 28px;
+  color: var(--ink);
+}
+
+.big:hover {
+  color: var(--forest);
+}
+
+.value {
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--ink);
+}
+
+.channels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.privacy {
+  max-width: 46ch;
+  margin-top: 24px;
+}
+
+/* ---------- form ---------- */
+
+.formBox {
+  padding: 36px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--sh-1);
+}
+
+.formTitle {
+  font-size: var(--t-h3);
+  line-height: var(--lh-h3);
+}
+
+.formLead {
+  margin-top: 8px;
+  font-size: var(--t-spec);
+  line-height: 22px;
+  color: var(--ink-2);
+}
+
+.formInner {
+  margin-top: 24px;
+}
+
+/* ---------- map ---------- */
+
+.mapSection {
+  padding-top: var(--sec);
+}
+
+/* ---------- agents ---------- */
+
+.agentsSection {
+  padding-top: var(--sec);
+}
+
+.agentsHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+.agentsTitle {
+  margin-top: 14px;
+}
+
+.agentsAll {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.agentsAll:hover {
+  color: var(--forest);
+}
+
+.agents {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap);
+  margin-top: 32px;
+}
+
+.agent {
+  min-width: 0;
+}
+
+.agentName {
+  margin-top: 14px;
+  font-size: var(--t-card);
+  line-height: var(--lh-card);
+}
+
+.agentSectors {
+  margin-top: 4px;
+  font-weight: 500;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--ink-3);
+}
+
+.agentPhone {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.agentPhone:hover {
+  color: var(--forest);
+}
+
+/* ---------- faq ---------- */
+
+.faqSection {
+  padding-block: var(--sec);
+}
+
+.faq {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px var(--gap);
+  margin-top: 32px;
+}
+
+.faqItem {
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.faqQ {
+  font-size: var(--t-card);
+  line-height: var(--lh-card);
+}
+
+.faqA {
+  max-width: 54ch;
+  margin-top: 10px;
+  font-size: var(--t-spec);
+  line-height: 22px;
+  color: var(--ink-2);
+}
+
+@media (max-width: 1099px) {
+  .main {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .agents {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .main {
+    padding-top: 36px;
+  }
+
+  .entry {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .formBox {
+    padding: 24px 20px;
+  }
+
+  .mapSection,
+  .agentsSection {
+    padding-top: var(--sec-m);
+  }
+
+  .faqSection {
+    padding-block: var(--sec-m);
+  }
+
+  .faq {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}

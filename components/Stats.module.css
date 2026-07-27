@@ -1,0 +1,98 @@
+/* The one dark band on the homepage. It sits between two paper sections, so
+   the page has a middle instead of a long single tone. */
+.band {
+  background: var(--forest);
+  color: var(--on-dark);
+}
+
+.top {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: end;
+  margin-bottom: 56px;
+}
+
+.title {
+  margin-top: 14px;
+  color: var(--on-dark);
+}
+
+.lead {
+  max-width: 46ch;
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  color: var(--on-dark-2);
+}
+
+.figures {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding-top: 40px;
+  border-top: 1px solid var(--line-dark);
+}
+
+.fig {
+  padding-inline: 28px;
+}
+.fig:first-child {
+  padding-left: 0;
+}
+.fig:last-child {
+  padding-right: 0;
+}
+.fig + .fig {
+  border-left: 1px solid var(--line-dark);
+}
+
+.value {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-weight: 600;
+  font-size: var(--t-figure);
+  line-height: var(--lh-figure);
+  letter-spacing: -0.02em;
+  color: var(--on-dark);
+}
+
+.suffix {
+  font-size: var(--t-lead);
+  line-height: 1;
+  font-weight: 500;
+  color: var(--on-dark-2);
+}
+
+.label {
+  margin-top: 12px;
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--on-dark-2);
+}
+
+@media (max-width: 899px) {
+  .top {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+  .figures {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 36px;
+  }
+  .fig,
+  .fig:first-child,
+  .fig:last-child {
+    padding: 0;
+  }
+  .fig + .fig {
+    border-left: 0;
+  }
+  .fig:nth-child(even) {
+    padding-left: 24px;
+    border-left: 1px solid var(--line-dark);
+  }
+}

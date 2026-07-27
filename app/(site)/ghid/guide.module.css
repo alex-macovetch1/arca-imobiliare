@@ -1,0 +1,207 @@
+.head {
+  padding-bottom: 32px;
+}
+
+.h2 {
+  margin-top: 10px;
+  max-width: 20ch;
+}
+
+/* ---------- steps ---------- */
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px var(--gap);
+  border-top: 1px solid var(--line);
+  padding-top: 40px;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 8px;
+}
+
+.stepNo {
+  font-weight: 600;
+  font-size: var(--t-spec);
+  line-height: 30px;
+  letter-spacing: 0.1em;
+  color: var(--brass);
+}
+
+.stepBody {
+  max-width: 52ch;
+}
+
+.stepTitle {
+  font-size: var(--t-h3);
+  line-height: var(--lh-h3);
+}
+
+.stepText {
+  margin-top: 10px;
+  color: var(--ink-2);
+}
+
+/* ---------- checklist band ---------- */
+
+.checkSection {
+  margin-top: var(--sec);
+  padding-block: var(--sec-accent);
+  background: var(--forest);
+  color: var(--on-dark);
+}
+
+.checkInner {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: calc(var(--gap) * 2);
+  align-items: start;
+}
+
+.checkTitle {
+  margin-top: 12px;
+  max-width: 16ch;
+  color: var(--on-dark);
+}
+
+.checks {
+  display: flex;
+  flex-direction: column;
+}
+
+.check {
+  position: relative;
+  padding: 18px 0 18px 34px;
+  border-bottom: 1px solid var(--line-dark);
+  color: var(--on-dark-2);
+  font-size: var(--t-lead);
+  line-height: var(--lh-lead);
+}
+
+.check:last-child {
+  border-bottom: 0;
+}
+
+.check::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 30px;
+  width: 18px;
+  height: 1px;
+  background: var(--brass);
+}
+
+/* ---------- sectors ---------- */
+
+.sectorsLead {
+  margin-top: 14px;
+}
+
+.sectors {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px var(--gap);
+  border-top: 1px solid var(--line);
+  padding-top: 8px;
+}
+
+.sector {
+  padding-top: 32px;
+}
+
+.sectorHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.sectorName {
+  font-size: var(--t-h3);
+  line-height: var(--lh-h3);
+}
+
+.sectorFigure {
+  font-weight: 600;
+  font-size: var(--t-card);
+  line-height: var(--lh-card);
+}
+
+.sectorText {
+  margin-top: 14px;
+  max-width: 56ch;
+  color: var(--ink-2);
+}
+
+.sectorFoot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.sectorCount {
+  color: var(--ink-3);
+}
+
+/* ---------- closing ---------- */
+
+.help {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: calc(var(--gap) * 2);
+  align-items: center;
+  padding: 40px 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--line);
+}
+
+.helpText {
+  margin-top: 14px;
+}
+
+.helpActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 40px;
+  padding-top: 32px;
+}
+
+.link {
+  font-family: var(--f-serif);
+  font-weight: 500;
+  font-size: var(--t-h3);
+  line-height: var(--lh-h3);
+  transition: color 0.2s var(--ease);
+}
+
+.link:hover {
+  color: var(--forest);
+}
+
+@media (max-width: 1099px) {
+  .steps,
+  .sectors {
+    grid-template-columns: 1fr;
+  }
+
+  .checkInner,
+  .help {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}

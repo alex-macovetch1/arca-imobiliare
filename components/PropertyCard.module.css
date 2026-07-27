@@ -1,0 +1,220 @@
+/* The card used on every grid in the site. The only thing that moves on hover
+   is the shadow: photography stays exactly where the eye left it. */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--sh-1);
+  transition: box-shadow 0.3s var(--ease);
+}
+
+.card:hover {
+  box-shadow: var(--sh-2);
+}
+
+.photo {
+  flex: none;
+}
+
+.img {
+  object-fit: cover;
+}
+
+.badges {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-width: calc(100% - 72px);
+  pointer-events: none;
+}
+
+.counter {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  z-index: 2;
+  padding: 5px 8px;
+  background: var(--badge-bg);
+  color: var(--on-dark);
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* 44px hit area, 34px visible square — the tap target rule without a heavy button. */
+.heart {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: var(--on-dark);
+}
+
+.heart::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  background: var(--badge-bg);
+  transition: background-color 0.25s var(--ease);
+}
+
+.heart:hover::before {
+  background: var(--forest);
+}
+
+.heart svg {
+  position: relative;
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+}
+
+.sector {
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.title {
+  font-family: var(--f-serif);
+  font-weight: 500;
+  font-size: var(--t-card);
+  line-height: var(--lh-card);
+  color: var(--ink);
+}
+
+/* The whole card is the link; the anchor itself stays the title, so a screen
+   reader announces the address rather than "link, link, link". */
+.link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.specs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  letter-spacing: 0.01em;
+  color: var(--ink-2);
+}
+
+.specs li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.specs li + li::before {
+  content: "";
+  width: 1px;
+  height: 11px;
+  background: var(--brass);
+}
+
+.intro {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  margin-top: 2px;
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--ink-2);
+}
+
+.foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.price {
+  font-weight: 600;
+  font-size: var(--t-price-card);
+  line-height: var(--lh-price-card);
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.cut {
+  margin-left: 10px;
+  font-weight: 500;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--clay);
+  text-decoration: line-through;
+}
+
+.sqm {
+  flex: none;
+  font-weight: 500;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---- list layout ---- */
+@media (min-width: 700px) {
+  .horizontal {
+    flex-direction: row;
+  }
+
+  .horizontal .photo {
+    width: 340px;
+    aspect-ratio: 4 / 3;
+  }
+
+  .horizontal .body {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 699px) {
+  .body {
+    padding: 16px;
+  }
+
+  .intro {
+    display: none;
+  }
+}

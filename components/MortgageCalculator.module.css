@@ -1,0 +1,195 @@
+.card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 28px;
+}
+
+.field {
+  display: block;
+}
+
+.label {
+  display: block;
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.value {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--ink);
+}
+
+.inputWrap {
+  position: relative;
+  display: block;
+  margin-top: 8px;
+}
+
+.input {
+  padding-right: 76px;
+  font-weight: 600;
+}
+/* The spinners fight the tabular figures and are useless at this step size. */
+.input::-webkit-outer-spin-button,
+.input::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+.input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.suffix {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  font-size: var(--t-spec);
+  color: var(--ink-3);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* ---------- slider: a hairline track and a square handle ---------- */
+.range {
+  appearance: none;
+  -webkit-appearance: none;
+  display: block;
+  width: 100%;
+  height: 44px;
+  margin-top: 2px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.range::-webkit-slider-runnable-track {
+  height: 1px;
+  background: var(--line-2);
+}
+.range::-moz-range-track {
+  height: 1px;
+  background: var(--line-2);
+}
+
+.range::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  margin-top: -8px;
+  border: 0;
+  border-radius: var(--r);
+  background: var(--forest);
+}
+.range::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border: 0;
+  border-radius: var(--r);
+  background: var(--forest);
+}
+
+.range:focus-visible {
+  box-shadow: none;
+}
+.range:focus-visible::-webkit-slider-thumb {
+  box-shadow: var(--focus);
+}
+.range:focus-visible::-moz-range-thumb {
+  box-shadow: var(--focus);
+}
+
+/* ---------- result ---------- */
+.result {
+  padding: 28px;
+  border-left: 1px solid var(--line);
+  background: var(--surface-2);
+}
+
+.big {
+  margin-top: 14px;
+  font-weight: 600;
+  font-size: var(--t-figure);
+  line-height: var(--lh-figure);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.mdl {
+  margin-top: 2px;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--ink-3);
+}
+
+.lines {
+  margin-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.line {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.line dt {
+  color: var(--ink-2);
+}
+
+.line dd {
+  margin: 0;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.full {
+  display: inline-block;
+  margin-top: 18px;
+}
+
+.note {
+  margin-top: 14px;
+}
+
+@media (max-width: 899px) {
+  .card {
+    grid-template-columns: 1fr;
+  }
+  .result {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+  .controls,
+  .result {
+    padding: 22px;
+  }
+}

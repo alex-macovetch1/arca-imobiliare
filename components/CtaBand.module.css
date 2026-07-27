@@ -1,0 +1,98 @@
+.band {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+/* No aspect-ratio here on purpose: the photo cell takes its height from the
+   text cell next to it, so the two halves always end on the same line. */
+.photo {
+  position: relative;
+  min-height: 400px;
+  overflow: hidden;
+  background: var(--surface-2);
+}
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.body {
+  padding: 48px;
+}
+
+.title {
+  margin-top: 14px;
+}
+
+.lead {
+  max-width: 44ch;
+  margin-top: 16px;
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  color: var(--ink-2);
+}
+
+.steps {
+  margin-top: 28px;
+  border-top: 1px solid var(--line);
+}
+
+.step {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+  font-weight: 500;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--ink);
+}
+
+.no {
+  flex: none;
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  letter-spacing: 0.1em;
+  color: var(--ink-3);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  margin-top: 32px;
+}
+
+.call {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 500;
+  font-size: var(--t-spec);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-2);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.25s var(--ease), color 0.25s var(--ease);
+}
+.call:hover {
+  color: var(--ink);
+  border-bottom-color: var(--brass);
+}
+
+@media (max-width: 899px) {
+  .band {
+    grid-template-columns: 1fr;
+  }
+  .photo {
+    min-height: 0;
+    aspect-ratio: 3 / 2;
+  }
+  .body {
+    padding: 32px 24px;
+  }
+}

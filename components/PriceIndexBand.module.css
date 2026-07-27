@@ -1,0 +1,113 @@
+.wrap {
+  padding: 28px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.verdict {
+  font-family: var(--f-serif);
+  font-weight: 500;
+  font-size: var(--t-h3);
+  line-height: var(--lh-h3);
+}
+
+.sub {
+  color: var(--forest);
+}
+
+.in {
+  color: var(--ink);
+}
+
+.peste {
+  color: var(--clay);
+}
+
+/* ---------- the rail ---------- */
+
+.rail {
+  position: relative;
+  height: 8px;
+  margin: 26px 0 22px;
+  background: var(--surface-2);
+}
+
+.band {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: var(--forest-soft);
+  border-left: 1px solid var(--line-2);
+  border-right: 1px solid var(--line-2);
+}
+
+.median {
+  position: absolute;
+  top: -5px;
+  bottom: -5px;
+  width: 1px;
+  background: var(--line-2);
+}
+
+/* The offer itself: the only filled mark on the rail. */
+.marker {
+  position: absolute;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  background: var(--forest);
+  box-shadow: 0 0 0 3px var(--surface);
+}
+
+/* ---------- legend ---------- */
+
+.legend {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 0 0 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.item dt {
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--ink-3);
+}
+
+.item dd {
+  margin: 2px 0 0;
+  font-weight: 500;
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+}
+
+.strong {
+  font-weight: 600;
+}
+
+.note {
+  margin-bottom: 12px;
+  max-width: 68ch;
+}
+
+@media (max-width: 699px) {
+  .wrap {
+    padding: 22px 18px;
+  }
+
+  .legend {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}

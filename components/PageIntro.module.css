@@ -1,0 +1,29 @@
+.head {
+  padding-top: 64px;
+  padding-bottom: 8px;
+}
+
+.title {
+  margin-top: 18px;
+  max-width: 20ch;
+}
+
+.lead {
+  margin-top: 20px;
+}
+
+.meta {
+  margin-top: 14px;
+  color: var(--ink-3);
+}
+
+@media (max-width: 700px) {
+  .head {
+    padding-top: 40px;
+  }
+
+  .title {
+    margin-top: 14px;
+    max-width: none;
+  }
+}

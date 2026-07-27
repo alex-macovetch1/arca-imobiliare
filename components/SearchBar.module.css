@@ -1,0 +1,232 @@
+/* The card overlaps the photograph instead of sitting under it: the search is
+   the first thing the page asks for, and the overlap makes that unmissable. */
+.zone {
+  position: relative;
+  z-index: 1;
+  margin-top: -72px;
+  padding-bottom: 8px;
+}
+
+.card {
+  padding: 40px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--sh-1);
+}
+
+.h1 {
+  margin-top: 14px;
+  font-size: var(--t-h1-hero);
+  line-height: var(--lh-h1-hero);
+  letter-spacing: -0.015em;
+}
+
+.sub {
+  max-width: 52ch;
+  margin-top: 12px;
+  color: var(--ink-2);
+}
+
+/* ---------- deal tabs ---------- */
+.tabs {
+  display: inline-flex;
+  margin-top: 30px;
+  border: 1px solid var(--line-2);
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 24px;
+  color: var(--ink-3);
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: color 0.25s var(--ease), background-color 0.25s var(--ease);
+}
+.tab:hover {
+  color: var(--ink);
+}
+.tab + .tab {
+  border-left: 1px solid var(--line-2);
+}
+
+.tabOn,
+.tabOn:hover {
+  background: var(--forest);
+  color: var(--on-dark);
+}
+
+/* ---------- the four fields and the button ---------- */
+/* Two rows: the free field and the button on top, the four narrowers under it.
+   Placement is explicit so the source order can stay input → filters → button,
+   which is the order the fields stack in on a phone. */
+.form {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) auto;
+  gap: 16px;
+  align-items: end;
+  margin-top: 18px;
+}
+
+.q {
+  grid-column: 1 / 5;
+  grid-row: 1;
+  min-width: 0;
+}
+
+/* Safari rounds a search field and adds its own inner shading: both would
+   break the square-corner rule the rest of the site follows. */
+.q input {
+  appearance: none;
+}
+
+.cell {
+  grid-row: 2;
+  min-width: 0;
+}
+
+.label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.pick {
+  position: relative;
+}
+
+.pick select {
+  appearance: none;
+  width: 100%;
+  padding-right: 40px;
+  cursor: pointer;
+}
+
+.chev {
+  position: absolute;
+  top: 50%;
+  right: 13px;
+  transform: translateY(-50%) rotate(90deg);
+  color: var(--ink-3);
+  pointer-events: none;
+}
+
+.submit {
+  grid-column: 5;
+  grid-row: 1;
+  padding: 0 28px;
+}
+
+/* ---------- the line under the card ---------- */
+.trust {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  font-size: var(--t-spec);
+  line-height: var(--lh-spec);
+  color: var(--ink-3);
+}
+
+.dot {
+  width: 1px;
+  height: 10px;
+  background: var(--brass);
+}
+
+/* ---------- quick chips ---------- */
+.chips {
+  display: flex;
+  gap: 8px;
+  margin-top: 28px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.chips::-webkit-scrollbar {
+  display: none;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  min-height: 44px;
+  padding: 0 18px;
+  background: var(--surface);
+  border: 1px solid var(--line-2);
+  font-weight: 500;
+  font-size: var(--t-spec);
+  line-height: 1;
+  color: var(--ink-2);
+  white-space: nowrap;
+  transition: border-color 0.25s var(--ease), background-color 0.25s var(--ease),
+    color 0.25s var(--ease);
+}
+.chip:hover {
+  border-color: var(--forest);
+  background: var(--forest-soft);
+  color: var(--ink);
+}
+
+@media (max-width: 1099px) {
+  .form {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .q,
+  .cell,
+  .submit {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  .q,
+  .submit {
+    grid-column: 1 / -1;
+  }
+  /* Auto-placement follows order, so the button drops below the filters
+     without the markup having to change. */
+  .submit {
+    order: 1;
+  }
+}
+
+@media (max-width: 700px) {
+  .zone {
+    margin-top: -40px;
+  }
+  .card {
+    padding: 24px;
+  }
+  .form {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .tabs {
+    display: flex;
+    margin-top: 24px;
+  }
+  .tab {
+    flex: 1;
+    justify-content: center;
+    padding: 0 12px;
+  }
+  /* The chips run off the gutter on purpose: a cut-off chip is what tells a
+     thumb that the row scrolls. */
+  .chips {
+    margin-inline: calc(var(--gut) * -1);
+    padding-inline: var(--gut);
+    scroll-snap-type: x mandatory;
+  }
+  .chip {
+    scroll-snap-align: start;
+  }
+}
