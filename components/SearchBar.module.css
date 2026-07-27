@@ -169,11 +169,14 @@
     color 0.22s var(--ease);
 }
 
+/* Inverts to ink instead of tinting: the pale wash under a hard blue outline
+   read as an unfinished state. This is the same move the deal tab makes, so
+   the two controls speak one language. */
 .chip:hover {
   transform: translateY(-2px);
-  border-color: var(--accent);
-  background: var(--accent-soft);
-  color: var(--accent);
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #fff;
   box-shadow: var(--sh-1);
 }
 
