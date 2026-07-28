@@ -1,178 +1,261 @@
-/* The search bar sits under the header and stays there: on a results page the
-   filters are the navigation. Nothing here changes size between states, so the
-   grid below never jumps. */
-.wrap {
+/* The filter bar sits under the header and stays there: on a results page the
+   filters are the navigation. Every control is a free-standing pill — nothing
+   is welded into a panel, and a pill that carries a choice says the choice out
+   loud instead of its own label. */
+.shell {
   position: sticky;
   top: var(--h-header);
   z-index: 40;
-  background: var(--surface);
+  background: var(--paper);
   box-shadow: inset 0 -1px 0 var(--line);
 }
 
 .bar {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
-  padding-block: 8px;
+  gap: 10px;
+  padding-block: 11px;
 }
 
-.barMobile {
-  display: none;
-  gap: 8px;
-  padding-block: 8px;
-}
-
-/* ---- shared control shell ---- */
-.control {
+/* ---------- the pill ---------- */
+.pill {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   height: 44px;
-  padding: 0 14px;
-  border: 1px solid var(--line-2);
-  border-radius: var(--r);
-  background: var(--surface);
-  color: var(--ink);
+  max-width: 260px;
+  padding: 0 16px;
+  border-radius: var(--r-full);
+  background: var(--surface-2);
+  box-shadow: inset 0 0 0 1px transparent;
+  color: var(--ink-2);
   font-weight: 500;
   font-size: var(--t-spec);
   line-height: 1;
   white-space: nowrap;
   cursor: pointer;
-  transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease);
+  transition: background-color 0.24s var(--ease), color 0.24s var(--ease),
+    box-shadow 0.24s var(--ease), transform 0.24s var(--ease);
 }
 
-.control:hover {
-  border-color: var(--ink-3);
+.pill:hover {
+  box-shadow: inset 0 0 0 1px var(--line-2);
+  color: var(--ink);
 }
 
-.controlOn {
-  border-color: var(--accent);
+.pill:active {
+  transform: scale(0.97);
+  transition-duration: 90ms;
 }
 
-.selectWrap {
-  position: relative;
-  display: inline-flex;
+.pillText {
   min-width: 0;
-}
-
-/* Fixed widths, so the row keeps its rhythm whichever language is on and
-   whichever option is picked. */
-.kindSelect {
-  flex: 0 1 172px;
-  width: 172px;
-  min-width: 116px;
-}
-
-.priceSelect {
-  flex: 0 1 124px;
-  width: 124px;
-  min-width: 92px;
-}
-
-.selectWrap select {
-  width: 100%;
-  padding-right: 32px;
-  appearance: none;
+  overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.selectWrap::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: 13px;
+/* A choice was made: the pill goes solid and carries the value. This is the
+   whole point of the bar — the state has to be readable at a glance. */
+.pillOn,
+.pillOn:hover {
+  background: var(--ink);
+  color: var(--on-dark);
+  box-shadow: none;
+  font-weight: 600;
+}
+
+.pillOpen {
+  box-shadow: inset 0 0 0 1px var(--ink-3);
+}
+
+.caret {
+  flex: none;
   width: 7px;
   height: 7px;
-  border-right: 1px solid var(--ink-3);
-  border-bottom: 1px solid var(--ink-3);
-  transform: translateY(-70%) rotate(45deg);
+  margin-left: -1px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  opacity: 0.55;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform 0.24s var(--ease);
+}
+
+.pillOpen .caret {
+  transform: translateY(1px) rotate(225deg);
+}
+
+/* ---------- segmented pills: deal and rooms ---------- */
+.seg {
+  position: relative;
+  display: flex;
+  flex: none;
+  padding: 3px;
+  border-radius: var(--r-full);
+  background: var(--surface-2);
+}
+
+/* The indicator is a separate layer, so choosing a different figure is one
+   slide instead of two background swaps. */
+.segInd {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: var(--cell);
+  height: calc(100% - 6px);
+  border-radius: var(--r-full);
+  background: var(--ink);
+  transform: translateX(calc(var(--i) * var(--cell)));
+  transition: transform 0.34s var(--ease);
+  animation: indIn 0.24s var(--ease) both;
   pointer-events: none;
 }
 
-/* ---- deal tabs ---- */
-.segmented {
-  display: flex;
-  flex: none;
-  height: 44px;
-  border: 1px solid var(--line-2);
+@keyframes indIn {
+  from {
+    opacity: 0;
+  }
 }
 
-.seg {
-  padding: 0 15px;
+.segBtn {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cell);
+  height: 38px;
   color: var(--ink-2);
   font-weight: 600;
   font-size: var(--t-spec);
   line-height: 1;
-  letter-spacing: 0.04em;
-  transition: background-color 0.25s var(--ease), color 0.25s var(--ease);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.24s var(--ease);
 }
 
-.seg + .seg {
-  border-left: 1px solid var(--line-2);
+.segBtn:hover:not(:disabled) {
+  color: var(--ink);
 }
 
-.seg:hover {
-  background: var(--accent-soft);
-}
-
-.segOn,
-.segOn:hover {
-  background: var(--accent);
+.segBtnOn,
+.segBtnOn:hover {
   color: var(--on-dark);
 }
 
-/* ---- rooms ---- */
-.rooms {
-  display: flex;
-  flex: none;
-  height: 44px;
-  border: 1px solid var(--line-2);
-}
-
-.room {
-  width: 40px;
-  color: var(--ink-2);
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 1;
-  transition: background-color 0.25s var(--ease), color 0.25s var(--ease);
-}
-
-.room + .room {
-  border-left: 1px solid var(--line-2);
-}
-
-.room:hover:not(:disabled) {
-  background: var(--accent-soft);
-}
-
-.roomOn,
-.roomOn:hover {
-  background: var(--accent);
-  color: var(--on-dark);
-}
-
-.room:disabled {
-  opacity: 0.45;
+.segBtn:disabled {
+  opacity: 0.4;
   cursor: not-allowed;
 }
 
-/* ---- location dropdown ---- */
+.segDeal {
+  --cell: 108px;
+}
+
+.segDeal .segBtn {
+  letter-spacing: 0.06em;
+}
+
+.segRooms {
+  --cell: 46px;
+}
+
+.roomBtn {
+  font-size: 14px;
+}
+
+/* ---------- the panel button and the clear-all ---------- */
+.panelBtn {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.panelBtn svg {
+  flex: none;
+  opacity: 0.75;
+}
+
+.badge {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: var(--r-full);
+  background: var(--accent);
+  color: var(--on-dark);
+  font-weight: 700;
+  font-size: 11px;
+  line-height: 1;
+}
+
+/* Discreet, and only there when there is something to clear. */
+.reset {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 44px;
+  margin-left: auto;
+  padding: 0 6px;
+  color: var(--ink-3);
+  font-weight: 500;
+  font-size: var(--t-spec);
+  white-space: nowrap;
+  animation: resetIn 0.24s var(--ease) both;
+  transition: color 0.2s var(--ease);
+}
+
+.reset:hover {
+  color: var(--ink);
+}
+
+@keyframes resetIn {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+}
+
+/* ---------- dropdowns ---------- */
 .pop {
   position: relative;
   flex: none;
+  min-width: 0;
 }
 
 .popPanel {
   position: absolute;
-  top: calc(100% + 8px);
+  top: calc(100% + 9px);
   left: 0;
   z-index: 5;
-  width: 460px;
-  padding: 20px;
-  background: var(--surface);
+  width: min(460px, calc(100vw - 2 * var(--gut)));
+  padding: 18px;
   border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--paper);
   box-shadow: var(--sh-2);
+  transform-origin: top left;
+  animation: popIn 0.22s var(--ease) both;
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+.popNarrow {
+  width: min(276px, calc(100vw - 2 * var(--gut)));
+  padding: 8px;
+}
+
+.popPrice {
+  width: min(368px, calc(100vw - 2 * var(--gut)));
+}
+
+.popPrice .groups {
+  gap: 14px;
 }
 
 .searchRow {
@@ -182,7 +265,7 @@
 .searchIcon {
   position: absolute;
   top: 50%;
-  left: 13px;
+  left: 15px;
   transform: translateY(-50%);
   color: var(--ink-3);
   pointer-events: none;
@@ -190,14 +273,21 @@
 
 .search {
   width: 100%;
-  height: 48px;
-  padding: 0 14px 0 40px;
+  height: 46px;
+  padding: 0 16px 0 42px;
   border: 1px solid var(--line-2);
-  border-radius: var(--r);
+  border-radius: var(--r-full);
   background: var(--surface);
+  appearance: none;
   /* 16px keeps iOS from zooming the page when the field takes focus. */
   font-size: 16px;
   line-height: 1;
+  transition: border-color 0.2s var(--ease);
+}
+
+.search:hover,
+.search:focus {
+  border-color: var(--ink-3);
 }
 
 .search::placeholder {
@@ -207,8 +297,11 @@
 .groups {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  margin-top: 18px;
+  gap: 22px;
+}
+
+.searchRow + .groups {
+  margin-top: 16px;
 }
 
 .group {
@@ -225,11 +318,55 @@
   color: var(--ink-3);
 }
 
+/* ---- a single-choice row ---- */
+.option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  min-height: 40px;
+  padding: 0 12px;
+  border-radius: var(--r-sm);
+  color: var(--ink);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.18s var(--ease), color 0.18s var(--ease);
+}
+
+.option:hover:not(:disabled) {
+  background: var(--surface-2);
+}
+
+.optionOn,
+.optionOn:hover:not(:disabled) {
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.option:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* The price steps are a long list: give the column a window instead of letting
+   the dropdown grow past the fold. */
+.optionScroll {
+  max-height: 268px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* ---- multi-choice rows ---- */
 .check {
   display: flex;
   align-items: center;
   gap: 10px;
-  min-height: 44px;
+  min-height: 40px;
   font-size: 14px;
   line-height: 20px;
   color: var(--ink);
@@ -244,10 +381,14 @@
   cursor: pointer;
 }
 
-.check .n {
+.n {
   margin-left: auto;
   font-size: 12px;
   color: var(--ink-3);
+}
+
+.optionOn .n {
+  color: var(--accent);
 }
 
 /* Options that would return nothing stay visible: the shape of the portfolio
@@ -261,8 +402,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 16px;
-  padding-top: 14px;
+  margin-top: 14px;
+  padding-top: 13px;
   border-top: 1px solid var(--line);
 }
 
@@ -271,107 +412,59 @@
   cursor: not-allowed;
 }
 
-/* ---- panel button and reset ---- */
-.panelBtn {
-  font-weight: 600;
-}
-
-.panelOn {
-  border-color: var(--accent);
-  background: var(--accent-soft);
-}
-
-/* A count, not a label — the same disc the saved counter wears in the header. */
-.badge {
-  display: inline-grid;
-  place-items: center;
-  min-width: 20px;
-  height: 20px;
-  padding: 0 6px;
-  border-radius: var(--r-full);
-  background: var(--accent);
-  color: var(--on-dark);
-  font-weight: 700;
-  font-size: 11px;
-  line-height: 1;
-}
-
-.reset {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-left: auto;
-  height: 44px;
-  padding: 0 10px;
-  color: var(--ink-3);
-  font-weight: 500;
-  font-size: var(--t-spec);
-  transition: color 0.2s var(--ease);
-}
-
-.reset:hover {
-  color: var(--ink);
-}
-
-.resetMobile {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  flex: none;
-  border: 1px solid var(--line-2);
-  color: var(--ink-2);
-}
-
-.srOnly {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-
+/* ---------- phone: one snapping row, choices go to the drawer ---------- */
 @media (max-width: 1099px) {
   .bar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    /* Bleed to both edges so the row reads as scrollable, without widening
+       the page: the negative margin cancels the wrapper's gutter exactly. */
+    margin-inline: calc(var(--gut) * -1);
+    padding-inline: var(--gut);
+  }
+
+  .bar::-webkit-scrollbar {
     display: none;
   }
 
-  .barMobile {
-    display: flex;
+  .bar > * {
+    flex: none;
+    scroll-snap-align: start;
   }
 
-  .barMobile .segmented {
-    flex: 1;
+  .reset {
+    margin-left: 0;
   }
 
-  .barMobile .seg {
-    flex: 1;
-  }
-
-  .barMobile .panelBtn {
-    flex: 1;
-    justify-content: center;
+  .segDeal {
+    --cell: 96px;
   }
 }
 
-/* Below 380px the three controls no longer fit at full padding, and the reset
-   button is the one that gets pushed off the screen. Tighten instead. */
-@media (max-width: 380px) {
-  .barMobile {
-    gap: 6px;
+@media (max-width: 400px) {
+  .segDeal {
+    --cell: 88px;
   }
 
-  .barMobile .segmented,
-  .barMobile .panelBtn {
-    min-width: 0;
+  .pill {
+    padding: 0 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pill,
+  .segInd,
+  .caret,
+  .popPanel,
+  .reset,
+  .option {
+    transition: none;
+    animation: none;
   }
 
-  .barMobile .seg {
-    padding: 0 8px;
-  }
-
-  .barMobile .panelBtn {
-    padding: 0 8px;
+  .pill:active {
+    transform: none;
   }
 }

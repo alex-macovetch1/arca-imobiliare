@@ -4,3 +4,52 @@
 .page {
   transform-origin: 50% 0;
 }
+
+/* ---------- navigation indicator ----------
+   Always mounted and invisible at rest, so a navigation never inserts an
+   element and never costs a layout: the only two properties that ever change
+   are transform and opacity. It is a sibling of .page rather than a child,
+   because .page carries a transform while the incoming route fades in and a
+   transformed ancestor would become the containing block for this. */
+.bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 100;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Creeps to three quarters and waits there. The last quarter belongs to the
+   arrival, so the bar can never finish before the page does. */
+.on {
+  opacity: 1;
+  transform: scaleX(0.74);
+  transition: transform 1800ms cubic-bezier(0.08, 0.82, 0.24, 1), opacity 120ms linear;
+}
+
+/* Transitions read from the current computed value, so this picks the bar up
+   wherever the creep left it instead of restarting it. */
+.done {
+  opacity: 0;
+  transform: scaleX(1);
+  transition: transform 180ms var(--ease), opacity 220ms 140ms linear;
+}
+
+/* Still useful information, so it stays — it just stops travelling. */
+@media (prefers-reduced-motion: reduce) {
+  .bar {
+    transform: scaleX(1);
+  }
+  .on {
+    opacity: 1;
+  }
+  .done {
+    opacity: 0;
+  }
+}

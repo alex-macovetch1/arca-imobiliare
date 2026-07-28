@@ -36,10 +36,13 @@ export const L = {
 
   /* stat band */
   roomsShort: { ro: "Camere", ru: "Комнат" },
+  pricePerSqmShort: { ro: "Preț pe m²", ru: "Цена за м²" },
 
   /* location */
   mapTitle: { ro: "Harta zonei", ru: "Карта района" },
   openInMaps: { ro: "Deschide în Google Maps", ru: "Открыть в Google Maps" },
+  showMap: { ro: "Deschide harta", ru: "Открыть карту" },
+  planAlt: { ro: "Schema orașului Chișinău", ru: "Схема Кишинёва" },
   poiTransport: { ro: "Transport", ru: "Транспорт" },
   poiEducation: { ro: "Educație", ru: "Образование" },
   poiDaily: { ro: "Zilnic", ru: "Каждый день" },

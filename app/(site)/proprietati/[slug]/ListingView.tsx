@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import AgentCard from "@/components/AgentCard";
@@ -57,12 +58,32 @@ const SECTIONS: { id: string; label: T }[] = [
 
 type Props = { property: Property; agent: Agent; similar: Property[] };
 
+/** The affirmative mark on an amenity. Kept here: nothing else on the site says it. */
+function Tick({ size = 15 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M4.5 12.5l5 5 10-11" />
+    </svg>
+  );
+}
+
 export default function ListingView({ property: p, agent, similar }: Props) {
   const { t, lang } = useLang();
 
   const [active, setActive] = useState(SECTIONS[0].id);
   const [copied, setCopied] = useState(false);
   const [wholeText, setWholeText] = useState(false);
+  const [mapOn, setMapOn] = useState(false);
 
   /* Saved listings live in the browser, without an account. The same store
      backs the heart on the card and the counter in the header. */
@@ -137,22 +158,30 @@ export default function ListingView({ property: p, agent, similar }: Props) {
     { label: UI.available, value: t(p.availableFrom) },
   ];
 
+  /* The five figures a buyer checks before reading a word. Everything else in
+     this section is a detail, and reads as one. */
+  const figures: { label: T; value: string }[] = [
+    ...(p.rooms > 0 ? [{ label: L.roomsShort, value: String(p.rooms) }] : []),
+    { label: UI.area, value: formatArea(p.area, lang) },
+    { label: UI.floorLabel, value: floorFigure(p.floor, p.floors, t) },
+    { label: UI.year, value: String(p.year) },
+    { label: L.pricePerSqmShort, value: formatPricePerSqm(p.pricePerSqm, lang) },
+  ];
+
   const rows: { label: T; value: React.ReactNode }[] = [];
   const add = (label: T, value: React.ReactNode) => {
     if (value !== null && value !== undefined && value !== "") rows.push({ label, value });
   };
 
+  /* Rooms, area, floor and the year are the figures above; repeating them here
+     is what made this read like a spreadsheet. */
   add(UI.propertyType, t(KIND_LABEL[p.kind]));
   add(L.dealRow, t(DEAL_LABEL[p.deal]));
-  if (p.rooms > 0) add(L.roomsRow, String(p.rooms));
   if (p.bedrooms) add(L.bedrooms, String(p.bedrooms));
   add(L.bathrooms, String(p.bathrooms));
-  add(L.usableArea, formatArea(p.area, lang));
   if (p.livingArea) add(L.livingArea, formatArea(p.livingArea, lang));
   if (p.kitchenArea) add(L.kitchenArea, formatArea(p.kitchenArea, lang));
   if (p.landArea) add(L.land, formatLand(p.landArea, lang));
-  add(UI.floorLabel, floorFigure(p.floor, p.floors, t));
-  add(L.floorsRow, String(p.floors));
   add(UI.fund, t(FUND_LABEL[p.fund]));
   add(L.yearBuilt, formatYear(p.year, p.yearStatus, lang));
   add(L.buildingType, t(BUILDING_LABEL[p.buildingType]));
@@ -272,7 +301,7 @@ export default function ListingView({ property: p, agent, similar }: Props) {
           </div>
 
           <div className={styles.gallery}>
-            <Gallery photos={p.photos} badges={badges} />
+            <Gallery photos={p.photos} badges={badges} vt={p.slug} />
           </div>
         </div>
       </div>
@@ -304,7 +333,10 @@ export default function ListingView({ property: p, agent, similar }: Props) {
             </ul>
 
             <section id="prezentare" className={`rv ${styles.section}`}>
-              <h2>{t(UI.overview)}</h2>
+              <div className={styles.head}>
+                <span className={styles.rule} aria-hidden="true" />
+                <h2>{t(UI.overview)}</h2>
+              </div>
               <div className={styles.text}>
                 {shown.map((par, i) => (
                   <p key={i}>{par}</p>
@@ -322,7 +354,24 @@ export default function ListingView({ property: p, agent, similar }: Props) {
             </section>
 
             <section id="caracteristici" className={`rv ${styles.section}`}>
-              <h2>{t(UI.features)}</h2>
+              <div className={styles.head}>
+                <span className={styles.rule} aria-hidden="true" />
+                <h2>{t(UI.features)}</h2>
+              </div>
+
+              <ul className={styles.figures}>
+                {figures.map((f, i) => (
+                  <li
+                    key={f.label.ro}
+                    className={styles.figure}
+                    style={{ "--i": i } as React.CSSProperties}
+                  >
+                    <span className={`num ${styles.figureValue}`}>{f.value}</span>
+                    <span className={styles.figureLabel}>{t(f.label)}</span>
+                  </li>
+                ))}
+              </ul>
+
               <dl className={styles.table}>
                 {rows.map((r) => (
                   <div key={r.label.ro} className={styles.tableRow}>
@@ -335,10 +384,18 @@ export default function ListingView({ property: p, agent, similar }: Props) {
 
             {p.amenities.length > 0 && (
               <section id="facilitati" className={`rv ${styles.section}`}>
-                <h2>{t(UI.amenities)}</h2>
+                <div className={styles.head}>
+                  <span className={styles.rule} aria-hidden="true" />
+                  <h2>{t(UI.amenities)}</h2>
+                </div>
                 <ul className={styles.chips}>
-                  {p.amenities.map((a) => (
-                    <li key={a} className={styles.chip}>
+                  {p.amenities.map((a, i) => (
+                    <li
+                      key={a}
+                      className={styles.chip}
+                      style={{ "--i": i } as React.CSSProperties}
+                    >
+                      <Tick />
                       {t(AMENITY_LABEL[a])}
                     </li>
                   ))}
@@ -347,17 +404,43 @@ export default function ListingView({ property: p, agent, similar }: Props) {
             )}
 
             <section id="localizare" className={`rv ${styles.section}`}>
-              <h2>{t(UI.locationSection)}</h2>
-              <p className={styles.mapAddress}>
-                {formatStreet(p.street, lang)}, {t(SECTOR_LABEL[p.sector])}
-              </p>
+              <div className={styles.head}>
+                <span className={styles.rule} aria-hidden="true" />
+                <h2>{t(UI.locationSection)}</h2>
+              </div>
+
+              {/* The embed pulls a third-party script and its tiles, so it stays
+                  unmounted until it is asked for. The frame keeps its ratio
+                  either way, so opening the map cannot move the page. */}
               <div className={styles.map}>
-                <iframe
-                  src={mapSrc}
-                  title={`${t(L.mapTitle)} — ${formatStreet(p.street, lang)}`}
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                />
+                {mapOn ? (
+                  <iframe
+                    src={mapSrc}
+                    title={`${t(L.mapTitle)} — ${formatStreet(p.street, lang)}`}
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                ) : (
+                  <button
+                    type="button"
+                    className={styles.poster}
+                    onClick={() => setMapOn(true)}
+                  >
+                    <Image
+                      src="/harti/chisinau.jpg"
+                      alt={t(L.planAlt)}
+                      fill
+                      sizes="(max-width: 1099px) 100vw, 732px"
+                      className={styles.posterImg}
+                    />
+                    <span className={styles.posterPlate}>
+                      <span className={styles.posterAddress}>
+                        <IconPin size={18} />
+                        {formatStreet(p.street, lang)}, {t(SECTOR_LABEL[p.sector])}
+                      </span>
+                      <span className={styles.posterAction}>{t(L.showMap)}</span>
+                    </span>
+                  </button>
+                )}
               </div>
               <a
                 href={mapsHref}
@@ -393,7 +476,10 @@ export default function ListingView({ property: p, agent, similar }: Props) {
             </section>
 
             <section id="costuri" className={`rv ${styles.section}`}>
-              <h2>{t(UI.costs)}</h2>
+              <div className={styles.head}>
+                <span className={styles.rule} aria-hidden="true" />
+                <h2>{t(UI.costs)}</h2>
+              </div>
               {p.deal === "vanzare" ? (
                 <>
                   {position && (
@@ -431,7 +517,10 @@ export default function ListingView({ property: p, agent, similar }: Props) {
 
       {similar.length > 0 && (
         <section id="similare" className={`wrap sec ${styles.anchored}`}>
-          <h2 className="rv">{t(UI.similar)}</h2>
+          <div className={`rv ${styles.head}`}>
+            <span className={styles.rule} aria-hidden="true" />
+            <h2>{t(UI.similar)}</h2>
+          </div>
           <div className={styles.similar}>
             <SimilarList properties={similar} />
           </div>

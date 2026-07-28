@@ -45,7 +45,9 @@
 
   /* --- over photography --- */
   --photo-scrim: linear-gradient(180deg, rgba(6, 8, 12, 0) 38%, rgba(6, 8, 12, 0.72) 100%);
-  --badge-bg: rgba(6, 8, 12, 0.82);
+  /* One value for every mark that sits on a photograph: the badge, the photo
+     counter on a card and the "all photos" plate in the gallery. */
+  --badge-bg: rgba(6, 8, 12, 0.72);
 
   /* --- shadows: soft and wide, so cards lift instead of stamping --- */
   --sh-1: 0 1px 2px rgba(12, 14, 19, 0.05), 0 8px 24px -12px rgba(12, 14, 19, 0.18);
@@ -56,6 +58,11 @@
   --r: 12px;
   --r-sm: 8px;
   --r-full: 9999px;
+  /* Photography is the one thing on the site that carries a shape of its own,
+     so it gets its own step — slightly softer than a control, and identical
+     everywhere, or the picture changes shape while it travels from a card into
+     the listing page. */
+  --r-photo: 14px;
 
   /* --- rhythm: wider and airier than a listings board usually is --- */
   --maxw: 1280px;
@@ -298,11 +305,15 @@ table {
   }
 }
 
-/* Card grid: 3 x 358px at >=1100, 2 at 700-1099, 1 below. */
+/* Card grid: 3 x 358px at >=1100, 2 at 700-1099, 1 below.
+   The rows breathe more than the columns on purpose: a card carries no frame
+   of its own, so with an even gap the specification line of one card starts to
+   read as a caption for the photograph underneath it. */
 .grid-cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--gap);
+  column-gap: var(--gap);
+  row-gap: calc(var(--gap) + 16px);
 }
 
 @media (max-width: 1099px) {
@@ -513,24 +524,6 @@ table {
   transform: translate3d(-160%, 0, 0) rotate(16deg);
   pointer-events: none;
 }
-/* `.btn.btn-line` is a real combination on this site, so the solid fill and
-   the sheen are both scoped away from it. */
-.btn:not(.btn-line):not(:disabled):not([aria-disabled="true"]):hover {
-  background: var(--accent-2);
-  border-color: var(--accent-2);
-}
-.btn:not(.btn-line):not(:disabled):not([aria-disabled="true"]):hover::after {
-  transform: translate3d(500%, 0, 0) rotate(16deg);
-  transition: transform 0.66s var(--ease);
-}
-.btn:not(:disabled):not([aria-disabled="true"]):hover {
-  transform: translateY(-2px);
-  box-shadow: var(--sh-1);
-}
-.btn:not(:disabled):not([aria-disabled="true"]):active {
-  transform: translateY(1px);
-  transition-duration: 90ms;
-}
 .btn:focus-visible {
   box-shadow: var(--focus);
 }
@@ -568,18 +561,6 @@ table {
   transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease),
     transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
 }
-.btn-line:hover {
-  border-color: var(--accent);
-  background: var(--accent-soft);
-}
-.btn-line:not(:disabled):not([aria-disabled="true"]):hover {
-  transform: translateY(-2px);
-  box-shadow: var(--sh-1);
-}
-.btn-line:not(:disabled):not([aria-disabled="true"]):active {
-  transform: translateY(1px);
-  transition-duration: 90ms;
-}
 .btn-line:focus-visible {
   box-shadow: var(--focus);
 }
@@ -594,9 +575,56 @@ table {
   border-color: rgba(255, 255, 255, 0.7);
   color: var(--on-dark);
 }
-.btn-line-dark:hover {
+/* A finger cannot hover. Left outside this query, the last button tapped on a
+   phone would stay lifted and darkened until something else was tapped.
+   `.btn.btn-line` is a real combination on this site, so the solid fill and
+   the sheen are both scoped away from it. */
+@media (hover: hover) {
+  .btn:not(.btn-line):not(:disabled):not([aria-disabled="true"]):hover {
+    background: var(--accent-2);
+    border-color: var(--accent-2);
+  }
+  .btn:not(.btn-line):not(:disabled):not([aria-disabled="true"]):hover::after {
+    transform: translate3d(500%, 0, 0) rotate(16deg);
+    transition: transform 0.66s var(--ease);
+  }
+  .btn:not(:disabled):not([aria-disabled="true"]):hover {
+    transform: translateY(-2px);
+    box-shadow: var(--sh-1);
+  }
+  .btn-line:hover {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .btn-line:not(:disabled):not([aria-disabled="true"]):hover {
+    transform: translateY(-2px);
+    box-shadow: var(--sh-1);
+  }
+  .btn-line-dark:hover {
+    border-color: var(--on-dark);
+    background: rgba(255, 255, 255, 0.12);
+  }
+}
+
+/* Pressed. Last, so a press beats the hover lift on a pointer, and a finger —
+   which never reaches the block above — still gets the colour on its own. */
+.btn:not(.btn-line):not(:disabled):not([aria-disabled="true"]):active {
+  background: var(--accent-2);
+  border-color: var(--accent-2);
+}
+.btn-line:not(:disabled):not([aria-disabled="true"]):active {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.btn-line-dark:not(:disabled):not([aria-disabled="true"]):active {
   border-color: var(--on-dark);
   background: rgba(255, 255, 255, 0.12);
+}
+.btn:not(:disabled):not([aria-disabled="true"]):active,
+.btn-line:not(:disabled):not([aria-disabled="true"]):active {
+  transform: translateY(1px);
+  box-shadow: none;
+  transition-duration: 90ms;
 }
 
 @media (max-width: 700px) {
@@ -653,6 +681,7 @@ textarea.field {
   position: relative;
   overflow: hidden;
   aspect-ratio: 3 / 2;
+  border-radius: var(--r-photo);
   background: var(--surface-2);
 }
 .ph-portrait {
@@ -672,24 +701,31 @@ textarea.field {
 }
 
 /* The mark that sits on a photograph. Same pill on a card, in the gallery and
-   on a complex tile — one shape, so the listing page and the card agree. */
+   on a complex tile — one shape, so the listing page and the card agree.
+   Glass rather than a solid plate: the photograph stays readable through it,
+   which is the difference between a label on a picture and a sticker. */
 .badge {
   display: inline-flex;
   align-items: center;
-  height: 25px;
+  height: 24px;
   padding: 0 11px;
   border-radius: var(--r-full);
   background: var(--badge-bg);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   color: var(--on-dark);
-  font-weight: 700;
-  font-size: 11px;
+  font-weight: 650;
+  font-size: 11.5px;
   line-height: 1;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   white-space: nowrap;
 }
+/* A price cut is the one badge that changes colour, and it changes type rather
+   than fill: amber is never a background on this site. Lightened, or it would
+   not survive the glass. */
 .badge-clay {
-  background: var(--clay);
+  color: var(--amber-on-dark);
 }
 
 /* ---------- the ARCA arch, hairline, sits before eyebrows and in the 404 ---- */
@@ -714,22 +750,28 @@ textarea.field {
    reveal can never shift the page. Keep rv-right off full-bleed blocks: the
    24px it travels would push past the right edge for the length of the
    transition. */
+/* The two durations are deliberately different: the block is fully opaque a
+   little before it stops moving, which reads as settling rather than sliding
+   in. Both stay under the 700ms ceiling for anything triggered by scrolling. */
 .rv {
   opacity: 0;
-  transform: translate3d(0, 18px, 0);
-  transition: opacity 0.62s var(--ease), transform 0.62s var(--ease);
+  transform: translate3d(0, 22px, 0);
+  transition: opacity 0.52s var(--ease), transform 0.66s var(--ease);
   transition-delay: var(--d, 0ms);
 }
 /* Direction modifiers: they only replace the starting transform, so they must
    stay after .rv and before .rv.in. */
 .rv-left {
-  transform: translate3d(-24px, 0, 0);
+  transform: translate3d(-28px, 0, 0);
 }
 .rv-right {
-  transform: translate3d(24px, 0, 0);
+  transform: translate3d(28px, 0, 0);
 }
+/* For large photography: it comes forward out of the page rather than up from
+   under it. Kept shallow — a full-bleed band scaled much further shows paper
+   down its edges for the length of the transition. */
 .rv-scale {
-  transform: scale(0.985);
+  transform: translate3d(0, 12px, 0) scale(0.976);
 }
 .rv.in {
   opacity: 1;
@@ -761,24 +803,84 @@ textarea.field {
 }
 
 /* Stagger steps. Six is enough for a card row; past that the last card in the
-   row waits long enough to read as a bug. */
+   row waits long enough to read as a bug. The gaps close as the row goes on —
+   an even ramp makes the tail of a six-card row feel like it is lagging. */
 .rvd1 {
-  --d: 60ms;
+  --d: 70ms;
 }
 .rvd2 {
-  --d: 120ms;
+  --d: 135ms;
 }
 .rvd3 {
-  --d: 180ms;
+  --d: 195ms;
 }
 .rvd4 {
-  --d: 240ms;
+  --d: 248ms;
 }
 .rvd5 {
-  --d: 300ms;
+  --d: 294ms;
 }
 .rvd6 {
-  --d: 360ms;
+  --d: 334ms;
+}
+
+/* Held on <html> for the one frame in which the arriving page is captured for
+   a route transition. A reveal caught halfway would be photographed at opacity
+   zero, and the picture would grow into an empty frame. */
+.rv-now .rv,
+.rv-now .rvimg > *,
+.rv-now .rvimg img,
+.rv-now .rvimg video {
+  transition: none !important;
+}
+
+/* ---------- route transition ----------
+   The photograph on a card and the photograph at the top of the listing are
+   the same picture, so the browser carries one into the other instead of
+   fading one out and the other in.
+
+   `arca-photo` is attached to exactly one element on each side, and only for
+   the length of the click that starts the navigation — see PageFade.tsx. Two
+   live elements sharing a name abort the transition outright, and the same
+   photograph really does appear twice on a listing page, under "similar". */
+::view-transition-group(arca-photo) {
+  animation-duration: 320ms;
+  animation-timing-function: var(--ease);
+}
+::view-transition-old(arca-photo),
+::view-transition-new(arca-photo) {
+  animation-duration: 320ms;
+  animation-timing-function: var(--ease);
+}
+/* Everything that is not the photograph is a plain, quick cross-fade, short
+   enough that it is over before the eye leaves the picture. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 200ms;
+  animation-timing-function: linear;
+}
+
+/* The header and the contact rail are the same two objects before and after
+   the navigation, so they are lifted out of that cross-fade entirely: the old
+   copy is dropped and the new one is simply there. Left inside the root
+   snapshot they get composited twice for 200ms, which reads as a flicker on
+   the one part of the screen that is meant to hold still.
+   Names are declared on the elements themselves — see Nav.module.css and
+   ContactRail.module.css. */
+::view-transition-old(arca-nav),
+::view-transition-old(arca-rail) {
+  animation: none;
+  opacity: 0;
+}
+::view-transition-new(arca-nav),
+::view-transition-new(arca-rail) {
+  animation: none;
+  opacity: 1;
+}
+::view-transition-group(arca-nav),
+::view-transition-group(arca-rail) {
+  animation-duration: 200ms;
+  animation-timing-function: linear;
 }
 
 /* Reveal is driven by an observer. With scripting off the observer never
@@ -844,6 +946,18 @@ textarea.field {
   }
   html {
     scroll-behavior: auto;
+  }
+  /* PageFade never opens a view transition under this setting, so this is only
+     a second lock on the same door. */
+  ::view-transition-group(arca-photo),
+  ::view-transition-old(arca-photo),
+  ::view-transition-new(arca-photo),
+  ::view-transition-group(arca-nav),
+  ::view-transition-group(arca-rail),
+  ::view-transition-group(root),
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
   }
   /* Near-zero rather than "none": animations with fill both still have to land
      on their end state, or revealed blocks stay hidden forever. */

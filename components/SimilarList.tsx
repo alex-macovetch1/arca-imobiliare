@@ -4,7 +4,8 @@ import type { Property } from "@/lib/types";
 /**
  * The three closest listings by sector and price. The card is the same one the
  * results page and the homepage use — a listing must not look different here
- * than it does where the visitor found it.
+ * than it does where the visitor found it, and the row spacing comes from the
+ * shared grid for the same reason.
  */
 export default function SimilarList({ properties }: { properties: Property[] }) {
   if (properties.length === 0) return null;

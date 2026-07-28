@@ -169,17 +169,20 @@
   margin-left: auto;
 }
 
-/* Hairline chip, amber border: the badge treatment used off the photograph. */
+/* The badge treatment used off the photograph: same pill as the one on the
+   card's cover, drawn as a hairline in amber because there is no picture here
+   to sit the glass on. */
 .flag {
   display: inline-flex;
   align-items: center;
   height: 28px;
-  padding: 0 12px;
+  padding: 0 13px;
   border: 1px solid var(--amber);
+  border-radius: var(--r-full);
   font-weight: 600;
   font-size: var(--t-eyebrow);
   line-height: 1;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--ink-2);
 }
@@ -237,7 +240,7 @@
   grid-template-columns: minmax(0, 1fr) 366px;
   gap: 32px;
   align-items: start;
-  padding-block: 48px 24px;
+  padding-block: calc(var(--sec) * 0.6) 24px;
 }
 
 .main {
@@ -256,18 +259,20 @@
   color: var(--ink-3);
 }
 
-/* ---------- four key facts ---------- */
+/* ---------- four key facts ----------
+   A band, not a box: one rule above and one below, hairlines between the
+   cells. A frame around this turned it into a card sitting on a card. */
 .facts {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  border: 1px solid var(--line);
-  background: var(--surface);
+  border-block: 1px solid var(--line);
 }
 
 .fact {
-  padding: 16px 18px;
+  padding: 18px 22px 18px 0;
 }
 .fact + .fact {
+  padding-left: 22px;
   border-left: 1px solid var(--line);
 }
 
@@ -296,28 +301,53 @@
   scroll-margin-top: calc(var(--h-header) + var(--h-subbar) + 16px);
 }
 
+/* Derived from --sec rather than a fixed 48px: the gaps inside the page now
+   grow with the page instead of staying at the density of a spec sheet. */
 .section {
-  padding-top: 48px;
+  padding-top: calc(var(--sec) * 0.7);
+}
+
+/* Same entry as every other title on the site: an amber hairline draws itself,
+   then the heading. */
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.rule {
+  display: block;
+  width: 28px;
+  height: 1px;
+  flex: none;
+  background: var(--amber);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.56s var(--ease) 80ms;
+}
+:global(.in) .rule {
+  transform: none;
 }
 
 .h3 {
-  margin-top: 28px;
+  margin-top: 36px;
 }
 
 .sectionLead {
-  margin-block: 12px 24px;
+  margin-block: 20px 28px;
 }
 
 /* The index band opens the costs section, before the monthly-payment maths. */
 .position {
-  margin-top: 20px;
+  margin-top: 28px;
 }
 
 .text {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-top: 20px;
+  margin-top: 26px;
   max-width: 66ch;
   font-size: var(--t-body);
   line-height: var(--lh-body);
@@ -330,13 +360,59 @@
   cursor: pointer;
 }
 
-/* ---------- feature table ---------- */
+/* ---------- the figures that carry the section ----------
+   Five numbers set large with the label underneath. auto-fit rather than a
+   fixed count, because a house with no room count prints four. */
+.figures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(116px, 1fr));
+  gap: 28px 24px;
+  margin-top: 34px;
+  padding-bottom: 34px;
+  border-bottom: 1px solid var(--line);
+}
+
+.figure {
+  min-width: 0;
+  opacity: 0;
+  transform: translate3d(0, 10px, 0);
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+  transition-delay: calc(var(--i, 0) * 55ms + 90ms);
+}
+:global(.in) .figure {
+  opacity: 1;
+  transform: none;
+}
+
+.figureValue {
+  display: block;
+  font-weight: 600;
+  font-size: clamp(26px, 1.25rem + 1.1vw, 38px);
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.figureLabel {
+  display: block;
+  margin-top: 10px;
+  font-weight: 600;
+  font-size: var(--t-eyebrow);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* ---------- the detail list under them ----------
+   Two columns, no frame. The weight is entirely in the value: the label is the
+   quietest thing in the row, so the eye runs down the right edge. */
 .table {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  column-gap: 40px;
-  margin-top: 20px;
-  border-top: 1px solid var(--line);
+  column-gap: 56px;
+  margin-top: 30px;
 }
 
 .tableRow {
@@ -344,57 +420,80 @@
   align-items: baseline;
   justify-content: space-between;
   gap: 16px;
-  padding: 11px 0;
+  padding: 13px 0;
   border-bottom: 1px solid var(--line);
+  transition: border-color 0.2s var(--ease);
+}
+.tableRow:hover {
+  border-bottom-color: var(--line-2);
 }
 
 .dt {
   font-size: 14px;
   line-height: 22px;
-  color: var(--ink-2);
+  color: var(--ink-3);
 }
 
 .dd {
   margin: 0;
-  font-weight: 500;
-  font-size: 14px;
+  font-weight: 600;
+  font-size: 14.5px;
   line-height: 22px;
   font-variant-numeric: tabular-nums;
   text-align: right;
   color: var(--ink);
 }
 
-/* ---------- amenities ---------- */
+/* ---------- amenities ----------
+   Pills rather than a second two-column list: the detail list sits directly
+   above, and two stacked columns of hairlines would read as one long table. */
 .chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 20px;
+  gap: 10px;
+  margin-top: 30px;
 }
 
 .chip {
   display: inline-flex;
   align-items: center;
-  min-height: 36px;
-  padding: 0 14px;
-  border: 1px solid var(--line-2);
+  gap: 9px;
+  min-height: 40px;
+  padding: 0 16px 0 13px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-full);
+  background: var(--paper);
   font-size: 14px;
+  line-height: 1.2;
   color: var(--ink-2);
+  opacity: 0;
+  transform: translate3d(0, 8px, 0);
+  transition: opacity 0.45s var(--ease), transform 0.45s var(--ease),
+    border-color 0.24s var(--ease), color 0.24s var(--ease);
+  transition-delay: calc(var(--i, 0) * 40ms + 60ms), calc(var(--i, 0) * 40ms + 60ms), 0s, 0s;
+}
+:global(.in) .chip {
+  opacity: 1;
+  transform: none;
+}
+.chip:hover {
+  border-color: var(--ink-3);
+  color: var(--ink);
+}
+
+.chip svg {
+  flex: none;
+  color: var(--accent);
 }
 
 /* ---------- location ---------- */
-.mapAddress {
-  margin-top: 12px;
-  font-size: var(--t-spec);
-  line-height: var(--lh-spec);
-  color: var(--ink-3);
-}
-
+/* The ratio is declared on the frame, so the poster and the map that replaces
+   it occupy exactly the same height and nothing below them moves. */
 .map {
   position: relative;
-  margin-top: 16px;
+  overflow: hidden;
+  margin-top: 30px;
   aspect-ratio: 732 / 380;
-  border: 1px solid var(--line);
   background: var(--surface-2);
 }
 .map iframe {
@@ -402,22 +501,105 @@
   width: 100%;
   height: 100%;
   border: 0;
+  animation: map-in 0.32s var(--ease) both;
+}
+
+@keyframes map-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.poster {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  cursor: pointer;
+}
+/* The frame clips, so the standard two-tone ring would lose its outer half. */
+.poster:focus-visible {
+  box-shadow: none;
+  outline: 2px solid var(--accent);
+  outline-offset: -3px;
+}
+
+.posterImg {
+  object-fit: cover;
+  filter: saturate(0.5);
+  transform: scale(1.01);
+  transition: transform 0.5s var(--ease), filter 0.35s var(--ease);
+}
+.poster:hover .posterImg {
+  filter: saturate(0.8);
+  transform: scale(1.045);
+}
+
+.posterPlate {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 20px;
+  padding: 18px 20px;
+  background: linear-gradient(180deg, rgba(6, 8, 12, 0) 0%, rgba(6, 8, 12, 0.78) 62%);
+  text-align: left;
+}
+
+.posterAddress {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--on-dark);
+}
+.posterAddress svg {
+  flex: none;
+  color: var(--amber-on-dark);
+}
+
+.posterAction {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 18px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: var(--r);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--on-dark);
+  transition: background-color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+.poster:hover .posterAction,
+.poster:focus-visible .posterAction {
+  border-color: var(--on-dark);
+  background: rgba(255, 255, 255, 0.16);
 }
 
 .mapLink {
   display: inline-block;
-  margin-top: 14px;
+  margin-top: 16px;
 }
 
 .poi {
-  margin-top: 8px;
+  margin-top: 12px;
 }
 
 .poiGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-top: 18px;
+  gap: 28px;
+  margin-top: 22px;
 }
 
 .poiTitle {
@@ -452,14 +634,44 @@
 
 /* ---------- similar ---------- */
 .similar {
-  margin-top: 28px;
+  margin-top: 36px;
 }
 
 .more {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-top: 28px;
+  margin-top: 32px;
+}
+
+/* ---------- motion fallbacks ----------
+   Everything above rests at opacity 0 and is released by the reveal observer.
+   With no scripting the observer never runs, and with reduced motion nothing
+   is allowed to travel, so both hand the content back whole. */
+@media (scripting: none) {
+  .rule,
+  .figure,
+  .chip {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rule,
+  .figure,
+  .chip,
+  .posterImg {
+    opacity: 1 !important;
+    transform: none !important;
+    transition-delay: 0s !important;
+  }
+  .poster:hover .posterImg {
+    transform: none !important;
+  }
+  .map iframe {
+    animation: none !important;
+  }
 }
 
 /* ---------- mobile action bar ---------- */
@@ -506,6 +718,7 @@
     grid-template-columns: 1fr 1fr;
   }
   .fact:nth-child(odd) {
+    padding-left: 0;
     border-left: 0;
   }
   .fact:nth-child(n + 3) {
@@ -583,22 +796,50 @@
   }
 
   .body {
-    padding-block: 32px 16px;
+    padding-block: calc(var(--sec-m) * 0.62) 16px;
   }
 
   .section {
-    padding-top: 40px;
+    padding-top: calc(var(--sec-m) * 0.8);
+  }
+
+  .head {
+    gap: 14px;
   }
 
   .facts {
     grid-template-columns: 1fr;
   }
   .fact {
+    padding-right: 0;
     border-left: 0;
   }
   .fact + .fact {
+    padding-left: 0;
     border-left: 0;
     border-top: 1px solid var(--line);
+  }
+
+  .figures {
+    grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
+    gap: 22px 16px;
+    margin-top: 26px;
+    padding-bottom: 26px;
+  }
+
+  .table {
+    margin-top: 24px;
+  }
+
+  /* Taller on a phone: the address plate needs room, and a 2:1 strip of city
+     plan says nothing at 390px wide. */
+  .map {
+    margin-top: 24px;
+    aspect-ratio: 4 / 3;
+  }
+
+  .posterPlate {
+    padding: 14px;
   }
 
   .poiGrid {

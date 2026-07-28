@@ -11,6 +11,9 @@
   flex-direction: column-reverse;
   align-items: flex-end;
   gap: 12px;
+  /* Same reason as the header: named, so a route change does not fade a second
+     copy of this button over the first. See globals.css. */
+  view-transition-name: arca-rail;
   /* The column is tall and mostly empty. Only the pressable parts take the
      pointer back, or the invisible area steals clicks from the page. */
   pointer-events: none;

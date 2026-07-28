@@ -20,6 +20,9 @@ export type GalleryBadge = { label: T; clay?: boolean };
 type Props = {
   photos: Photo[];
   badges?: GalleryBadge[];
+  /** Marks the cover frame as the landing side of the card-to-page photograph
+   *  transition. The slug, so it can only ever pair with its own card. */
+  vt?: string;
 };
 
 /**
@@ -27,7 +30,7 @@ type Props = {
  * driven by the arrow keys. No dependency: a gallery is four states and a
  * modulo.
  */
-export default function Gallery({ photos, badges = [] }: Props) {
+export default function Gallery({ photos, badges = [], vt }: Props) {
   const { t } = useLang();
   const [open, setOpen] = useState(false);
   const [i, setI] = useState(0);
@@ -78,6 +81,7 @@ export default function Gallery({ photos, badges = [] }: Props) {
         <button
           type="button"
           className={styles.big}
+          data-vt={vt}
           onClick={() => openAt(0)}
           aria-label={t(G.open)}
         >

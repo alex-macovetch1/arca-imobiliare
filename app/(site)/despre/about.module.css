@@ -170,12 +170,14 @@
   margin-top: 28px;
 }
 
+/* A filled panel rather than a hairline rectangle of white on white: these sit
+   in the shared card grid, and a card on this site no longer carries a frame. */
 .service {
   display: flex;
   flex-direction: column;
   padding: 32px 28px;
-  background: var(--surface);
-  border: 1px solid var(--line);
+  border-radius: var(--r-photo);
+  background: var(--surface-2);
 }
 
 .serviceTitle {
@@ -198,7 +200,8 @@
   min-height: 44px;
   margin-top: 20px;
   padding-top: 16px;
-  border-top: 1px solid var(--line);
+  /* One step darker than elsewhere: --line disappears on a filled panel. */
+  border-top: 1px solid var(--line-2);
   font-weight: 600;
   font-size: var(--t-eyebrow);
   letter-spacing: 0.12em;

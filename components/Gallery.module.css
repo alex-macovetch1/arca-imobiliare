@@ -5,12 +5,15 @@
   align-items: stretch;
 }
 
+/* Same shape as the card, because the cover is literally the card's photograph
+   after it has finished travelling. */
 .big,
 .thumb {
   position: relative;
   display: block;
   width: 100%;
   overflow: hidden;
+  border-radius: var(--r-photo);
   background: var(--surface-2);
   cursor: zoom-in;
 }
@@ -96,6 +99,10 @@
     grid-template-columns: 1fr;
     gap: 0;
   }
+  /* Edge to edge on a phone, so the corners have nothing to round against. */
+  .big {
+    border-radius: 0;
+  }
   .thumbs {
     display: none;
   }
@@ -114,6 +121,16 @@
   flex-direction: column;
   background: var(--ink);
   color: var(--on-dark);
+  animation: viewer-in 0.22s var(--ease) both;
+}
+
+@keyframes viewer-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .bar {
@@ -158,8 +175,20 @@
   height: 100%;
 }
 
+/* The photograph is remounted on every step, so the fade replays by itself.
+   `both` matters: an animation that is cut short still has to land on 1. */
 .full {
   object-fit: contain;
+  animation: photo-in 0.26s var(--ease) both;
+}
+
+@keyframes photo-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .arrow {

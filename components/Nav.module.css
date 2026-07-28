@@ -5,6 +5,10 @@
   height: var(--h-header);
   background: transparent;
   color: var(--on-dark);
+  /* Its own name during a route transition, so the header is not composited
+     twice inside the page cross-fade. The rules that go with it are in
+     globals.css, next to the other ::view-transition-* blocks. */
+  view-transition-name: arca-nav;
   /* Height never changes and the surface is a separate layer, so the page below
      never shifts by a pixel. */
   transition: transform 0.38s var(--ease), color 0.3s var(--ease);

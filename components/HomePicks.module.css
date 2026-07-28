@@ -41,24 +41,12 @@
   }
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--gap);
-}
-
-.rail {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--gap);
-}
-
-@media (max-width: 1099px) {
-  .grid,
-  .rail {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
+/* The cards themselves sit in the shared .grid-cards, so a row on the homepage
+   is spaced exactly like a row on the results page. This section used to carry
+   a second copy of that grid, plus a snapping horizontal rail on phones — but
+   the photograph inside a card is already a horizontal scroller on a touch
+   screen, and the inner one wins the gesture: swiping for the next property
+   turned the current property's photo instead. */
 
 @media (max-width: 699px) {
   .head {
@@ -66,27 +54,6 @@
   }
   .all {
     margin-top: 20px;
-  }
-  .grid {
-    grid-template-columns: 1fr;
-  }
-  /* One card per screen with the next one peeking: the row reads as scrollable
-     without a hint under it. */
-  .rail {
-    display: flex;
-    gap: 16px;
-    margin-inline: calc(var(--gut) * -1);
-    padding-inline: var(--gut);
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-  }
-  .rail::-webkit-scrollbar {
-    display: none;
-  }
-  .rail > * {
-    flex: 0 0 84%;
-    scroll-snap-align: start;
   }
 }
 

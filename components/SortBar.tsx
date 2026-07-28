@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { UI } from "@/lib/content";
 import { formatCount } from "@/lib/format";
 import { useLang } from "@/lib/lang";
@@ -31,9 +32,11 @@ const VIEW_LABEL: Record<ViewKey, { ro: string; ru: string }> = {
   harta: MAP_VIEW,
 };
 
+const VIEW_KEYS: ViewKey[] = ["grila", "lista", "harta"];
+
 const icon = {
-  width: 20,
-  height: 20,
+  width: 18,
+  height: 18,
   viewBox: "0 0 24 24",
   fill: "none",
   stroke: "currentColor",
@@ -61,18 +64,58 @@ const VIEW_ICON: Record<ViewKey, React.ReactNode> = {
   ),
 };
 
+/**
+ * A filter that returns a different number has to look like it did something.
+ * The figure runs to its new value instead of swapping.
+ */
+function useCountUp(value: number, ms: number): number {
+  const [shown, setShown] = useState(value);
+  const current = useRef(value);
+
+  useEffect(() => {
+    const start = current.current;
+    if (start === value) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      current.current = value;
+      setShown(value);
+      return;
+    }
+
+    let raf = 0;
+    const t0 = performance.now();
+    const step = (now: number) => {
+      const p = Math.min(1, (now - t0) / ms);
+      const eased = 1 - Math.pow(1 - p, 3);
+      const next = Math.round(start + (value - start) * eased);
+      current.current = next;
+      setShown(next);
+      if (p < 1) raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [value, ms]);
+
+  return shown;
+}
+
 export default function SortBar({ total, sort, view, onSort, onView }: Props) {
   const { t, lang } = useLang();
+  const running = useCountUp(total, 250);
 
   return (
     <div className={styles.row}>
-      <p className={`${styles.count} num`} aria-live="polite">
-        {formatCount(total, t(UI.propertiesOne), t(UI.properties), lang)}
+      <p className={styles.count}>
+        <span key={total} className={`${styles.countNum} num`} aria-hidden="true">
+          {formatCount(running, t(UI.propertiesOne), t(UI.properties), lang)}
+        </span>
+        <span className={styles.srOnly} aria-live="polite">
+          {formatCount(total, t(UI.propertiesOne), t(UI.properties), lang)}
+        </span>
       </p>
 
       <div className={styles.tools}>
         <label className={styles.sort}>
-          <span className={styles.sortLabel}>{t(UI.sort)}</span>
+          <span className={styles.srOnly}>{t(UI.sort)}</span>
           <select
             className={styles.select}
             value={sort}
@@ -84,10 +127,16 @@ export default function SortBar({ total, sort, view, onSort, onView }: Props) {
               </option>
             ))}
           </select>
+          <span className={styles.caret} aria-hidden="true" />
         </label>
 
         <div className={styles.views} role="group" aria-label={t(UI.listView)}>
-          {(Object.keys(VIEW_ICON) as ViewKey[]).map((v) => (
+          <span
+            className={styles.viewInd}
+            style={{ "--i": VIEW_KEYS.indexOf(view) } as React.CSSProperties}
+            aria-hidden="true"
+          />
+          {VIEW_KEYS.map((v) => (
             <button
               key={v}
               type="button"

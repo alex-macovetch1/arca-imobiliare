@@ -11,8 +11,6 @@ type Props = {
   note?: T;
   href: string;
   linkLabel: T;
-  /** "rail" turns the grid into a snapping horizontal row under 700px. */
-  variant?: "grid" | "rail";
   children: React.ReactNode;
 };
 
@@ -21,15 +19,7 @@ type Props = {
  * passed in as children, so this component never has to know what a property
  * looks like — and the listing card stays server-rendered.
  */
-export default function HomePicks({
-  kicker,
-  title,
-  note,
-  href,
-  linkLabel,
-  variant = "grid",
-  children,
-}: Props) {
+export default function HomePicks({ kicker, title, note, href, linkLabel, children }: Props) {
   const { t } = useLang();
 
   return (
@@ -45,7 +35,7 @@ export default function HomePicks({
         </Link>
       </div>
 
-      <div className={variant === "rail" ? styles.rail : styles.grid}>{children}</div>
+      <div className="grid-cards">{children}</div>
     </section>
   );
 }

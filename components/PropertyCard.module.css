@@ -1,10 +1,10 @@
-/* The card used on every grid in the site. The photograph carries it: 4:3,
-   flush to the top edges, and the price reads before the address does.
-   On hover the card lifts 3px and the photo drifts in — nothing else moves. */
+/* The listing card. It is not a box: there is no frame, no fill and no shadow
+   around it. What you see is a photograph with type set underneath it, sitting
+   straight on the paper of the page — the photograph is the only thing on the
+   card that has a shape. All the movement lives inside that shape. */
 
-/* The wrapper carries the scroll reveal and nothing else, so the entrance and
-   the hover lift never bid for the same transform. It is also the grid item,
-   which is what keeps a row of cards the same height. */
+/* The wrapper carries the scroll reveal and nothing else. It is also the grid
+   item, which is what keeps a row of cards aligned. */
 .reveal {
   display: flex;
   flex-direction: column;
@@ -16,42 +16,59 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  border-radius: var(--r);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  box-shadow: var(--sh-1);
-  transition: transform 0.34s var(--ease), box-shadow 0.34s var(--ease);
+  min-width: 0;
 }
 
-@media (hover: hover) {
-  .card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--sh-2);
-  }
-}
-
-/* Only the frame clips, so the card keeps its shadow and its lift. */
+/* ---- the photograph ---- */
 .frame {
   position: relative;
   flex: none;
   overflow: hidden;
   aspect-ratio: 4 / 3;
-  border-radius: calc(var(--r) - 1px) calc(var(--r) - 1px) 0 0;
+  border-radius: var(--r-photo);
   background: var(--surface-2);
 }
 
-/* Doubled class: the reveal helper owns the fade of every child of the frame,
-   so the zoom has to be declared alongside it rather than on top of it. */
-.card.card .img {
-  object-fit: cover;
-  transition: opacity 0.9s var(--ease), transform 0.6s var(--ease);
-  transition-delay: var(--d, 0ms), 0ms;
+/* The gallery track. On a touch screen it is a real scroller and the finger
+   moves it; on a pointer device the slides stack and cross-fade instead. */
+.shots {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.shots::-webkit-scrollbar {
+  display: none;
 }
 
-@media (hover: hover) {
-  .card.card:hover .img {
-    transform: scale(1.04);
-  }
+.slide {
+  position: relative;
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  scroll-snap-align: start;
+}
+
+.shotLink {
+  position: absolute;
+  inset: 0;
+}
+
+/* Doubled class: the reveal helper owns the blur and the overscale of every
+   image inside the frame, so the hover zoom has to outrank it rather than sit
+   next to it. The stagger stays on the blur; the transform answers the mouse
+   at once, or the sixth card in a row would lag a third of a second. */
+.card.card .img {
+  object-fit: cover;
+  transform: none;
+  transition: transform 0.6s var(--ease), filter 0.66s var(--ease);
+  transition-delay: 0ms, var(--d, 0ms);
 }
 
 /* ---- marks on the photograph ---- */
@@ -59,7 +76,7 @@
   position: absolute;
   top: 12px;
   left: 12px;
-  z-index: 2;
+  z-index: 3;
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
@@ -67,26 +84,25 @@
   pointer-events: none;
 }
 
-/* Amber stays type, never a fill: lightened just enough to hold on the scrim.
-   Doubled, so it outranks the colour the global .badge sets whichever
-   stylesheet the bundler emits last. */
-.badgeCut.badgeCut {
-  color: var(--amber-on-dark);
-}
+/* The pill itself is the global `.badge` — the same one the gallery and the
+   complex tiles use. Only the placing belongs to the card. */
 
 .counter {
   position: absolute;
-  bottom: 12px;
+  bottom: 11px;
   left: 12px;
-  z-index: 2;
-  padding: 5px 10px;
+  z-index: 3;
+  padding: 4px 9px;
   border-radius: var(--r-full);
   background: var(--badge-bg);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   color: var(--on-dark);
   font-weight: 600;
-  font-size: 12px;
+  font-size: 11.5px;
   line-height: 1;
   pointer-events: none;
+  transition: opacity 0.2s var(--ease);
 }
 
 /* 44px hit area, 34px visible disc — the tap target rule without a heavy button. */
@@ -94,7 +110,7 @@
   position: absolute;
   top: 5px;
   right: 5px;
-  z-index: 3;
+  z-index: 5;
   display: grid;
   place-items: center;
   width: 44px;
@@ -107,6 +123,8 @@
   inset: 5px;
   border-radius: var(--r-full);
   background: rgba(255, 255, 255, 0.82);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   box-shadow: 0 1px 3px rgba(12, 14, 19, 0.2);
   transition: background-color 0.25s var(--ease);
 }
@@ -144,13 +162,89 @@
   }
 }
 
+/* ---- gallery controls ----
+   The layer is inert; only the two chevrons take the pointer, so the rest of
+   the photograph still opens the listing. */
+.controls {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  margin-top: -17px;
+  border-radius: var(--r-full);
+  background: rgba(255, 255, 255, 0.86);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 1px 3px rgba(12, 14, 19, 0.18);
+  color: var(--ink);
+  pointer-events: auto;
+  transition: opacity 0.22s var(--ease), transform 0.22s var(--ease),
+    background-color 0.2s var(--ease);
+}
+
+.arrow:hover {
+  background: rgba(255, 255, 255, 0.98);
+}
+
+.prev {
+  left: 8px;
+}
+
+.prev svg {
+  transform: rotate(180deg);
+}
+
+.next {
+  right: 8px;
+}
+
+.dots {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transform: translateX(-50%);
+  transition: opacity 0.22s var(--ease);
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--r-full);
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 1px 2px rgba(12, 14, 19, 0.3);
+  transition: background-color 0.22s var(--ease), transform 0.22s var(--ease);
+}
+
+.dot[data-on="1"] {
+  background: var(--on-dark);
+}
+
+/* The window slides when there are more photographs than dots; the dot at the
+   edge shrinks, which is what says "there is more this way". */
+.dotEdge {
+  transform: scale(0.6);
+}
+
 /* ---- the written half ---- */
 .body {
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: 9px;
-  padding: 18px 20px 20px;
+  gap: 6px;
+  padding-top: 14px;
+  min-width: 0;
 }
 
 .priceRow {
@@ -161,10 +255,10 @@
 }
 
 .price {
-  font-weight: 640;
+  font-weight: 700;
   font-size: var(--t-price-card);
   line-height: var(--lh-price-card);
-  letter-spacing: -0.025em;
+  letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums;
   color: var(--ink);
 }
@@ -184,7 +278,7 @@
 .sqm {
   flex: none;
   font-weight: 500;
-  font-size: var(--t-spec);
+  font-size: 13px;
   line-height: var(--lh-spec);
   font-variant-numeric: tabular-nums;
   color: var(--ink-3);
@@ -193,11 +287,12 @@
 
 .title {
   font-family: var(--f-sans);
-  font-weight: 560;
+  font-weight: 500;
   font-size: var(--t-card);
   line-height: var(--lh-card);
   letter-spacing: -0.018em;
   color: var(--ink);
+  transition: color 0.2s var(--ease);
 }
 
 /* The whole card is the link; the anchor itself stays the title, so a screen
@@ -209,28 +304,24 @@
   z-index: 1;
 }
 
+/* One line, no fill, no rule around it: the specifications are type, not a
+   panel. They shorten with an ellipsis rather than wrapping into a block. */
 .specs {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
+  overflow: hidden;
   font-weight: 500;
-  font-size: var(--t-spec);
-  line-height: var(--lh-spec);
-  letter-spacing: 0.01em;
+  font-size: 14px;
+  line-height: 1.5;
   color: var(--ink-3);
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .specs li {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  display: inline;
 }
 
 .specs li + li::before {
-  content: "·";
-  font-size: 15px;
-  line-height: 1;
+  content: " · ";
   color: var(--line-2);
 }
 
@@ -240,7 +331,7 @@
   -webkit-line-clamp: 2;
   line-clamp: 2;
   overflow: hidden;
-  margin-top: 2px;
+  margin-top: 4px;
   font-size: 15px;
   line-height: 24px;
   color: var(--ink-2);
@@ -255,15 +346,74 @@
   white-space: nowrap;
 }
 
+/* ---- pointer devices: the slides stack and cross-fade, the controls wait
+   for the mouse, and the only thing that moves is the photograph itself ---- */
+@media (hover: hover) and (pointer: fine) {
+  .shots {
+    display: block;
+    overflow: hidden;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.26s var(--ease);
+  }
+
+  .slide[data-on="1"] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .card.card:hover .img {
+    transform: scale(1.045);
+  }
+
+  .card:hover .title {
+    color: var(--accent);
+  }
+
+  .arrow,
+  .dots {
+    opacity: 0;
+  }
+
+  .arrow {
+    transform: scale(0.86);
+  }
+
+  .frame.frame:hover .arrow,
+  .frame.frame:focus-within .arrow {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .frame.frame:hover .dots,
+  .frame.frame:focus-within .dots {
+    opacity: 1;
+  }
+
+  /* The dots take over as the position marker, so the counter steps aside. */
+  .frame.frame:hover .counter,
+  .frame.frame:focus-within .counter {
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .card:hover {
+  .card.card:hover .img {
     transform: none;
   }
-  .card.card:hover .img {
+  .arrow {
     transform: none;
   }
   .pulse {
     animation: none;
+  }
+  .shots {
+    scroll-behavior: auto;
   }
 }
 
@@ -271,24 +421,21 @@
 @media (min-width: 700px) {
   .horizontal {
     flex-direction: row;
+    gap: 24px;
   }
 
   .horizontal .frame {
+    flex: none;
     width: 340px;
-    border-radius: calc(var(--r) - 1px) 0 0 calc(var(--r) - 1px);
   }
 
   .horizontal .body {
-    gap: 10px;
-    padding: 24px;
+    gap: 8px;
+    padding-top: 2px;
   }
 }
 
 @media (max-width: 699px) {
-  .body {
-    padding: 16px;
-  }
-
   .intro {
     display: none;
   }

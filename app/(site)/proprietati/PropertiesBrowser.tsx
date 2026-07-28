@@ -73,6 +73,12 @@ const COPY = {
    the results page is where they belong. */
 const SEARCH_GROUPS = [LINK_GROUPS.camere, LINK_GROUPS.tipuri];
 
+/* The bar above already carries these on its own pills, and a pill that holds a
+   value says the value out loud. Repeating them underneath as removable chips
+   printed the search twice; the row now shows only what lives inside the
+   "Filtre" panel, which has no other visible trace on the page. */
+const SAID_BY_THE_BAR = /^(q|tip-|sector-|camere-|pretMin|pretMax)/;
+
 const ROOMS_TITLE: Record<number, T> = {
   1: { ro: "cu 1 cameră", ru: "1-комнатные" },
   2: { ro: "cu 2 camere", ru: "2-комнатные" },
@@ -137,6 +143,7 @@ export default function PropertiesBrowser({ items }: { items: Property[] }) {
   }, [page]);
 
   const chips = activeChips(filters);
+  const panelChips = chips.filter((c) => !SAID_BY_THE_BAR.test(c.id));
   const title = headline(filters);
   const sector = filters.sectors.length === 1 ? SECTOR_BY_SLUG[filters.sectors[0]] : null;
 
@@ -196,9 +203,9 @@ export default function PropertiesBrowser({ items }: { items: Property[] }) {
           onView={(view) => apply({ ...filters, view })}
         />
 
-        {chips.length > 0 && (
+        {panelChips.length > 0 && (
           <div className={styles.chipRow}>
-            {chips.map((c) => (
+            {panelChips.map((c) => (
               <button
                 key={c.id}
                 type="button"
@@ -209,13 +216,6 @@ export default function PropertiesBrowser({ items }: { items: Property[] }) {
                 <IconClose size={14} />
               </button>
             ))}
-            <button
-              type="button"
-              className={styles.clearAll}
-              onClick={() => apply(clearFilters(filters))}
-            >
-              {t(UI.clearAll)}
-            </button>
           </div>
         )}
 

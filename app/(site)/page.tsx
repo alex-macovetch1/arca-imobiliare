@@ -100,16 +100,9 @@ export default async function Home() {
         title={{ ro: "Adăugate recent", ru: "Добавлены недавно" }}
         href="/proprietati"
         linkLabel={{ ro: "Vezi toate ofertele →", ru: "Смотреть все предложения →" }}
-        variant="rail"
       >
         {fresh.map((p, i) => (
-          <PropertyCard
-            key={p.slug}
-            property={p}
-            delay={Math.min(i, 5) * 60}
-            // The rail shows one card at 84% of the screen, not a full-width one.
-            sizes="(max-width: 699px) 84vw, (max-width: 1099px) 50vw, 358px"
-          />
+          <PropertyCard key={p.slug} property={p} delay={Math.min(i, 5) * 60} />
         ))}
       </HomePicks>
 

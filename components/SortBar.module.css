@@ -13,103 +13,145 @@
   color: var(--ink-2);
 }
 
+/* Remounted whenever the total changes, so the figure lands rather than swaps.
+   The count itself runs to the new value in JS. */
+.countNum {
+  display: inline-block;
+  animation: countIn 0.25s var(--ease) both;
+}
+
+@keyframes countIn {
+  from {
+    opacity: 0.4;
+    transform: translateY(3px);
+  }
+}
+
 .tools {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
+/* ---------- sort: the same pill, with a native menu underneath ---------- */
 .sort {
   position: relative;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
-}
-
-.sortLabel {
-  font-weight: 500;
-  font-size: var(--t-spec);
-  line-height: var(--lh-spec);
-  color: var(--ink-3);
+  min-width: 0;
 }
 
 .select {
   height: 44px;
-  padding: 0 34px 0 12px;
-  border: 1px solid var(--line-2);
-  border-radius: var(--r);
-  background: var(--surface);
+  max-width: 100%;
+  padding: 0 38px 0 16px;
+  border: 0;
+  border-radius: var(--r-full);
+  background: var(--surface-2);
+  box-shadow: inset 0 0 0 1px transparent;
+  font-family: var(--f-sans);
   font-weight: 500;
   font-size: var(--t-spec);
   line-height: 1;
-  color: var(--ink);
+  color: var(--ink-2);
   appearance: none;
+  text-overflow: ellipsis;
   cursor: pointer;
-  transition: border-color 0.2s var(--ease);
+  transition: box-shadow 0.24s var(--ease), color 0.24s var(--ease);
 }
 
 .select:hover {
-  border-color: var(--ink-3);
+  box-shadow: inset 0 0 0 1px var(--line-2);
+  color: var(--ink);
+}
+
+.select:focus-visible {
+  box-shadow: var(--focus);
 }
 
 /* A hairline chevron instead of the operating system arrow. */
-.sort::after {
-  content: "";
+.caret {
   position: absolute;
-  right: 14px;
+  right: 17px;
   width: 7px;
   height: 7px;
-  border-right: 1px solid var(--ink-3);
-  border-bottom: 1px solid var(--ink-3);
+  border-right: 1.5px solid var(--ink-3);
+  border-bottom: 1.5px solid var(--ink-3);
   transform: translateY(-2px) rotate(45deg);
   pointer-events: none;
 }
 
+/* ---------- grid / list / map ---------- */
 .views {
+  --cell: 104px;
+  position: relative;
   display: flex;
-  border: 1px solid var(--line-2);
+  flex: none;
+  padding: 3px;
+  border-radius: var(--r-full);
+  background: var(--surface-2);
+}
+
+.viewInd {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: var(--cell);
+  height: calc(100% - 6px);
+  border-radius: var(--r-full);
+  background: var(--ink);
+  transform: translateX(calc(var(--i) * var(--cell)));
+  transition: transform 0.34s var(--ease);
+  pointer-events: none;
 }
 
 .view {
+  position: relative;
+  z-index: 1;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  height: 44px;
-  padding: 0 14px;
+  width: var(--cell);
+  height: 38px;
   color: var(--ink-2);
   font-weight: 600;
   font-size: var(--t-spec);
   line-height: 1;
-  transition: background-color 0.25s var(--ease), color 0.25s var(--ease);
-}
-
-.view + .view {
-  border-left: 1px solid var(--line-2);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.24s var(--ease);
 }
 
 .view:hover {
-  background: var(--accent-soft);
+  color: var(--ink);
 }
 
 .viewOn,
 .viewOn:hover {
-  background: var(--accent);
   color: var(--on-dark);
 }
 
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 @media (max-width: 899px) {
+  .views {
+    --cell: 46px;
+  }
+
   .viewText {
     position: absolute;
     width: 1px;
     height: 1px;
     overflow: hidden;
     clip-path: inset(50%);
-  }
-
-  .view {
-    width: 46px;
-    padding: 0;
-    justify-content: center;
   }
 }
 
@@ -118,17 +160,13 @@
     gap: 12px;
   }
 
-  .sortLabel {
-    display: none;
-  }
-
   .tools {
     width: 100%;
     justify-content: space-between;
   }
 
-  /* On a 320px screen the sort label is long enough to push the view switcher
-     off the edge. The three icons are the fixed part; the select gives way. */
+  /* On a 320px screen the sort label is the part that gives way; the three
+     icons keep their width. */
   .sort {
     flex: 1;
     min-width: 0;
@@ -137,10 +175,15 @@
   .select {
     width: 100%;
     min-width: 0;
-    text-overflow: ellipsis;
   }
+}
 
-  .views {
-    flex: none;
+@media (prefers-reduced-motion: reduce) {
+  .countNum,
+  .viewInd,
+  .select,
+  .view {
+    animation: none;
+    transition: none;
   }
 }

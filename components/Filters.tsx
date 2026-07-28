@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { DEAL_LABEL, KIND_PLURAL, SECTOR_LABEL, UI } from "@/lib/content";
-import { formatPrice } from "@/lib/format";
+import { formatPrice, formatRent } from "@/lib/format";
 import { useLang } from "@/lib/lang";
-import type { Deal, Kind, Property, Sector } from "@/lib/types";
+import type { Deal, Kind, Property, Sector, T } from "@/lib/types";
 import { IconClose, IconSearch } from "./Icons";
 import type { Filters as FilterState } from "./FiltersCore";
 import {
@@ -28,7 +28,13 @@ type Props = {
   onTogglePanel: () => void;
 };
 
+type PopId = "tip" | "loc" | "pret";
+
 const DEALS: Deal[] = ["vanzare", "chirie"];
+
+/** Under this width a pill hands its choices to the full-screen panel instead
+    of opening a dropdown the scrolling row would clip. */
+const PHONE = "(max-width: 1099px)";
 
 const COPY = {
   roomsLabel: { ro: "Camere", ru: "Комнаты" },
@@ -36,17 +42,52 @@ const COPY = {
   searchInside: { ro: "Stradă, complex sau cod ofertă", ru: "Улица, комплекс или код объявления" },
   clearLocation: { ro: "Șterge locațiile", ru: "Очистить" },
   roomsAria: { ro: "camere", ru: "комнат" },
-  // Shorter than "Fără minim" — the closed select has 124px and Russian needs
-  // every one of them.
-  priceFrom: { ro: "Preț de la", ru: "Цена от" },
-  priceTo: { ro: "Preț până în", ru: "Цена до" },
+  from: { ro: "de la", ru: "от" },
+  to: { ro: "până în", ru: "до" },
+  fromTitle: { ro: "De la", ru: "От" },
+  toTitle: { ro: "Până în", ru: "До" },
+  anyBound: { ro: "Oricât", ru: "Любая" },
+  clearPrice: { ro: "Șterge prețul", ru: "Сбросить цену" },
 };
 
+const Sliders = () => (
+  <svg
+    width="17"
+    height="17"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    aria-hidden="true"
+  >
+    <path d="M3 8h4M11 8h10M3 16h10M17 16h4" />
+    <circle cx="9" cy="8" r="2" />
+    <circle cx="15" cy="16" r="2" />
+  </svg>
+);
+
+const Check = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M4 12.5l5.5 5.5L20 6.5" />
+  </svg>
+);
+
 export default function Filters({ filters, base, onChange, panelOpen, onTogglePanel }: Props) {
-  const { t } = useLang();
-  const [locOpen, setLocOpen] = useState(false);
+  const { t, lang } = useLang();
+  const [pop, setPop] = useState<PopId | null>(null);
   const [q, setQ] = useState(filters.q);
-  const locRef = useRef<HTMLDivElement>(null);
+  const popRef = useRef<HTMLDivElement>(null);
   const latest = useRef({ filters, onChange });
 
   useEffect(() => {
@@ -64,20 +105,23 @@ export default function Filters({ filters, base, onChange, panelOpen, onTogglePa
   }, [q]);
 
   useEffect(() => {
-    if (!locOpen) return;
+    if (!pop) return;
+    const close = () => setPop(null);
     const onDown = (e: MouseEvent) => {
-      if (locRef.current && !locRef.current.contains(e.target as Node)) setLocOpen(false);
+      if (popRef.current && !popRef.current.contains(e.target as Node)) close();
     };
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setLocOpen(false);
+      if (e.key === "Escape") close();
     };
     document.addEventListener("mousedown", onDown);
     document.addEventListener("keydown", onKey);
+    window.addEventListener("resize", close);
     return () => {
       document.removeEventListener("mousedown", onDown);
       document.removeEventListener("keydown", onKey);
+      window.removeEventListener("resize", close);
     };
-  }, [locOpen]);
+  }, [pop]);
 
   const set = (next: Partial<FilterState>) => onChange({ ...filters, ...next, page: 1 });
   const count = (next: Partial<FilterState>) => countFor(base, filters, next);
@@ -85,16 +129,55 @@ export default function Filters({ filters, base, onChange, panelOpen, onTogglePa
   const active = activeCount(filters);
   const extra = extraCount(filters);
 
-  // Plain amounts in the steps: the active tab already says whether this is a
-  // sale or a rent, and "1 000 €/мес." does not fit a 124px control.
-  const money = (v: number) => formatPrice(v);
+  const money = (v: number) => (filters.deal === "chirie" ? formatRent(v, lang) : formatPrice(v));
 
-  const toggleSector = (s: Sector) =>
-    set({
-      sectors: filters.sectors.includes(s)
-        ? filters.sectors.filter((v) => v !== s)
-        : [...filters.sectors, s],
-    });
+  const togglePop = (id: PopId) => {
+    if (typeof window !== "undefined" && window.matchMedia(PHONE).matches) {
+      if (!panelOpen) onTogglePanel();
+      return;
+    }
+    setPop((v) => (v === id ? null : id));
+  };
+
+  /* ---- what each pill says once it carries a choice ---- */
+
+  const kindOn = filters.kinds.length === 1 ? filters.kinds[0] : null;
+  const kindLabel: T | null = kindOn ? KIND_PLURAL[kindOn] : null;
+
+  const locLabel: T | null = filters.sectors.length
+    ? filters.sectors.length === 1
+      ? SECTOR_LABEL[filters.sectors[0]]
+      : {
+          ro: `${t(SECTOR_LABEL[filters.sectors[0]])} +${filters.sectors.length - 1}`,
+          ru: `${t(SECTOR_LABEL[filters.sectors[0]])} +${filters.sectors.length - 1}`,
+        }
+    : filters.q.trim()
+      ? { ro: `„${filters.q}”`, ru: `«${filters.q}»` }
+      : null;
+
+  const priceLabel: T | null =
+    filters.priceMin !== undefined && filters.priceMax !== undefined
+      ? { ro: `${money(filters.priceMin)} – ${money(filters.priceMax)}`, ru: `${money(filters.priceMin)} – ${money(filters.priceMax)}` }
+      : filters.priceMin !== undefined
+        ? { ro: `${t(COPY.from)} ${money(filters.priceMin)}`, ru: `${t(COPY.from)} ${money(filters.priceMin)}` }
+        : filters.priceMax !== undefined
+          ? { ro: `${t(COPY.to)} ${money(filters.priceMax)}`, ru: `${t(COPY.to)} ${money(filters.priceMax)}` }
+          : null;
+
+  const roomsOn = [...filters.rooms].sort((a, b) => a - b);
+
+  const pill = (id: PopId, label: T | null, fallback: T) => (
+    <button
+      type="button"
+      className={`${styles.pill} ${label ? styles.pillOn : ""} ${pop === id ? styles.pillOpen : ""}`}
+      onClick={() => togglePop(id)}
+      aria-expanded={pop === id}
+      aria-haspopup="true"
+    >
+      <span className={styles.pillText}>{label ? t(label) : t(fallback)}</span>
+      <span className={styles.caret} aria-hidden="true" />
+    </button>
+  );
 
   const sectorGroup = (values: Sector[], title: string) => (
     <div className={styles.group}>
@@ -108,7 +191,13 @@ export default function Filters({ filters, base, onChange, panelOpen, onTogglePa
               type="checkbox"
               checked={on}
               disabled={!n && !on}
-              onChange={() => toggleSector(s)}
+              onChange={() =>
+                set({
+                  sectors: on
+                    ? filters.sectors.filter((v) => v !== s)
+                    : [...filters.sectors, s],
+                })
+              }
             />
             <span>{t(SECTOR_LABEL[s])}</span>
             <span className={`${styles.n} num`}>{n}</span>
@@ -118,76 +207,110 @@ export default function Filters({ filters, base, onChange, panelOpen, onTogglePa
     </div>
   );
 
-  const deals = (
-    <div className={styles.segmented} role="group">
-      {DEALS.map((d) => (
-        <button
-          key={d}
-          type="button"
-          className={`${styles.seg} ${filters.deal === d ? styles.segOn : ""}`}
-          onClick={() => set({ deal: d, priceMin: undefined, priceMax: undefined })}
-          aria-pressed={filters.deal === d}
-        >
-          {t(DEAL_LABEL[d])}
-        </button>
-      ))}
-    </div>
-  );
-
-  const filtersButton = (badge: number) => (
-    <button
-      type="button"
-      className={`${styles.control} ${styles.panelBtn} ${panelOpen ? styles.panelOn : ""}`}
-      onClick={onTogglePanel}
-      aria-expanded={panelOpen}
-    >
-      {t(UI.filters)}
-      {badge > 0 && <span className={`${styles.badge} num`}>{badge}</span>}
-    </button>
-  );
+  const priceColumn = (bound: "min" | "max") => {
+    const value = bound === "min" ? filters.priceMin : filters.priceMax;
+    const usable = steps.filter((v) =>
+      bound === "min"
+        ? filters.priceMax === undefined || v < filters.priceMax
+        : filters.priceMin === undefined || v > filters.priceMin
+    );
+    return (
+      <div className={styles.group}>
+        <p className={styles.groupTitle}>{t(bound === "min" ? COPY.fromTitle : COPY.toTitle)}</p>
+        <div className={styles.optionScroll}>
+          <button
+            type="button"
+            className={`${styles.option} ${value === undefined ? styles.optionOn : ""}`}
+            onClick={() => set(bound === "min" ? { priceMin: undefined } : { priceMax: undefined })}
+          >
+            <span>{t(COPY.anyBound)}</span>
+            {value === undefined && <Check />}
+          </button>
+          {usable.map((v) => (
+            <button
+              key={v}
+              type="button"
+              className={`${styles.option} ${value === v ? styles.optionOn : ""} num`}
+              onClick={() => set(bound === "min" ? { priceMin: v } : { priceMax: v })}
+            >
+              {/* Plain amounts in the list: the deal pill already says whether
+                  this is a sale or a rent, and the column is narrow. */}
+              <span>{formatPrice(v)}</span>
+              {value === v && <Check />}
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  };
 
   return (
-    <div className={styles.wrap}>
+    <div className={styles.shell}>
       <div className="wrap">
-        {/* desktop row */}
         <div className={styles.bar}>
-          {deals}
+          {/* deal — a mode, not a filter, so it keeps its own segmented pill */}
+          <div className={`${styles.seg} ${styles.segDeal}`} role="group">
+            <span
+              className={styles.segInd}
+              style={{ "--i": DEALS.indexOf(filters.deal) } as React.CSSProperties}
+              aria-hidden="true"
+            />
+            {DEALS.map((d) => (
+              <button
+                key={d}
+                type="button"
+                className={`${styles.segBtn} ${filters.deal === d ? styles.segBtnOn : ""}`}
+                onClick={() => set({ deal: d, priceMin: undefined, priceMax: undefined })}
+                aria-pressed={filters.deal === d}
+              >
+                {t(DEAL_LABEL[d])}
+              </button>
+            ))}
+          </div>
 
-          <label className={`${styles.selectWrap} ${styles.kindSelect}`}>
-            <span className={styles.srOnly}>{t(UI.propertyType)}</span>
-            <select
-              className={styles.control}
-              value={filters.kinds.length === 1 ? filters.kinds[0] : ""}
-              onChange={(e) => set({ kinds: e.target.value ? [e.target.value as Kind] : [] })}
-            >
-              <option value="">
-                {t(UI.allTypes)} ({count({ kinds: [] })})
-              </option>
-              {KIND_VALUES.map((k) => {
-                const n = count({ kinds: [k] });
-                return (
-                  <option key={k} value={k} disabled={!n}>
-                    {t(KIND_PLURAL[k])} ({n})
-                  </option>
-                );
-              })}
-            </select>
-          </label>
+          {/* type */}
+          <div className={styles.pop} ref={pop === "tip" ? popRef : null}>
+            {pill("tip", kindLabel, UI.allTypes)}
+            {pop === "tip" && (
+              <div className={`${styles.popPanel} ${styles.popNarrow}`}>
+                <button
+                  type="button"
+                  className={`${styles.option} ${!kindOn ? styles.optionOn : ""}`}
+                  onClick={() => {
+                    set({ kinds: [] });
+                    setPop(null);
+                  }}
+                >
+                  <span>{t(UI.allTypes)}</span>
+                  <span className={`${styles.n} num`}>{count({ kinds: [] })}</span>
+                </button>
+                {KIND_VALUES.map((k) => {
+                  const n = count({ kinds: [k] });
+                  const on = kindOn === k;
+                  return (
+                    <button
+                      key={k}
+                      type="button"
+                      className={`${styles.option} ${on ? styles.optionOn : ""}`}
+                      disabled={!n && !on}
+                      onClick={() => {
+                        set({ kinds: on ? [] : [k as Kind] });
+                        setPop(null);
+                      }}
+                    >
+                      <span>{t(KIND_PLURAL[k])}</span>
+                      <span className={`${styles.n} num`}>{n}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
 
-          <div className={styles.pop} ref={locRef}>
-            <button
-              type="button"
-              className={`${styles.control} ${locOpen ? styles.controlOn : ""}`}
-              onClick={() => setLocOpen((v) => !v)}
-              aria-expanded={locOpen}
-            >
-              {t(UI.location)}
-              {filters.sectors.length > 0 && (
-                <span className={`${styles.badge} num`}>{filters.sectors.length}</span>
-              )}
-            </button>
-
-            {locOpen && (
+          {/* location */}
+          <div className={styles.pop} ref={pop === "loc" ? popRef : null}>
+            {pill("loc", locLabel, UI.location)}
+            {pop === "loc" && (
               <div className={styles.popPanel}>
                 <div className={styles.searchRow}>
                   <IconSearch size={18} className={styles.searchIcon} />
@@ -214,7 +337,7 @@ export default function Filters({ filters, base, onChange, panelOpen, onTogglePa
                   >
                     {t(COPY.clearLocation)}
                   </button>
-                  <button type="button" className="link" onClick={() => setLocOpen(false)}>
+                  <button type="button" className="link" onClick={() => setPop(null)}>
                     {t(UI.close)}
                   </button>
                 </div>
@@ -222,7 +345,16 @@ export default function Filters({ filters, base, onChange, panelOpen, onTogglePa
             )}
           </div>
 
-          <div className={styles.rooms} role="group" aria-label={t(COPY.roomsLabel)}>
+          {/* rooms — one indicator per chosen figure, so a change slides */}
+          <div className={`${styles.seg} ${styles.segRooms}`} role="group" aria-label={t(COPY.roomsLabel)}>
+            {roomsOn.map((r, i) => (
+              <span
+                key={i}
+                className={styles.segInd}
+                style={{ "--i": ROOM_VALUES.indexOf(r) } as React.CSSProperties}
+                aria-hidden="true"
+              />
+            ))}
             {ROOM_VALUES.map((r) => {
               const n = count({ rooms: [r] });
               const on = filters.rooms.includes(r);
@@ -230,7 +362,7 @@ export default function Filters({ filters, base, onChange, panelOpen, onTogglePa
                 <button
                   key={r}
                   type="button"
-                  className={`${styles.room} ${on ? styles.roomOn : ""}`}
+                  className={`${styles.segBtn} ${styles.roomBtn} ${on ? styles.segBtnOn : ""}`}
                   disabled={!n && !on}
                   aria-pressed={on}
                   aria-label={`${r === 4 ? "4+" : r} ${t(COPY.roomsAria)} (${n})`}
@@ -246,43 +378,42 @@ export default function Filters({ filters, base, onChange, panelOpen, onTogglePa
             })}
           </div>
 
-          <label className={`${styles.selectWrap} ${styles.priceSelect}`}>
-            <span className={styles.srOnly}>{t(UI.price)}</span>
-            <select
-              className={styles.control}
-              value={filters.priceMin ?? ""}
-              onChange={(e) => set({ priceMin: e.target.value ? Number(e.target.value) : undefined })}
-            >
-              <option value="">{t(COPY.priceFrom)}</option>
-              {steps
-                .filter((v) => filters.priceMax === undefined || v < filters.priceMax)
-                .map((v) => (
-                  <option key={v} value={v}>
-                    {money(v)}
-                  </option>
-                ))}
-            </select>
-          </label>
+          {/* price */}
+          <div className={styles.pop} ref={pop === "pret" ? popRef : null}>
+            {pill("pret", priceLabel, UI.price)}
+            {pop === "pret" && (
+              <div className={`${styles.popPanel} ${styles.popPrice}`}>
+                <div className={styles.groups}>
+                  {priceColumn("min")}
+                  {priceColumn("max")}
+                </div>
+                <div className={styles.popFoot}>
+                  <button
+                    type="button"
+                    className="link"
+                    onClick={() => set({ priceMin: undefined, priceMax: undefined })}
+                    disabled={filters.priceMin === undefined && filters.priceMax === undefined}
+                  >
+                    {t(COPY.clearPrice)}
+                  </button>
+                  <button type="button" className="link" onClick={() => setPop(null)}>
+                    {t(UI.close)}
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
 
-          <label className={`${styles.selectWrap} ${styles.priceSelect}`}>
-            <span className={styles.srOnly}>{t(UI.price)}</span>
-            <select
-              className={styles.control}
-              value={filters.priceMax ?? ""}
-              onChange={(e) => set({ priceMax: e.target.value ? Number(e.target.value) : undefined })}
-            >
-              <option value="">{t(COPY.priceTo)}</option>
-              {steps
-                .filter((v) => filters.priceMin === undefined || v > filters.priceMin)
-                .map((v) => (
-                  <option key={v} value={v}>
-                    {money(v)}
-                  </option>
-                ))}
-            </select>
-          </label>
-
-          {filtersButton(extra)}
+          <button
+            type="button"
+            className={`${styles.pill} ${styles.panelBtn} ${panelOpen ? styles.pillOn : ""}`}
+            onClick={onTogglePanel}
+            aria-expanded={panelOpen}
+          >
+            <Sliders />
+            <span className={styles.pillText}>{t(UI.filters)}</span>
+            {extra > 0 && <span className={`${styles.badge} num`}>{extra}</span>}
+          </button>
 
           {active > 0 && (
             <button
@@ -290,24 +421,8 @@ export default function Filters({ filters, base, onChange, panelOpen, onTogglePa
               className={styles.reset}
               onClick={() => onChange({ ...filters, ...RESET, page: 1 })}
             >
-              <IconClose size={16} />
-              {t(UI.reset)}
-            </button>
-          )}
-        </div>
-
-        {/* phone row */}
-        <div className={styles.barMobile}>
-          {deals}
-          {filtersButton(active)}
-          {active > 0 && (
-            <button
-              type="button"
-              className={styles.resetMobile}
-              onClick={() => onChange({ ...filters, ...RESET, page: 1 })}
-              aria-label={t(UI.reset)}
-            >
-              <IconClose size={18} />
+              <IconClose size={15} />
+              {t(UI.clearAll)}
             </button>
           )}
         </div>

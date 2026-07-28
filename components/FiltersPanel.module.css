@@ -4,6 +4,21 @@
 .band {
   background: var(--surface);
   box-shadow: inset 0 -1px 0 var(--line);
+  animation: bandIn 0.24s var(--ease) both;
+}
+
+@keyframes bandIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes sheetUp {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
 }
 
 .panel {
@@ -24,6 +39,11 @@
   display: flex;
   flex-direction: column;
   gap: 26px;
+}
+
+/* A column is a grid track: without this a long chip row would widen it. */
+.block {
+  min-width: 0;
 }
 
 .blockTitle {
@@ -57,10 +77,11 @@
 .search {
   width: 100%;
   height: 48px;
-  padding: 0 14px 0 40px;
+  padding: 0 16px 0 42px;
   border: 1px solid var(--line-2);
-  border-radius: var(--r);
+  border-radius: var(--r-full);
   background: var(--surface);
+  appearance: none;
   /* 16px, or iOS zooms the page on focus. */
   font-size: 16px;
   line-height: 1;
@@ -95,28 +116,39 @@
 .chip {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   min-height: 40px;
-  padding: 0 12px;
-  border: 1px solid var(--line-2);
-  border-radius: var(--r);
+  padding: 0 14px;
+  border: 0;
+  border-radius: var(--r-full);
+  background: var(--surface-2);
+  box-shadow: inset 0 0 0 1px transparent;
   color: var(--ink-2);
   font-weight: 500;
   font-size: var(--t-spec);
   line-height: 1;
-  transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease),
-    color 0.2s var(--ease);
+  /* Same 240ms and the same press as the pills in the bar above: one pill
+     language, two sizes — 44px in the bar, 40px in here. */
+  transition: background-color 0.24s var(--ease), color 0.24s var(--ease),
+    box-shadow 0.24s var(--ease), transform 0.24s var(--ease);
 }
 
 .chip:hover:not(:disabled) {
-  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--line-2);
+  color: var(--ink);
+}
+
+.chip:active:not(:disabled) {
+  transform: scale(0.97);
+  transition-duration: 90ms;
 }
 
 .chipOn,
 .chipOn:hover {
-  border-color: var(--accent);
-  background: var(--accent);
+  background: var(--ink);
+  box-shadow: none;
   color: var(--on-dark);
+  font-weight: 600;
 }
 
 .chip:disabled {
@@ -155,10 +187,12 @@
 .select {
   width: 100%;
   height: 44px;
-  padding: 0 32px 0 12px;
-  border: 1px solid var(--line-2);
-  border-radius: var(--r);
-  background: var(--surface);
+  padding: 0 36px 0 16px;
+  border: 0;
+  border-radius: var(--r-full);
+  background: var(--surface-2);
+  box-shadow: inset 0 0 0 1px transparent;
+  font-family: var(--f-sans);
   font-weight: 500;
   font-size: var(--t-spec);
   line-height: 1;
@@ -166,17 +200,18 @@
   appearance: none;
   cursor: pointer;
   text-overflow: ellipsis;
+  transition: box-shadow 0.24s var(--ease);
 }
 
 .select:hover {
-  border-color: var(--ink-3);
+  box-shadow: inset 0 0 0 1px var(--line-2);
 }
 
 .selectWrap::after {
   content: "";
   position: absolute;
   top: 50%;
-  right: 13px;
+  right: 16px;
   width: 7px;
   height: 7px;
   border-right: 1px solid var(--ink-3);
@@ -239,14 +274,22 @@
 }
 
 @media (max-width: 1099px) {
+  /* The drawer comes up from the bottom edge, where the thumb already is. */
   .band {
     position: fixed;
     inset: 0;
-    z-index: 70;
+    /* Above the contact rail, which also sits at 70 and would otherwise float
+       its button over the count — the mobile menu clears it the same way. */
+    z-index: 75;
     overflow-y: auto;
     overscroll-behavior: contain;
     background: var(--paper);
     box-shadow: none;
+    /* `backwards`, not `both`: a filled `to` state parks an identity transform
+       on this element for good, and a transformed ancestor is what a fixed
+       child resolves against — the count at the bottom would scroll away with
+       the sheet instead of staying under the thumb. */
+    animation: sheetUp 0.32s var(--ease) backwards;
   }
 
   .panel {
@@ -318,12 +361,27 @@
     left: 0;
     z-index: 2;
     display: block;
-    padding: 12px var(--gut);
-    background: var(--surface);
+    padding: 12px var(--gut) calc(12px + env(safe-area-inset-bottom));
+    background: var(--paper);
     box-shadow: inset 0 1px 0 var(--line);
   }
 
   .showBtn {
     width: 100%;
+    min-height: 54px;
+    border-radius: var(--r-full);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .band,
+  .chip,
+  .select {
+    animation: none;
+    transition: none;
+  }
+
+  .chip:active:not(:disabled) {
+    transform: none;
   }
 }
