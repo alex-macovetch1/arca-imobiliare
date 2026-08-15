@@ -171,6 +171,9 @@ h2,
 h3,
 h4 {
   margin: 0;
+  /* "Политика конфиденциальности" is one word and wider than a 390px phone.
+     Only bites when a word cannot fit its line at all. */
+  overflow-wrap: break-word;
   font-family: var(--f-sans);
   font-weight: 560;
   color: var(--ink);
