@@ -6,6 +6,7 @@ import { formatDate, formatStreet, normalizePhone } from "@/lib/format";
 import { useLang } from "@/lib/lang";
 import { nextViewing } from "@/lib/next-viewing";
 import type { Agent, Lang, Property, T } from "@/lib/types";
+import { DemoFormNote } from "./DemoBar";
 import styles from "./ViewingForm.module.css";
 
 const V = {
@@ -102,6 +103,7 @@ export default function ViewingForm({ property, agent }: Props) {
         <p className="kicker">{t(UI.bookViewing)}</p>
         <p className={`serif ${styles.doneTitle}`}>{t(UI.successTitle)}</p>
         <p className={styles.doneText}>{t(V.reply)}</p>
+        <DemoFormNote />
         <a href={agent.phoneHref} className={`num ${styles.donePhone}`}>
           {agent.phone}
         </a>
@@ -125,6 +127,8 @@ export default function ViewingForm({ property, agent }: Props) {
   return (
     <form className={styles.card} onSubmit={submit} noValidate>
       <p className="kicker">{t(V.title)}</p>
+
+      <DemoFormNote />
 
       <div className={styles.fields}>
         <label className={styles.field}>

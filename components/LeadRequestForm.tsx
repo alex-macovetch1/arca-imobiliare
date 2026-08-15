@@ -4,6 +4,7 @@ import { useMemo, useRef, useState } from "react";
 import { AGENCY, UI } from "@/lib/content";
 import { useLang } from "@/lib/lang";
 import type { LeadSource, T } from "@/lib/types";
+import { DemoFormNote } from "./DemoBar";
 import styles from "./LeadRequestForm.module.css";
 
 /* ---------------------------------------------------------------------------
@@ -141,6 +142,7 @@ export default function LeadRequestForm({
             ru: `Обычно перезваниваем в течение ${AGENCY.stats.replyMinutes} минут в рабочее время. Если срочно — звоните: ${AGENCY.mobile}.`,
           })}
         </p>
+        <DemoFormNote dark={dark} />
         <button
           type="button"
           className={`btn-line ${dark ? "btn-line-dark" : ""} ${styles.doneBtn}`}
@@ -154,6 +156,8 @@ export default function LeadRequestForm({
 
   return (
     <form ref={formRef} className={`${styles.form} ${dark ? styles.dark : ""}`} onSubmit={submit} noValidate>
+      <DemoFormNote dark={dark} />
+
       {/* Left empty by a person, filled in by everything else. */}
       <label className={styles.trap} aria-hidden="true">
         <span>Companie</span>

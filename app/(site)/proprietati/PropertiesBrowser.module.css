@@ -99,7 +99,7 @@
 .results {
   margin-top: 24px;
   /* The sticky header and filter bar must not cover the first row after paging. */
-  scroll-margin-top: calc(var(--h-header) + 82px);
+  scroll-margin-top: calc(var(--top-header) + 82px);
 }
 
 /* One row per listing, and nothing draws a box around it. With the frame gone

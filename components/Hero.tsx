@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useLang } from "@/lib/lang";
+import { Fake } from "./DemoBar";
 import styles from "./Hero.module.css";
 
 /**
@@ -38,7 +39,8 @@ export default function Hero({ total }: { total: number }) {
           {t({
             ro: `${total} de oferte în Chișinău și suburbii, fiecare cu prețul pe metru pătrat pus lângă mediana sectorului.`,
             ru: `${total} предложений в Кишинёве и пригородах — у каждого цена за квадратный метр рядом с медианой сектора.`,
-          })}
+          })}{" "}
+          <Fake dark />
         </p>
 
         <div className={styles.actions}>

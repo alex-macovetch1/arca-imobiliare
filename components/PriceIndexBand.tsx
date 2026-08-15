@@ -6,6 +6,7 @@ import { formatPricePerSqm } from "@/lib/format";
 import { useLang } from "@/lib/lang";
 import type { PricePosition } from "@/lib/market-index";
 import type { Sector, T } from "@/lib/types";
+import { Fake } from "./DemoBar";
 import styles from "./PriceIndexBand.module.css";
 
 const P = {
@@ -71,7 +72,8 @@ export default function PriceIndexBand({
         </div>
       </dl>
 
-      <p className={`legal ${styles.note}`}>{t(INDEX_DISCLAIMER)}</p>
+      <p className={`legal ${styles.note}`}>
+        {t(INDEX_DISCLAIMER)} <Fake /></p>
       <Link href="/indice" className="link">
         {t(P.seeIndex)} →
       </Link>

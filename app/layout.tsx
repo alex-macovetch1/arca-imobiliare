@@ -3,6 +3,10 @@ import { Instrument_Serif, Manrope } from "next/font/google";
 import { LangProvider } from "@/lib/lang";
 import { AGENCY } from "@/lib/content";
 import "./globals.css";
+// After globals.css on purpose: a CSS-module import placed above it reorders
+// the whole stylesheet graph and the media queries in the other modules stop
+// outranking the base rules.
+import DemoBar from "@/components/DemoBar";
 
 // Manrope is variable, so no `weight` key — passing one makes next/font throw
 // at build. Cyrillic is not optional here: half the site is in Russian.
@@ -59,7 +63,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ro" data-lang="ro" className={`${sans.variable} ${display.variable}`}>
       <body>
-        <LangProvider>{children}</LangProvider>
+        <LangProvider>
+          <DemoBar />
+          {children}
+        </LangProvider>
       </body>
     </html>
   );

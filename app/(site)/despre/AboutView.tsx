@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { Fake } from "@/components/DemoBar";
 import { IconArrowRight } from "@/components/Icons";
 import OfficeMap from "@/components/OfficeMap";
 import PageIntro from "@/components/PageIntro";
@@ -172,6 +173,7 @@ export default function AboutView({ portfolio }: { portfolio: number }) {
             </li>
           ))}
         </ul>
+        <Fake block />
       </section>
 
       <section className={`wrap ${styles.methodSection}`}>

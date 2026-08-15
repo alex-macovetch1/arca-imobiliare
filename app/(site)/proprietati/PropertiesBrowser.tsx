@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Fake } from "@/components/DemoBar";
 import Filters from "@/components/Filters";
 import FiltersPanel from "@/components/FiltersPanel";
 import type { Filters as FilterState } from "@/components/FiltersCore";
@@ -193,6 +194,8 @@ export default function PropertiesBrowser({ items }: { items: Property[] }) {
         <div className={styles.head}>
           <h1>{t(title)}</h1>
           {sector && <p className="lead">{t(sector.blurb)}</p>}
+          {/* The whole portfolio is invented: count, prices, addresses, badges. */}
+          <Fake block />
         </div>
 
         <SortBar

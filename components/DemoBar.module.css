@@ -1,0 +1,123 @@
+/* Fixed strip above everything the page itself draws. Its height is a token,
+   so the header and every sticky sub-bar offset by exactly the same amount.
+   z-index sits above the header (60) and below the full-screen sheets
+   (75 / 80 / 90) — those are modals, and they may cover it. */
+.bar {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 70;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--demo-h);
+  padding: 5px var(--gut);
+  background: #0a0c11;
+  /* The faintest amber hatch: reads as "staging", not as a promotion. */
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(214, 154, 66, 0.08) 0 8px,
+    transparent 8px 16px
+  );
+  box-shadow: inset 0 -1px 0 rgba(214, 154, 66, 0.34);
+}
+
+.text {
+  margin: 0;
+  text-align: center;
+  font-size: 11.5px;
+  line-height: 1.35;
+  letter-spacing: 0.004em;
+  color: rgba(255, 255, 255, 0.76);
+}
+
+.text b {
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #e2a24a;
+}
+
+.dash {
+  margin: 0 0.42em;
+  opacity: 0.45;
+}
+
+@media (max-width: 760px) {
+  .text {
+    font-size: 10.5px;
+    line-height: 1.32;
+  }
+  .dash {
+    margin: 0 0.3em;
+  }
+}
+
+/* ---------- the sentence inside a form ---------- */
+.formNote {
+  margin: 0 0 14px;
+  padding: 9px 12px;
+  border: 1px solid rgba(185, 118, 26, 0.28);
+  border-radius: 8px;
+  background: #fdf3e4;
+  color: #7d4d0c;
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.formNote[data-dark] {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.88);
+}
+
+/* ---------- the little tag next to an invented number ---------- */
+/* The class is doubled on purpose: it drops into sections whose own
+   `.x span {}` rules would otherwise win on specificity and repaint it. */
+.fake.fake {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  border: 1px solid rgba(185, 118, 26, 0.3);
+  border-radius: 9999px;
+  /* Solid, so it reads the same on the paper sections and on the photographs. */
+  background: #fdf3e4;
+  color: #7d4d0c;
+  font-family: inherit;
+  font-size: 9.5px;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: 0.1em;
+  line-height: 1.6;
+  text-transform: uppercase;
+  white-space: nowrap;
+  vertical-align: middle;
+  text-decoration: none;
+}
+
+.fake.fake::before {
+  content: "";
+  flex: none;
+  width: 5px;
+  height: 5px;
+  border-radius: 9999px;
+  background: #b9761a;
+}
+
+.fake.fake[data-block] {
+  display: flex;
+  width: fit-content;
+  margin-top: 10px;
+}
+
+/* On the cobalt and graphite bands the paper pill would punch a hole, so it
+   turns into an outline instead. */
+.fake.fake[data-dark] {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.34);
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.fake.fake[data-dark]::before {
+  background: #e2a24a;
+}

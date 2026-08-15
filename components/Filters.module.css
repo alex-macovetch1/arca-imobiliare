@@ -4,7 +4,7 @@
    loud instead of its own label. */
 .shell {
   position: sticky;
-  top: var(--h-header);
+  top: var(--top-header);
   z-index: 40;
   background: var(--paper);
   box-shadow: inset 0 -1px 0 var(--line);

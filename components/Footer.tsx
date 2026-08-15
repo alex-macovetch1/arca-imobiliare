@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { AGENCY, LINK_GROUPS, type LinkGroup } from "@/lib/content";
 import { useLang } from "@/lib/lang";
+import { Fake } from "./DemoBar";
 import LangSwitch from "./LangSwitch";
 import styles from "./Footer.module.css";
 
@@ -77,6 +78,15 @@ export default function Footer() {
 
           <p className={styles.line}>{t(AGENCY.address)}</p>
           <p className={styles.line}>{t(AGENCY.schedule)}</p>
+
+          {/* Invented agency: the numbers, the address and the hours included. */}
+          <Fake dark block />
+          <p className={styles.line}>
+            {t({
+              ro: "ARCA este un concept demonstrativ realizat de NARON WEB. Agenția nu există.",
+              ru: "ARCA — демонстрационный концепт, созданный NARON WEB. Такого агентства не существует.",
+            })}
+          </p>
         </div>
 
         {COLUMNS.map((col) => (

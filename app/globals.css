@@ -111,6 +111,10 @@
   /* --- fixed chrome heights, so sticky offsets agree across pages --- */
   --h-header: 72px;
   --h-subbar: 56px;
+  /* Height of the fixed "this is a demo" strip. The body pads by it and every
+     sticky offset adds it, so nothing ends up hidden underneath. */
+  --demo-h: 30px;
+  --top-header: calc(var(--demo-h) + var(--h-header));
 }
 
 /* The scale above is already fluid, so phones only need the frame tightened. */
@@ -119,6 +123,19 @@
     --gut: 18px;
     --gap: 20px;
     --h-header: 60px;
+  }
+}
+
+/* The sentence wraps to two lines here, and to three on the narrowest phones. */
+@media (max-width: 900px) {
+  :root {
+    --demo-h: 46px;
+  }
+}
+
+@media (max-width: 400px) {
+  :root {
+    --demo-h: 60px;
   }
 }
 
@@ -136,6 +153,8 @@ html {
 
 body {
   margin: 0;
+  /* Room for the fixed demo strip — see components/DemoBar.module.css. */
+  padding-top: var(--demo-h);
   background: var(--paper);
   color: var(--ink);
   font-family: var(--f-sans);

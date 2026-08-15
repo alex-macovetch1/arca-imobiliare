@@ -6,6 +6,7 @@ import { formatDate, formatPricePerSqm } from "@/lib/format";
 import { useLang } from "@/lib/lang";
 import type { PriceBand } from "@/lib/market-index";
 import type { Sector, T } from "@/lib/types";
+import { Fake } from "./DemoBar";
 import styles from "./MarketBand.module.css";
 
 export interface MarketTile {
@@ -52,7 +53,9 @@ export default function MarketBand({
           <div>
             <p className="kicker kicker-dark">{t(M.kicker)}</p>
             <h2 className={styles.title}>{t(M.title)}</h2>
-            <p className={styles.lead}>{t(M.lead)}</p>
+            <p className={styles.lead}>
+              {t(M.lead)} <Fake dark />
+            </p>
           </div>
 
           <div className={styles.city}>

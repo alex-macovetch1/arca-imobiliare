@@ -6,6 +6,7 @@ import { UI } from "@/lib/content";
 import { formatCount } from "@/lib/format";
 import { useLang } from "@/lib/lang";
 import type { Agent } from "@/lib/types";
+import { Fake } from "./DemoBar";
 import { IconPhone } from "./Icons";
 import styles from "./AgentStrip.module.css";
 
@@ -22,6 +23,8 @@ export default function AgentStrip({ items }: { items: AgentCard[] }) {
         <div>
           <p className="kicker">{t({ ro: "Echipa", ru: "Команда" })}</p>
           <h2 className={styles.title}>{t({ ro: "Agenții tăi", ru: "Ваши агенты" })}</h2>
+          {/* Four invented people with invented phone numbers. */}
+          <Fake block />
         </div>
         <Link href="/agenti" className={styles.all}>
           {t({ ro: "Toți agenții →", ru: "Все агенты →" })}

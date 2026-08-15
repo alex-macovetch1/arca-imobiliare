@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import AgentCard from "@/components/AgentCard";
+import { Fake } from "@/components/DemoBar";
 import Gallery, { type GalleryBadge } from "@/components/Gallery";
 import { IconArrowRight, IconHeart, IconPin, IconShare } from "@/components/Icons";
 import MortgageCalculator from "@/components/MortgageCalculator";
@@ -289,15 +290,15 @@ export default function ListingView({ property: p, agent, similar }: Props) {
               {copied ? t(L.linkCopied) : t(UI.share)}
             </button>
 
-            {p.flags.length > 0 && (
-              <div className={styles.flags}>
-                {p.flags.map((f) => (
-                  <span key={f} className={styles.flag}>
-                    {t(FLAG_LABEL[f])}
-                  </span>
-                ))}
-              </div>
-            )}
+            <div className={styles.flags}>
+              {p.flags.map((f) => (
+                <span key={f} className={styles.flag}>
+                  {t(FLAG_LABEL[f])}
+                </span>
+              ))}
+              {/* Price, address and every badge on this page are invented. */}
+              <Fake />
+            </div>
           </div>
 
           <div className={styles.gallery}>

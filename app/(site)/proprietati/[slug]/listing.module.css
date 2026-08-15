@@ -195,7 +195,7 @@
 /* ---------- sticky anchors ---------- */
 .anchors {
   position: sticky;
-  top: var(--h-header);
+  top: var(--top-header);
   z-index: 40;
   margin-top: 40px;
   background: var(--surface);
@@ -249,7 +249,7 @@
 
 .side {
   position: sticky;
-  top: calc(var(--h-header) + var(--h-subbar) + 24px);
+  top: calc(var(--top-header) + var(--h-subbar) + 24px);
 }
 
 .sideMeta {
@@ -298,7 +298,7 @@
 /* Clears the header and the anchor bar when a link jumps here. */
 .section,
 .anchored {
-  scroll-margin-top: calc(var(--h-header) + var(--h-subbar) + 16px);
+  scroll-margin-top: calc(var(--top-header) + var(--h-subbar) + 16px);
 }
 
 /* Derived from --sec rather than a fixed 48px: the gaps inside the page now

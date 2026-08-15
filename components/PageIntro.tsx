@@ -2,6 +2,7 @@
 
 import { useLang } from "@/lib/lang";
 import type { T } from "@/lib/types";
+import { Fake } from "./DemoBar";
 import styles from "./PageIntro.module.css";
 
 interface Props {
@@ -33,6 +34,9 @@ export default function PageIntro({ kicker, title, lead, meta, children }: Props
           {t(meta)}
         </p>
       )}
+      {/* One tag at the head of every secondary page: the counts, the prices,
+          the people and the phone numbers below are all invented. */}
+      <Fake block />
       {children}
     </header>
   );

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { Fake } from "@/components/DemoBar";
 import { IconPhone, IconViber, IconWhatsapp } from "@/components/Icons";
 import LeadRequestForm from "@/components/LeadRequestForm";
 import PropertyCard from "@/components/PropertyCard";
@@ -69,6 +70,10 @@ export default function AgentView({ agent, properties }: { agent: Agent; propert
           <h1 className={`rv ${styles.name}`} style={{ "--d": "60ms" } as React.CSSProperties}>
             {agent.name}
           </h1>
+
+          {/* Invented person, invented phone number, invented deal count. */}
+          <Fake block />
+
 
           {agent.quote && (
             <blockquote className={`rv ${styles.quote}`} style={{ "--d": "120ms" } as React.CSSProperties}>

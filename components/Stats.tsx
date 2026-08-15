@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { AGENCY } from "@/lib/content";
 import { useLang } from "@/lib/lang";
 import type { T } from "@/lib/types";
+import { Fake } from "./DemoBar";
 import styles from "./Stats.module.css";
 
 type Figure = { value: number; suffix?: T; label: T };
@@ -99,6 +100,7 @@ export default function Stats({ properties }: { properties: number }) {
               ro: "Lucrăm cu un portofoliu pe care îl fotografiem și îl verificăm noi, act cu act. De aceea îl ținem mic și de aceea știm pe de rost fiecare bloc din el.",
               ru: "Мы работаем с портфелем, который сами снимаем и сами проверяем — документ за документом. Поэтому он небольшой, и поэтому мы знаем в нём каждый дом наизусть.",
             })}
+            <Fake dark block />
           </p>
         </div>
 

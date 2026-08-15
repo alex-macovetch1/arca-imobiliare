@@ -166,7 +166,7 @@
 
 .side {
   position: sticky;
-  top: calc(var(--h-header) + 20px);
+  top: calc(var(--top-header) + 20px);
   display: flex;
   flex-direction: column;
   gap: 20px;
